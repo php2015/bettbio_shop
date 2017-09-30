@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../Font-Awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../zTree/css/zTreeStyle/zTreeStyle.css" />
+		<link rel="stylesheet" type="text/css" href="../../../bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../../dropify/css/dropify.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/admin.css">
+	</head>
+
+	<body>
+		<div class="warp-body warp-dialog">
+			<form class="form-horizontal" action="" method="post">
+				<div class="row">
+					<div class="col-sm-4">
+						<label class="control-label">货号(必填且最多255位)</label>
+						<input required id="" name="" class="form-control" type="text" value="" maxlength="255">
+					</div>
+					<div class="col-sm-4" id="ztControl">
+						<label class="control-label">类别名称(必填)</label>
+						<input id="" name="" class="form-control" type="text" value="" readonly="readonly">
+						<div class="ztree-hd">
+							<ul id="ZT" class="ztree"></ul>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label">商品价格</label>
+						<input id="" name="" class="form-control" type="text" value="" maxlength="255">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-1">
+						<label class="control-label">是否上架</label>
+						<input id="" name="" type="checkbox" value="true" checked="checked">
+					</div>
+					<div class="col-sm-3">
+						<label class="control-label">上架日期</label>
+						<div class="input-group date" data-date-format="yyyy-mm-dd">
+							<input class="form-control" placeholder="" size="16" type="text" value="">
+							<span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label">商品CAS(最多255位)</label>
+						<input id="" name="" class="form-control" type="text" value="" maxlength="255">
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label">品牌</label>
+						<div class="input-group">
+							<input class="form-control" placeholder="" type="text" value="" readonly="readonly">
+							<span class="input-group-addon dropdown-toggle" data-toggle="collapse" aria-haspopup="true" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample"> 
+	                         <span class="fa fa-th" aria-hidden="true"></span>
+							</span>
+						</div>
+					</div>
+					<div class="collapse" id="collapseExample" aria-expanded="true">
+						<div class="well" id="storeNameList"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<label>合作模式</label>
+						<select class="form-control" id="" name="" value="true">
+							<option value="1" selected="selected">免费商品</option>
+							<option value="0">收费商品</option>
+						</select>
+					</div>
+					<div class="col-sm-8">
+						<label>有效范围</label>
+						<div class="input-daterange input-group">
+							<input type="text" class="form-control datepicker" name="" value="" data-date-format="yyyy-mm-dd">
+							<span class="input-group-addon">to</span>
+							<input type="text" class="form-control datepicker" name="" value="" data-date-format="yyyy-mm-dd">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<label class="control-label">商品名称(必填且最多512位)</label>
+						<input type="text" class="form-control" name="" value="" id="" required="" />
+					</div>
+					<div class="col-sm-6">
+						<label class="control-label">英文名(最多512位)</label>
+						<input type="text" class="form-control" name="" value="" id="" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">商品简单描述</label>
+						<textarea class="form-control" name="" value="" id="" rows="3"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">商品描述</label>
+						<textarea id="KE" class="form-control" rows="10"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">图片(上传图片最大为2M且都为png、jpg、jpeg、gif、bmp、pdf格式) </label>
+
+					</div>
+					<div class="col-sm-12">
+						<div class="col-sm-2"><input type="file" id="" class="dropify" /></div>
+						<div class="col-sm-2"><input type="file" id="" class="dropify" /></div>
+						<div class="col-sm-2"><input type="file" id="" class="dropify" /></div>
+						<div class="col-sm-2"><input type="file" id="" class="dropify" /></div>
+						<div class="col-sm-2"><input type="file" id="" class="dropify" /></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">附件 </label>
+
+					</div>
+					<div class="col-sm-12">
+						<div class="col-sm-3"><input class="input-file btn btn-primary" id="file" name="file" type="file"></div>
+						<div class="col-sm-3"><input class="input-file btn btn-primary" id="file" name="file" type="file"></div>
+						<div class="col-sm-3"><input class="input-file btn btn-primary" id="file" name="file" type="file"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<br />
+						<p>
+							<a href="">小工具提示：您可以访问“常用工具”下载图片处理软件（图片水印和马赛克处理）</a>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 text-right">
+						<button type="button" class="btn btn-success">提交</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<script type="text/javascript" src="../../../js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../../../bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../../bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+		<script type="text/javascript" src="../../../bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+		<script type="text/javascript" src="../../../kindeditor-4.1.5/kindeditor-all.min.js"></script>
+		<script type="text/javascript" src="../../../dropify/js/dropify.min.js"></script>
+		<script type="text/javascript" src="../../../zTree/js/jquery.ztree.all-3.5.min.js"></script>
+		<script type="text/javascript" src="../../../js/application.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$.app.initDatetimePicker();
+				$.app.initKindEditor();
+				$.app.initDropify();
+				$("#storeNameList").load("../data/test.html")
+			})
+			$(function() {
+				var zNodes = [{
+					name: "试剂",
+					id: 1,
+					open: true,
+					children: [{
+						name: "化学试剂",
+						id: 11
+					}]
+				}, {
+					name: "耗材",
+					id: 2,
+					children: [{
+						name: "吸头、离心管、移液器",
+						id: 22
+					}]
+				}, {
+					name: "仪器",
+					id: 2,
+					children: [{
+						name: "分子生物学仪器",
+						id: 22
+					}]
+				}, {
+					name: "服务",
+					id: 2,
+					children: [{
+						name: "分子生物学",
+						id: 22
+					}]
+				}];
+				var setting = {
+					callback: {
+						onClick: function(e, id, node) {
+							$("#ztControl :input").val(node.name);
+							$("#ztControl .ztree-hd").hide()
+						}
+					}
+				};
+
+				var zTree = $.fn.zTree.init($("#ZT"), setting, zNodes);
+
+				$("#ztControl :input").focus(function() {
+					$("#ztControl .ztree-hd").show()
+				}).blur(function() {
+
+				})
+			})
+		</script>
+	</body>
+
+</html>

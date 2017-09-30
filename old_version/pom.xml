@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.shopizer</groupId>
+  <artifactId>shopizer</artifactId>
+  <version>3.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>shopizer</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+
+  <modules>
+  	<module>sm-search</module>
+  	<module>sm-core-model</module>
+  	<module>sm-core</module>
+  	<module>sm-core-modules</module>
+  	<module>sm-shop</module>
+  	<module>m-sm-shop</module>
+  </modules>
+  
+  <build>
+	<plugins>
+	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-eclipse-plugin</artifactId>
+		<configuration>
+			<downloadSources>true</downloadSources>
+			<downloadJavadocs>false</downloadJavadocs>
+		</configuration>
+	  </plugin>
+	</plugins>
+   </build>
+</project>

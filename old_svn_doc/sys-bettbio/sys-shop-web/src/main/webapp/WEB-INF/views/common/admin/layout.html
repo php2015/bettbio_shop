@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商家管理</title>
+<link rel="stylesheet" type="text/css" href="${ctxPath}/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${ctxPath}/static/Font-Awesome/css/font-awesome.min.css">
+<%if(isNotEmpty(css)){for(var cs in css){%>
+<link rel='stylesheet' type='text/css'	href="${ctxPath}/static/${cs}">
+<%}}%>
+<link rel="stylesheet" type="text/css" href="${ctxPath}/static/css/admin.css">
+<script type="text/javascript">var ctxPath = "${ctxPath}";</script>
+</head>
+<body>
+<div class="container-fluid">
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<ul class="nav navbar-nav navbar-right">
+		<li>
+			<a href="${ctxPath}/admin/index.html">
+				<span class="fa fa-home" aria-hidden="true"></span> 百图首页
+			</a>
+		</li>
+		<!-- <li>
+			<a href="user/user.html">
+				<span class="fa fa-info-circle" aria-hidden="true"></span> 用户信息
+			</a>
+		</li>
+		<li>
+			<a href="audit/list.html">
+				<span class="fa fa-fire" aria-hidden="true"></span> 质量审核
+			</a>
+		</li> -->
+		<li>
+			<a href="${ctxPath}/admin/store/info?code=${session.user.storeCode!}">
+				<span class="fa fa-th-large" aria-hidden="true"></span> 商家
+			</a>
+		</li>
+		<li>
+			<a href="${ctxPath}/admin/product/list">
+				<span class="fa fa-th-large" aria-hidden="true"></span> 商品
+			</a>
+		</li>
+		<!-- <li>
+			<a href="order/list.html">
+				<span class="fa fa-shopping-cart" aria-hidden="true"></span> 订单
+			</a>
+		</li> -->
+		<li>
+			<a href="${ctxPath}/admin/exhibition/list">
+				<span class="fa fa-signal" aria-hidden="true"></span> 展会
+			</a>
+		</li>
+		<!-- <li>
+			<a href="cache/index.html">
+				<span class="fa fa-th" aria-hidden="true"></span> 缓存管理
+			</a>
+		</li>
+		<li>
+			<a href="config/account.html">
+				<span class="fa fa-wrench" aria-hidden="true"></span> 配置
+			</a>
+		</li> -->
+		<li class="dropdown">
+			<a data-toggle="dropdown" class="dropdown-toggle" href="">
+				<span class="fa fa-user" aria-hidden="true"></span> ${session.user.name!}
+				<b class="caret"></b>
+			</a>
+			<ul class="dropdown-menu" style="z-index:999999">
+				<!-- <li>
+					<a href="/conf.html">我的配置文件</a>
+				</li> -->
+				<li class="divider"></li>
+				<li>
+					<a href="${ctxPath}/logout">退出</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<a></a>
+		</li>
+	</ul>
+</div>
+</div>
+${layoutContent}
+<footer class="container-fluid">
+	<p>© Bettbio 2015-2016</p>
+</footer>
+<div class="modal fade" id="delcfmModel" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop= 'static'>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">删除请确认</h4>  
+      </div>
+      <div class="modal-body">  
+        <p>您真的想删除吗？</p>  
+      </div>
+      <div class="modal-footer">  
+         <input type="hidden" id="url"/>  
+         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>  
+        	<a href="javascript:void(0);"   onclick="" class="btn btn-success" data-dismiss="modal" id="confirmHref">确定</a>  
+      </div>  
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="delcSuccess" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop= 'static'>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">  
+        <p>删除成功</p>  
+      </div>
+      <div class="modal-footer">  
+         <input type="hidden" id="url"/>  
+        	<a href="javascript:void(0);" class="btn btn-success" data-dismiss="modal" id="btncSuccess">确定</a>  
+      </div>  
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="${ctxPath}/static/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/jQurey-plugin/jquery.blockUI.min.js"></script>
+<%if(isNotEmpty(script)){for(var spt in script){%>
+<script type="text/javascript" src="${ctxPath}/static/${spt}"></script>
+<%}}%>
+<script type="text/javascript" src="${ctxPath}/static/js/application.js"></script>
+<%if(isNotEmpty(dynscript)){%>
+<script type="text/javascript">
+${dynscript}
+</script>
+<%}%>
+</body>
+</html>

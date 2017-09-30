@@ -1,0 +1,183 @@
+{"menus":[
+{
+"menu":{
+"code":"home", 
+"icon":"home",
+"url":"/shop", 
+"role":"AUTH_CUSTOMER", 
+"order":0
+}},
+{
+"menu":{
+"code":"sellerhome", 
+"icon":"home",
+"url":"/admin/home.html", 
+"role":"AUTH", 
+"order":1
+}},
+{
+"menu":{
+"code":"store", 
+"icon":"icon-file",
+"url":"/admin/store/store.html", 
+"role":"STORE",
+"order":2,
+"menus":[
+	{"menu":{"code":"storeDetails","url":"/admin/store/store.html","role":"STORE","order":1}},
+	{"menu":{"code":"create-store","url":"/admin/store/createStore.html","role":"ADMIN","order":2}},
+	{"menu":{"code":"store-list","url":"/admin/store/list.html","role":"ADMIN","order":0}},
+	{"menu":{"code":"storeBranding","url":"/admin/store/branding.html","role":"STORE","order":3}},
+	{"menu":{"code":"storeLanding","url":"/admin/store/storeLanding.html","role":"SUPERADMIN","order":4}},
+	{"menu":{"code":"storeImport","url":"/admin/store/storeImport.html","role":"SUPERADMIN","order":5}},
+	{"menu":{"code":"storeMap","url":"/admin/store/storeMap.html","role":"ADMIN","order":6}},
+	{"menu":{"code":"storeShow","url":"/admin/store/storeShow.html","role":"ADMIN","order":7}},
+	{"menu":{"code":"meberpoint","url":"/admin/store/memberpoint.html","role":"ADMIN","order":8}}
+]
+}},
+{
+"menu":{
+"code":"profile", 
+"icon":"info-sign",
+"url":"/admin/users/displayUser.html", 
+"role":"AUTH",
+"order":3,
+"menus":[
+	{"menu":{"code":"myprofile","url":"/admin/user/profile.html","role":"AUTH","order":0}},
+	{"menu":{"code":"change-password","url":"/admin/user/password.html","role":"AUTH","order":1}},
+	{"menu":{"code":"users","url":"","role":"ADMIN","order":2}},
+	{"menu":{"code":"create-user","url":"","role":"ADMIN","order":3}},
+	{"menu":{"code":"security-groups","url":"/admin/user/groups.html","role":"ADMIN","order":4}}
+]
+}},
+{
+"menu":{
+"code":"catalogue",
+"icon":"tags", 
+"url":"/admin/catalogue/manufacturer/list.html", 
+"role":"SUPERADMIN",
+"order":4,
+"menus":[	
+	{"menu":{"code":"catalogue-categories-create","url":"/admin/categories/createCategory.html","role":"SUPERADMIN","order":0}},
+	{"menu":{"code":"catalogue-categories-list","url":"/admin/categories/list.html","role":"SUPERADMIN","order":1}},
+	{"menu":{"code":"catalogue-categories-hierarchy","url":"/admin/categories/hierarchy.html","role":"SUPERADMIN","order":2}},
+	{"menu":{"code":"catalogue-options-list","url":"/admin/catalogue/options/list.html","role":"SUPERADMIN","order":3}},
+	{"menu":{"code":"catalogue-options-create","url":"/admin/catalogue/options/option.html","role":"SUPERADMIN","order":4}},
+	{"menu":{"code":"catalogue-optionsvalues-list","url":"/admin/optionvalues/list.html","role":"SUPERADMIN","order":5}},
+	{"menu":{"code":"catalogue-optionsvalues-create","url":"/admin/options/createOptionValue.html","role":"SUPERADMIN","order":6}},
+	{"menu":{"code":"manufacturer-list","url":"/admin/catalogue/manufacturer/list.html","role":"PRODUCTS","order":7}},
+	{"menu":{"code":"manufacturer-create","url":"/admin/catalogue/manufacturer/create.html","role":"PRODUCTS","order":8}},
+	{"menu":{"code":"catalogue-featured","url":"/admin/catalogue/featured/list.html","role":"SUPERADMIN","order":9}},
+	{"menu":{"code":"catalogue-products-custom-group","url":"/admin/catalogue/groups/list.html","role":"SUPERADMIN","order":10}}
+	]
+}},
+{
+"menu":{
+"code":"audit",
+"icon":"fire", 
+"url":"/admin/audit/auditManagement.html", 
+"role":"SUPERADMIN",
+"order":5
+}},
+{
+"menu":{
+"code":"catalogue-products",
+"icon":"th-large", 
+"url":"/admin/products/products.html", 
+"role":"PRODUCTS",
+"order":6,
+"menus":[	
+	{"menu":{"code":"catalogues","url":"/admin/products/products.html","role":"PRODUCTS","order":0}},
+	{"menu":{"code":"catalogue-reagent-create","url":"javascript:createProduct(1)","role":"PRODUCTS","order":1}},
+	{"menu":{"code":"catalogue-other-create","url":"javascript:createProduct(2)","role":"PRODUCTS","order":2}},
+	{"menu":{"code":"catalogue-services-create","url":"javascript:createProduct(3)","role":"PRODUCTS","order":3}},
+	{"menu":{"code":"reagent-download","url":"/resources/download/products-imp.xlsx","role":"ADMIN","order":4}},
+	{"menu":{"code":"others-download","url":"/resources/download/others-imp.xlsx","role":"ADMIN","order":5}},
+	{"menu":{"code":"service-download","url":"/resources/download/service-imp.xlsx","role":"ADMIN","order":6}},
+	{"menu":{"code":"product-import","url":"/admin/products/toUpload.html","role":"PRODUCTS","order":7}},
+	{"menu":{"code":"diamond-product","url":"/admin/products/diamondproducts.html","role":"DIAMOND_PRODUCT_CONTROLLER","order":8}}
+
+]
+}},
+{
+"menu":{
+"code":"price",
+"icon":"usd", 
+"url":"/admin/price/brands.html", 
+"role":"SUPERADMIN",
+"order":7,
+"menus":[	
+	{"menu":{"code":"price-brands","url":"/admin/price/brands.html","role":"SUPERADMIN","order":0}},
+	{"menu":{"code":"price-others","url":"/admin/price/others.html","role":"SUPERADMIN","order":1}}
+]
+}},
+{
+"menu":{
+"code":"customer",
+"icon":"user", 
+"url":"/admin/customers/list.html", 
+"role":"CUSTOMER",
+"order":8,
+"menus":[
+	{"menu":{"code":"customer-list","url":"/admin/customers/list.html","role":"CUSTOMER","order":0}},
+	{"menu":{"code":"customer-create","url":"/admin/customers/customer.html","role":"CUSTOMER","order":1}},
+	{"menu":{"code":"customer-options-list","url":"/admin/customers/options/list.html","role":"CUSTOMER","order":2}},
+	{"menu":{"code":"customer-options-create","url":"/admin/customers/options/create.html","role":"CUSTOMER","order":3}},
+	{"menu":{"code":"customer-options-values-list","url":"/admin/customers/options/values/list.html","role":"CUSTOMER","order":4}},
+	{"menu":{"code":"customer-options-values-create","url":"/admin/customers/options/values/create.html","role":"CUSTOMER","order":5}},
+	{"menu":{"code":"customer-options-set","url":"/admin/customers/optionsset/list.html","role":"CUSTOMER","order":6}}	
+]
+}},
+{
+"menu":{
+"code":"order",
+"icon":"shopping-cart", 
+"url":"/admin/orders/list.html", 
+"role":"ORDER",
+"order":9,
+"menus":[
+	{"menu":{
+		"code":"order-list","url":"/admin/orders/list.html","role":"ORDER","order":0
+	}}
+]
+}},
+{
+"menu":{
+"code":"cache",
+"icon":"th", 
+"url":"/admin/cache/cacheManagement.html", 
+"role":"SUPERADMIN",
+"order":10
+}},
+{
+"menu":{
+"code":"configuration",
+"icon":"wrench", 
+"url":"/admin/configuration/accounts.html", 
+"role":"SUPERADMIN",
+"order":11,
+"menus":[
+	{"menu":{
+		"code":"accounts-conf","url":"/admin/configuration/accounts.html","role":"SUPERADMIN","order":0
+	}},
+	{"menu":{
+		"code":"email-conf","url":"/admin/configuration/email.html","role":"SUPERADMIN","order":1
+	}},
+	{"menu":{
+		"code":"system-configurations","url":"/admin/configuration/system.html","role":"SUPERADMIN","order":2
+	}},
+	{"menu":{
+		"code":"special-configurations","url":"/admin/configuration/special.html","role":"SUPERADMIN","order":3
+	}}
+]
+}},
+{
+"menu":{
+"code":"batchDataOperation", 
+"icon":"exclamation-sign",
+"url":"/admin/batch/dataoperation.html", 
+"role":"SUPERADMIN", 
+"order":12
+}}
+]}
+
+

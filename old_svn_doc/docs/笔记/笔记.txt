@@ -1,0 +1,41 @@
+2016-11-01
+	今天开发黄金产品/钻石产品功能，看了原系统关于menu的源代码。
+	感觉原系统的设计没完成。主要是url的处理。
+	
+	首先说menu的入口。
+	在com\salesmanager\web\filter\AdminFilter.java中，有关于menu的加载。从代码看，当session中没有menu的时候，从资源文件 /WEB-INF/classes/admin/menu.json 加载。
+	具体代码是这句：
+	（line 140：）in =
+					(InputStream) this.getClass().getClassLoader().getResourceAsStream("admin/menu.json");
+	打开这个文件，内容类似：
+{
+"menu":{
+	"code":"catalogue",
+	"icon":"tags", 
+	"url":"/admin/catalogue/manufacturer/list.html", 
+	"role":"PRODUCTS",
+	"order":3,
+	"menus":[	
+		{"menu":{"code":"catalogue-categories-create","url":"/admin/categories/createCategory.html","role":"SUPERADMIN","order":0}},
+	。。。
+}},
+{
+	这里有两层菜单，都有menu的url被设置。但是实际上，我添加了一条记录后，发现不生效。
+
+	然后继续看代码，menu的link是在layout.jsp里，有一段JS处理的，代码类似
+	$("#catalogue-categories-create-link").click(function() {
+ 
+		window.location='<c:url value="/admin/categories/createCategory.html" />';
+
+	});
+	不晓得为什么不直接渲染出来。
+
+2016-11-11
+	经过几天的代码阅读和测试，关于数据大概有以下结论：
+	1. 大部分产品图片是存放在infinispan里的
+	2. 没有过期数据清理工作
+	3. 单条SQL很难搜索出可以做search feed的数据，需要程序配合。价格和category。
+	4. 配置需要重整，包括：邮箱，短信，search，infinispan，log，DB，部署类型（暂缺）
+	5. 价格数据结构和产品数据结构绑定，应该设计解耦
+	6. 很多不必要的Many-to-Many，其实大部分是One-to-One或者One-to-Many
+	

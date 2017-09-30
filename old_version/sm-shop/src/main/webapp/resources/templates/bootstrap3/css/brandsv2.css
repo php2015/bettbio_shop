@@ -1,0 +1,52 @@
+.clearfix:after{
+	content:"";
+	display:block;
+	clear:both;}
+.clearfix{
+	zoom:1;}
+input{
+	outline:0 none;
+	border:0 none;
+}
+
+.brand-show{
+}
+
+.brand-show-old{
+	margin:100px;
+	width:865px;
+}
+
+.brand-show li{
+	border: 1px solid #e1e1e1;
+	float:left;
+	width: 106px;
+	text-align: center;
+	height: 54px;
+	line-height: 52px;
+	overflow: hidden;
+	margin: -1px -1px 0 0;
+	z-index:1;}
+
+.brand-show a{
+	width: 104px;
+	height: 50px;
+	color:#000;
+	display:inline-block;
+	line-height:50px;
+	font-size:12px;}
+
+.brand-show a:hover{
+	color:#A10002;
+	border:1px solid #A10002;
+}
+
+.search_brand_fixed_height {
+	height: 75px;
+	overflow: hidden;
+	float: left;
+}
+
+.selectedBrand {
+	background:url(/sm-shop/resources/img/check.png) no-repeat right bottom;
+}

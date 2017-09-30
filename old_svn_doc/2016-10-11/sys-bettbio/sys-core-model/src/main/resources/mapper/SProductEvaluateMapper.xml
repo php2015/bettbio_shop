@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SProductEvaluateMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SProductEvaluate">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="QUALITY_SCORE" jdbcType="INTEGER" property="qualityScore" />
+    <result column="SERVICE_SCORE" jdbcType="INTEGER" property="serviceScore" />
+    <result column="CONTENT" jdbcType="VARCHAR" property="content" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+    <result column="PRODUCT_CODE" jdbcType="VARCHAR" property="productCode" />
+  </resultMap>
+</mapper>

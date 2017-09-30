@@ -1,0 +1,37 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
+<%@ page session="false" %>
+
+<ul class="pagination " style="padding:0px;">
+			 <c:choose>
+ 								<c:when test="${requestScope.paginationData.startPages eq 1}"> 									
+ 								</c:when>
+ 								<c:otherwise>
+ 									<li ><a href="javascript:void(0);" onclick="doPage(1);"><span class="glyphicon glyphicon-step-backward padding-height" aria-hidden="true"></span></a></li>
+ 								 	<li ><a href="javascript:void(0);" onclick = "doPage(${requestScope.paginationData.startPages-1});"><span class="glyphicon glyphicon-backward padding-height" aria-hidden="true"></span></a></li>
+ 								</c:otherwise>
+ 							</c:choose>	
+			<c:forEach begin="${requestScope.paginationData.startPages}" end="${requestScope.paginationData.showPages}" varStatus="paginationDataStatus">
+			    <li class="${requestScope.paginationData.currentPage eq (paginationDataStatus.index) ? 'active' : ''}">
+			    <c:choose>
+ 								<c:when test="${requestScope.paginationData.currentPage eq paginationDataStatus.index}">
+ 									<a href="javascript:void(0);" class="disabled">${paginationDataStatus.index}</a>
+ 								</c:when>
+ 								<c:otherwise>
+ 								 	<a href="javascript:void(0);" onclick="doPage( ${paginationDataStatus.index});">${paginationDataStatus.index}</a>
+ 								</c:otherwise>
+ 							</c:choose>	
+			   </li>
+			</c:forEach>
+	<c:choose>
+ 								<c:when test="${requestScope.paginationData.startPages+4 ge requestScope.paginationData.totalPages}">	
+ 								</c:when>
+ 								<c:otherwise>
+ 									<li ><a href="javascript:void(0);" onclick="doPage(${requestScope.paginationData.startPages+5});"><span class="glyphicon glyphicon-forward padding-height" aria-hidden="true"></a></li>
+ 									<li ><a href="javascript:void(0);" onclick="doPage(${requestScope.paginationData.totalPages});" ><span class="glyphicon glyphicon-step-forward padding-height" aria-hidden="true"></a></li> 									
+ 								</c:otherwise>
+ 							</c:choose>
+</ul>

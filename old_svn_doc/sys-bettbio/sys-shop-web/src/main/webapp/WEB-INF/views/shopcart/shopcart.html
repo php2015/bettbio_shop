@@ -1,0 +1,193 @@
+<%layout("/common/layout.html",{css:["css/style.css","Font-Awesome/css/font-awesome.min.css"]}){%>
+		<div class="warp">
+			<div class="container">
+				<h2>检查您的订单   当前剩余可下单额度为：<strong class="formatCurrencyItem">${balance}</strong><span style="display:none" id="balance">${balance}</span></h2>
+			</div>
+			<div class="shopcart" id="shopcart">
+				<div class="container">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th width="2%"><input type="checkbox" id="selectIdAll" name="selectIdAll" value="idChk" checked="checked"></th>
+								<th colspan="2" width="45%">商品名</th>
+								<th width="18%">规格</th>
+								<th colspan="2" width="5%">数量</th>
+								<th width="15%">价格</th>
+								<th width="15%">金额</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% for(entry in shopcarts){ %>
+								<tr class="shopcart-str-th">
+									<td><input type="checkbox" class="storeItem" checked="checked" code="${entry.key}"></td>
+									<td colspan="7">商家:${entry.key}</td>
+								</tr>	
+								<%  for(shopcart in entry.value){ %>
+								<tr code="${entry.key}">
+									<td><input type="checkbox" name="idChk" class="productItem" value="${shopcart.productCode}" spec='${shopcart.productSpec}' checked="checked"></td>
+									<td>
+										<img width="60" />
+									</td>
+									<td>
+										<a href="/sm-shop/shop/product/85113.html" target="blank">${shopcart.productNameCh}</a>
+										<p>${shopcart.productNameEn}</p>
+									</td>
+									<td>${shopcart.productSpec}</td>
+									<td>
+										<div class="input-group">
+										  	<span class="input-group-btn"><button class="btn btn-info" type="button"><span class=" fa fa-minus"></span></button></span>
+											<input type="text" readonly="readonly" class="form-control shopcart-num" placeholder="数量" value="${shopcart.number}" name="quantity">
+											<span class="input-group-btn"><button class="btn btn-success add" type="button" ><span class=" fa fa-plus"></span></button></span>
+											<strong class="itemUnitPrice" style="display: none">${shopcart.unitPrice}</strong>
+										</div>
+									</td>
+									<td>
+										<button class="close" type="button">×</button>
+									</td>
+									<td>
+										<strong class="formatCurrencyItem">${shopcart.unitPrice}</strong>
+									</td>
+									<td>
+										<strong class="formatCurrencyItem countPrice">${shopcart.unitPrice*shopcart.number}</strong>
+										<strong class="itemCountPrice" style="display: none">${shopcart.unitPrice*shopcart.number}</strong>
+									</td>
+								</tr>									
+								<% } %>
+							<% } %>
+						</tbody>
+						<tfoot>
+							<tr class="shopcart-str-th">
+								<td colspan="6"></td>
+								<td>总计</td>
+								<td id="countPrice"></td>
+								<td id="countHiddenPrice" style="display:none"></td>
+							</tr>
+						</tfoot>
+					</table>
+					<div class="shopcart-btn text-right">
+						<a href="#" class="btn btn-success" id="subBtn">确认您的订单</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<form action="${ctxPath}/shoppingCart/selement" method="post" id="subForm">
+		</form>
+<%}%>
+			<script type="text/javascript">
+				/*初始化计算价格*/
+				sumPrice();
+				/*格式化价格*/
+			    $(".formatCurrencyItem").each(function(){
+			    	$(this).text($.app.formatCurrencyTenThou($(this).text())+"元");
+			    });
+			    
+			    /*全选*/
+				$("#selectIdAll").click(function(){
+					if($(this).is(":checked")){
+						$("input:checkbox").prop("checked",true);
+						 sumPrice();
+					}else{
+						$("input:checkbox").removeAttr("checked");
+						$("#countPrice").text(0+"元");
+					}
+				});
+			    
+			    	
+				/*商家按钮*/
+				$(".storeItem").click(function(){
+					if($(this).is(":checked")){
+						$(this).parents("tr").siblings("tr[code="+$(this).attr("code")+"]").each(function(){
+							$(this).find(".productItem").prop("checked",true);
+						});
+						 sumPrice();
+					}else{
+						$(this).parents("tr").siblings("tr[code="+$(this).attr("code")+"]").each(function(){
+							$(this).find(".productItem").removeAttr("checked");
+						});
+						sumPrice();
+					}
+				});
+				
+				/*产品按钮*/				
+				$(".productItem").click(function(){
+					sumPrice();
+				});
+				
+				/*扣除*/
+				$(".btn-info").click(function(){
+					var _input=$(this).parent().siblings("input:text");
+					if(_input.val()>=2){
+						_input.val(parseInt(_input.val())-1);
+						sumUnitPrice(parseInt(_input.val()),_input);
+					}
+				});
+
+				/*增加*/
+				$(".add").click(function(){
+					var _input=$(this).parent().siblings("input:text");
+						_input.val(parseInt(_input.val())+1);
+						sumUnitPrice(parseInt(_input.val()),_input);
+				});
+				
+				/*删除*/
+				$(".close").click(function(){
+					var _this=$(this);
+					var _productCode=$(this).parents("tr").find(".productItem").val();
+					$.post("${ctxPath}/shoppingCart/remove",{productCode:_productCode},function(data){
+						$.app.message(data.message);
+						_this.parents("tr").remove();
+						sumPrice();
+					},"json");
+				});
+				
+				/*确认提交*/
+				$("#subBtn").click(function(){
+					if(parseInt($("#countHiddenPrice").text())<parseInt($("#balance").text())){
+						var i=0;
+						$("#subForm").empty();
+						$(".productItem").each(function(){
+							if($(this).is(":checked")){
+								i++;
+								if($(this).val()!=null&&$(this).attr("spec")!=null){
+									$("#subForm").append("<input name='carts["+i+"].productCode' type='hidden' value='"+$(this).val()+"'/>")
+									.append("<input name='carts["+i+"].productSpec' type='hidden' value='"+$(this).attr("spec")+"'/>");									
+								}
+							}
+						});
+						if(i==0){
+							$.app.message("请选中购买商品");
+							return false;
+						}else{
+							$("#subForm").submit();
+						}						
+					}else{
+						$.app.message("订单额度应小于授信额度,如需调整额度请联系客服人员。");
+					}
+					return false;
+				});
+				
+				/*计算单价*/
+				function sumUnitPrice(_number,_input){
+					_unitPrice=_input.siblings(".itemUnitPrice").text();
+					var _countPrice=_number*_unitPrice;
+					_input.parents("tr").find(".countPrice").text($.app.formatCurrencyTenThou(_countPrice)+"元");
+					_input.parents("tr").find(".itemCountPrice").text(_countPrice);
+					sumPrice();
+					var _productCode=_input.parents("tr").find(".productItem").val();
+					var _productSpec=_input.parents("tr").find(".productItem").attr("spec");
+					$.post("${ctxPath}/shoppingCart/changeNumber",{productCode:_productCode,productSpec:_productSpec,number:_number},function(data){
+					},"json");
+				}
+				
+				/*计算总价*/
+				function sumPrice(){
+				    var countPrice=0;
+					$(".productItem").each(function(){
+						if($(this).is(":checked")){
+							countPrice=parseInt(countPrice)+parseInt($(this).parents("tr").find(".itemCountPrice").text());
+						}
+					});
+					$("#countHiddenPrice").text(countPrice);
+					$("#countPrice").text($.app.formatCurrencyTenThou(countPrice)+"元");
+				}
+			</script>

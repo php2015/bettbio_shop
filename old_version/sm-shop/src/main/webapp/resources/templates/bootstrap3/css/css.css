@@ -1,0 +1,199 @@
+.nav-ezybio{
+	background: #2672c8;
+	padding-bottom:0px;
+}
+.nav-ezybio-font{
+	
+	color: #ffffff;
+	/**
+	font-family: chinesefont;*/
+}
+.logo-font{
+	vertical-align:bottom;
+	font-size: 30px;
+	font-family: 'Alex Brush';
+	color: #ffffff;
+}
+.nav-ezybio-copyright{
+	font-family: "Microsoft YaHei",;
+	color:#bb0000;
+	text-align: center;
+}
+/**
+@font-face {
+font-family: 'chinesefont';
+src: url('../fonts/minijianxiyuan.eot');
+src: url('../fonts/minijianxiyuan.eot?#iefix') format('embedded-opentype'),
+     url('../fonts/minijianxiyuan.woff') format('woff'),
+     url('../fonts/minijianxiyuan.ttf') format('truetype'),
+     url('../fonts/minijianxiyuan.svg#minijianxiyuan') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}*/
+.login {
+	width: 320px;
+	height: 340px;
+	border-radius: 3px;
+	background: white;
+	box-shadow: 0 1px 5px 0 rgba(0,0,0,0.26);
+	overflow: hidden;
+}
+@media only screen and (max-width: 768px) {
+	.login {
+		width: 300px;
+		height: 400px;
+		border-radius: 2px;
+		background: white;
+		box-shadow: 0 1px 5px 0 rgba(0,0,0,0.26);
+		overflow: hidden;
+	}
+	}
+
+.login > i {
+	position: relative;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	float: right;
+	cursor: pointer;
+}
+
+.login .photo {
+	position: relative;
+	width: 100px;
+	height: 100px;
+	margin: 10px 80px;
+	border-radius: 50%;
+	background: rgb(223, 223, 223);
+	border: 13px solid rgb(223, 223, 223);
+	overflow: hidden !important;
+	transform: rotate(-1deg);
+}
+
+.login .photo:before {
+	position: absolute;
+	content: '';
+	width: 35px;
+	height: 35px;
+	top: 0px;
+	right: 20px;
+	border-radius: 50%;
+	background: #0080c0;
+	border: 2px solid #fff;
+	transform: scale(0);
+	transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+	-webkit-animation: user-head 0.5s 0s forwards;
+	-moz-animation: user-head 0.5s 0s forwards;
+	animation: user-head 0.5s 0s forwards;
+}
+
+.login .photo:after {
+	position: absolute;
+	content: '';
+	width: 140px;
+	height: 220px;
+	top: 38px;
+	right: -32px;
+	border-radius: 50%;
+	background: #0080c0;
+	border: 2px solid #fff;
+	transform: translateY(36px);
+	transition: 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+	-webkit-animation: user-body 0.5s 0.3s forwards;
+	-moz-animation: user-body 0.5s 0.3s forwards;
+	animation: user-body 0.5s 0.3s forwards;
+}
+
+.login > span {
+	display: block;
+	text-align: center;
+	margin: -15px 0;
+	font-size: 15px;
+}
+
+
+
+
+.logon-password-box{
+	min-height:30px;
+	padding:5px;
+	border-radius: 5px;
+
+	
+	border: 0px solid #3c78d8;
+}
+
+button[type="submit"]:focus {
+	outline: none;
+}
+
+
+
+/* -- highlighter animation --------------------------- */
+@-webkit-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to { width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to { width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to { width:0; background:transparent; }
+}
+
+@-webkit-keyframes user-head {
+100% {
+	-webkit-transform:scale(1);
+	transform:scale(1);
+	-moz-transform:scale(1);
+} }
+@-moz-keyframes user-head {
+100% {
+	-webkit-transform:scale(1);
+	transform:scale(1);
+	-moz-transform:scale(1);
+} }
+@keyframes user-head {
+100% {
+	-webkit-transform:scale(1);
+	transform:scale(1);
+	-moz-transform:scale(1);
+} }
+
+@-webkit-keyframes user-body {
+100% {
+	-webkit-transform:translateY(2px);
+	transform:translateY(2px);
+	-moz-transform:translateY(2px);
+} }
+@-moz-keyframes user-body {
+100% {
+	-webkit-transform:translateY(2px);
+	transform:translateY(2px);
+	-moz-transform:translateY(2px);
+} }
+@keyframes user-body {
+100% {
+	-webkit-transform:translateY(2px);
+	transform:translateY(2px);
+	-moz-transform:translateY(2px);
+} }
+
+[ripple] {
+  position: relative;
+  overflow: hidden;
+  -webkit-transition: box-shadow .4s;
+  -moz-transition: box-shadow .4s;
+  -ms-transition: box-shadow .4s;
+  -o-transition: box-shadow .4s;
+  transition: box-shadow .4s;
+  cursor: inherit;
+}
+
+[ripple] .touch {
+  background: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  border-radius: 100%;
+}

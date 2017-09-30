@@ -1,0 +1,16 @@
+<% 
+/*
+printStar(para0,para1) 打印五角星
+	para0	打印五角星的个数，可以非整数
+	para1	是否打印半颗星，不填为否
+*/
+var text = "";
+for(var i = 0; i < para0; i++){
+	text = text + "<span class='fa fa-star icon-red'></span>";
+}
+if(isNotEmpty(para1)){
+	if(para1>0)
+		text = text + "<i class="fa fa-star-half-full icon-red"></i>";
+}
+return text;
+%>

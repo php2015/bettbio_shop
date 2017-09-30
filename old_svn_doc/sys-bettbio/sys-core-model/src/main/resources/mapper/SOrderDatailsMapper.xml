@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bettbio.core.mapper.SOrderDetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SOrderDatails" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SUB_ORDER_CODE" property="subOrderCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_NAME_CH" property="productNameCh" jdbcType="VARCHAR" />
+    <result column="PRODUCT_NAME_EN" property="productNameEn" jdbcType="VARCHAR" />
+    <result column="PRODUCT_SPCE" property="productSpce" jdbcType="VARCHAR" />
+    <result column="PRODUCT_PRICE" property="productPrice" jdbcType="DOUBLE" />
+    <result column="PRODUCT_NUM" property="productNum" jdbcType="INTEGER" />
+    <result column="PRODUCT_COUNT_PRICE" property="productCountPrice" jdbcType="DOUBLE" />
+     <result column="IMG_URL" property="imgUrl" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

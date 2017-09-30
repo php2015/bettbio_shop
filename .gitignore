@@ -1,0 +1,31 @@
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+**/target
+
+# Package Files #
+
+*.jar
+!/old_version/uptVer.jar
+!/old_version/lib/CCP_REST_SMS_SDK_JAVA_v2.6.3r.jar
+
+
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+**/bin
+**/eclipse_workspace
+**/eclipse_workspace/
+eclipse_workspace
+eclipse_workspace/
+/eclipse_workspace
+old_version/eclipse_workspace/
+/old_version/eclipse_workspace/
+old_version/eclipse_workspace
+/old_version/eclipse_workspace
+

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bettbio.core.mapper.SSubOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SSubOrder" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="PARENT_ORDER_CODE" property="parentOrderCode" jdbcType="VARCHAR" />
+    <result column="ORDER_CODE" property="orderCode" jdbcType="VARCHAR" />
+    <result column="STORE_CODE" property="storeCode" jdbcType="VARCHAR" />
+    <result column="STORE_PHONE" property="storePhone" jdbcType="VARCHAR" />
+    <result column="STORE_NAME" property="storeName" jdbcType="VARCHAR" />
+    <result column="ORDER_COUNT_PRICE" property="orderCountPrice" jdbcType="DOUBLE" />
+    <result column="ORDER_STATE" property="orderState" jdbcType="VARCHAR" />
+    <result column="LOGISTICS_NUM" property="logisticsNum" jdbcType="VARCHAR" />
+    <result column="CARRIER" property="carrier" jdbcType="VARCHAR" />
+    <result column="OLD_STORE_CODE" property="oldStoreCode" jdbcType="VARCHAR" />
+     <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+     
+  </resultMap>
+  
+  <resultMap type="com.bettbio.core.model.vo.SubOrderVo" id="subOrderVoMap" extends="BaseResultMap">
+  
+  </resultMap>	
+  	<sql id="columns">
+  	ID,PARENT_ORDER_CODE,ORDER_CODE,STORE_CODE,STORE_PHONE,STORE_NAME,ORDER_COUNT_PRICE,ORDER_STATE,LOGISTICS_NUM,CARRIER,OLD_STORE_CODE,REMARKS
+  	</sql>
+    
+    <select id="selectSubOrders" parameterType="String" resultMap="subOrderVoMap">
+		SELECT <include refid="columns"/> FROM  S_SUB_ORDER WHERE PARENT_ORDER_CODE=#{parentCode}
+  	</select>
+  	
+  	<select id="selectSubOrdersByMap" parameterType="java.util.Map" resultMap="subOrderVoMap">
+		SELECT <include refid="columns"/> FROM  S_SUB_ORDER WHERE STORE_CODE=#{storeCode} ORDER BY CREATE_DATE  DESC
+		limit #{startRow},#{endRow}	
+  	</select>
+  	
+  	<select id="selectCountByMap" parameterType="java.util.Map" resultType="Integer">
+  		SELECT count(*) FROM S_SUB_ORDER WHERE STORE_CODE=#{storeCode}
+  	</select>
+  	
+  	<update id="updateOrderState">
+  		UPDATE S_SUB_ORDER set ORDER_STATE=#{orderState} where ORDER_CODE=#{orderCode}
+  	</update>
+  	
+  	<select id="selectSubOrderByCode" parameterType="String" resultMap="subOrderVoMap">
+		select  <include refid="columns"/> 	FROM  S_SUB_ORDER where ORDER_CODE=#{orderCode}
+  	</select>
+  	
+  	<select id="selectCountPriceByCode" parameterType="String" resultType="java.lang.Double">
+  		SELECT SUM(ORDER_COUNT_PRICE) FROM S_SUB_ORDER WHERE STORE_CODE=#{storeCode}
+  	</select>
+</mapper>

@@ -1,0 +1,467 @@
+<%layout("/common/layout.html"){ %>
+<div id="warp" style="padding-bottom: 50px;">
+	<div class="s_hader">
+		<div class="container">
+			<div class="pull-left s_logo">
+				<img src="${ctxPath}/static/img/biglogo.png" height="56"><span
+					class="s_title">欢迎买家用户注册</span>
+			</div>
+			<div class="pull-right">
+				<a href="${ctxPath}/storeRegister" class="s_lead">切换至商家用户注册 <span
+					class="fa fa-angle-double-right"></span></a>
+			</div>
+		</div>
+	</div>
+	<div class="s_register container">
+		<div class="row">
+			<div class="col-md-6 s_register_from">
+				<form id="registrationForm" class="form-horizontal"
+					action="${ctxPath}/completeUserRegister" method="post">
+					<input type="hidden" name="source" value="0"/>
+					<div class="from_title ">机构信息</div>
+					<div class="form-group">
+						<label for="mechanismSubCode"
+							class="col-sm-3 control-label text-left" required>课题组：</label>
+						<div class="col-sm-6">
+							<input id="mechanismSubCode" name="mechanismSubCode"
+								class="form-control valueInput" type="text" value=""
+								maxlength="255" success="false" placeholder="请输入您所在课题组/负责人的名称">
+							<span class="error" style="display: none">输入课题组名有助于我们更好的服务</span>
+						</div>
+						<div class="col-sm-3 mechanismSubCode">
+							<span class="success-icon" style="display: none"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="company" class="col-sm-3 control-label text-left"
+							required>学校/公司：</label>
+						<div class="col-sm-6">
+							<input id="company" name="company"
+								class="form-control valueInput" type="text" value=""
+								maxlength="255" success="false" placeholder="请输入您所在学校/公司名称">
+							<span class="error" style="display: none">建议完善学校或公司名</span>
+						</div>
+						<div class="col-sm-3 company">
+							<span class="success-icon" style="display: none"></span>
+						</div>
+					</div>
+					<div class="from_title ">个人信息</div>
+					<div class="form-group">
+						<label for="phone" class="col-sm-3 control-label text-left"
+							required>手机号：</label>
+						<div class="col-sm-6">
+							<input id="phone" name="phone" class="form-control valueInput"
+								type="text" value="" maxlength="255" success="false"
+								placeholder="请输入您的手机号"> <span class="error e-phone"
+								style="display: none">手机号不正确</span>
+						</div>
+						<div class="col-sm-3 phone" style="display: none">
+							<span class="success-icon"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="name" class="col-sm-3 control-label text-left"
+							required>姓名：</label>
+						<div class="col-sm-6">
+							<input id="name" name="name" class="form-control valueInput"
+								type="text" value="" maxlength="255" success="false"
+								placeholder="请输入您的姓名"> <span class="error"
+								style="display: none">姓名不能为空</span>
+						</div>
+						<div class="col-sm-3 name">
+							<span class="success-icon" style="display: none"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email" class="col-sm-3 control-label text-left"
+							required>邮箱：</label>
+						<div class="col-sm-6">
+							<input id="email" name="email" class="form-control valueInput"
+								type="text" value="" maxlength="255" success="false"
+								placeholder="请输入您的邮箱"> <span class="error e-email"
+								style="display: none">邮箱格式不正确</span>
+						</div>
+						<div class="col-sm-3 email" style="display: none">
+							<span class="success-icon"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="passwd" class="col-sm-3 control-label text-left"
+							required>密码：</label>
+						<div class="col-sm-6">
+							<input id="password" name="password"
+								class="form-control valueInput" type="password" value=""
+								maxlength="255" success="false" placeholder="请输入密码"> <span
+								class="error e-password" style="display: none">密码格式不正确</span>
+						</div>
+						<div class="col-sm-3 password" style="display: none">
+							<span class="success-icon"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="repasswd" class="col-sm-3 control-label text-left"
+							required>确认密码：</label>
+						<div class="col-sm-6">
+							<input id="repassword" name="repassword"
+								class="form-control valueInput" type="password" value=""
+								maxlength="255" success="false" placeholder="请再次确认密码"> <span
+								class="error e-repassword" style="display: none">密码不一致</span>
+						</div>
+						<div class="col-sm-3 repassword" style="display: none">
+							<span class="success-icon"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="checkCode" class="col-sm-3 control-label text-left"
+							required>验证码：</label>
+						<div class="col-sm-4 padding-right-clear">
+							<input id="checkCode" name="checkCode" class="form-control valueInput"
+								type="text" value="" maxlength="255" success="false" placeholder="请输入右侧验证码"> 
+								<span class="error e-checkCode" style="display: none">验证码不正确</span>
+						</div>
+						<div class="col-sm-2 padding-left-clear">
+							<img class="code-img" src="${ctxPath}/imgcode.jpg" height="40"
+								width="90"
+								onclick="this.src='${ctxPath}/imgcode.jpg?d='+Math.random();" />
+						</div>
+						<div class="col-sm-3 checkCode" style="display: none">
+							<span class="success-icon"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="phoneCode" class="col-sm-3 control-label text-left"
+							required>手机验证码：</label>
+						<div class="col-sm-3 padding-right-clear">
+							<input id="phoneCode" name="phoneCode"
+								class="form-control valueInput" type="text" value=""
+								maxlength="255" success="false" placeholder="请输入手机验证码"> <span
+								class="error e-phoneCode" style="display: none">手机验证不正确</span>
+						</div>
+						<div class="col-sm-3 padding-left-clear">
+							<button type="button" id="sendCode"
+								class="btn btn-info btn-block">获取验证码</button>
+						</div>
+						<div class="col-sm-3 phoneCode" style="display: none">
+							<span class="success-icon"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-3"></div>
+						<div class="col-sm-9">
+							<input type="checkbox" id="userProtocolCheckbox"
+								checked="checked">
+							<div class="read-prot">
+								阅读和同意<a href="">《百图注册协议》</a>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8">
+							<button type="submit" class="btn btn-info btn-block"
+								id="submitRegistration">立即注册</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6 s_register_hint">
+				<div class="hint_link">
+					<a href="login.html">已有帐号，请登录</a>
+				</div>
+				<div class="hint_hd"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="sendCodeModel" tabindex="-1" role="dialog"
+	aria-hidden="true" data-backdrop='static'>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<p id="mess"></p>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" id="url" /> <a href="javascript:void(0);"
+					class="btn btn-success" data-dismiss="modal" id="btncSuccess">确定</a>
+			</div>
+		</div>
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+	var verdict = {
+		showErr : function(_this) {
+			var secIcon = _this.closest('.form-group').find('.success-icon');
+			if (_this.val() == "") {
+				_this.attr("success", false);
+				secIcon.hide();
+			} else {
+				_this.attr("success", true);
+				secIcon.show();
+			}
+		},
+		showSec : function(_this) {
+			_this.closest('.form-group').find('.success-icon').hide();
+			_this.attr("success", false);
+		}
+	}
+
+	//机构信息
+	$("#mechanismSubCode,#company,#name").blur(function() {
+		var _this = $(this);
+		verdict.showErr(_this);
+	}).focus(function() {
+		var _this = $(this);
+		verdict.showSec(_this);
+	});
+
+	//手机号验证
+	$("#phone").blur(function() {
+		var re = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i;
+		var storemobile = $.trim($("#phone").val());
+		if (storemobile != '') {
+			if (re.test(storemobile)) {
+				$.ajax({
+					type : 'get',
+					dataType : "json",
+					data : "phone=" + storemobile,
+					url : '${ctxPath}/verifyPhone',
+					success : function(ajaxResponse) {
+						if (ajaxResponse.success == true) {
+							$(".e-phone").hide();
+							$(".phone").show();
+							$("#phone").attr("success", true);
+						} else {
+							$(".e-phone").html(ajaxResponse.message)
+							$(".e-phone").show();
+							$(".phone").hide();
+							$("#phone").attr("success", false);
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+					}
+				});
+			} else {
+				$(".e-phone").html("手机号不正确");
+				$(".e-phone").show();
+				$(".phone").hide();
+				$("#phone").attr("success", false);
+			}
+		} else {
+			$(".phone").hide();
+			$("#phone").attr("success", false);
+		}
+	})
+
+	//验证邮箱
+	$("#email").blur(function() {
+		var email_name = $.trim($("#email").val());
+		var re = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
+		if (email_name != "") {
+			if (re.test(email_name)) {
+				$.ajax({
+					type : 'get',
+					dataType : "json",
+					data : "email=" + email_name,
+					url : '${ctxPath}/verifyEmail',
+					success : function(ajaxResponse) {
+						if (ajaxResponse.success == true) {
+							$(".e-email").hide();
+							$(".email").show();
+							$("#email").attr("success", true);
+						} else {
+							$(".e-email").empty();
+							$(".e-email").html("邮箱已存在");
+							$(".e-email").show();
+							$(".email").hide();
+							$("#email").attr("success", false);
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+					}
+				});
+			} else {
+				$(".e-email").empty();
+				$(".e-email").html("邮箱格式不正确");
+				$(".e-email").show();
+				$(".email").hide();
+				$("#email").attr("success", false);
+			}
+		} else {
+			$(".e-email").hide();
+			$(".email").hide();
+			$("#email").attr("success", false);
+		}
+	});
+
+	var pwdReg = /^(?=[0-9]+[a-z]+)|(?=[a-z]+[0-9]+)|(?=[0-9]+[A-Z]+)|(?=[A-Z]+[0-9]+)|(?=[a-z]+[A-Z]+)|(?=[A-Z]+[a-z]+).{6,20}$/;
+	var numEnReg = /^[a-zA-Z0-9]{6,20}$/;
+
+	//验证密码
+	$("#password").blur(function() {
+		var new_Password = $("#password").val();
+		if (new_Password != "") {
+			if (pwdReg.test(new_Password) && numEnReg.test(new_Password)) {
+				$(".e-password").hide();
+				$(".password").show();
+				$("#password").attr("success", true);
+			} else {
+				$(".e-password").addClass("error");
+				$(".e-password").html("密码格式不正确");
+				$(".e-password").show();
+				$(".password").hide();
+				$("#password").attr("success", false);
+			}
+		} else {
+			$(".e-password").addClass("error");
+			$(".e-password").html("密码格式不正确");
+			$(".e-password").hide();
+			$(".password").hide();
+			$("#password").attr("success", false);
+		}
+	}).focus(function() {
+		$(".e-password").removeClass("error")
+		$(".e-password").show();
+		$(".e-password").html("包含英文字母、大写英文字母、数字任意两种,6-20位字符");
+	});
+
+	//验证确认密码
+	$("#repassword").blur(function() {
+		var passwordAgain = $("#repassword").val();
+		var new_Password = $("#password").val();
+		if (passwordAgain != "") {
+			if (passwordAgain == new_Password) {
+				$(".e-repassword").hide();
+				$(".repassword").show();
+				$("#repassword").attr("success", true);
+			} else {
+				$(".e-repassword").show();
+				$(".repassword").hide();
+				$("#repassword").attr("success", false);
+			}
+		} else {
+			$(".e-repassword").hide();
+			$(".repassword").hide();
+			$("#repassword").attr("success", false);
+		}
+	}).focus(function() {
+		$(".e-repassword").hide();
+	});
+
+	/*
+	*发送验证码
+	*/
+	$("#sendCode").click(
+			function() {
+			var	_this = $(this);
+				if ($("#phone").attr("success") == "false") {
+					$('.e-phoneCode').html("手机号不正确");
+					$('.e-phoneCode').show();
+				} else {
+					$('.e-phoneCode').html("验证码不正确");
+					$('.e-phoneCode').hide();
+					var phone = $("#phone").val();
+					var phone = $("#phone").val();
+					$.ajax({
+						type : 'get',
+						dataType : "json",
+						data : "phone=" + phone,
+						url : '${ctxPath}/sms/register',
+						success : function(ajaxResponse) {
+							if (ajaxResponse.success == true) {
+								$("#mess").html(ajaxResponse.message);
+								$('#sendCodeModel').modal('show');
+								$("#sendCode").addClass("disabled");
+								$.app.countDown(_this);
+							} else {
+								$("#mess").html(ajaxResponse.message);
+								$('#sendCode').modal('show');
+							}
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+						}
+					});
+				}
+			});
+
+	//校验验证码
+	$("#phoneCode").blur(function() {
+		$('.e-phoneCode').html("验证码不正确");
+		var phoneCode = $("#phoneCode").val();
+		if (phoneCode != "") {
+			$.ajax({
+				type : 'get',
+				dataType : "json",
+				data : {"code" : phoneCode,"phone" : $("#phone").val()},
+				url : '${ctxPath}/sms/validate',
+				success : function(ajaxResponse) {
+					if (ajaxResponse.success == true) {
+						$('.phoneCode').show();
+						$("#phoneCode").attr("success", true);
+					} else {
+						$('.e-phoneCode').show();
+						$('.phoneCode').hide();
+						$("#phoneCode").attr("success", false);
+					}
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+				}
+			});
+		} else {
+			$(".phoneCode").hide();
+			$(".e-phoneCode").hide();
+			$("#phoneCode").attr("success", false);
+		}
+	})
+
+	//验证码
+	$("#checkCode").blur(function() {
+		var checkCode = $("#checkCode").val();
+		if (checkCode != "") {
+			$.ajax({
+				type : 'get',
+				dataType : "json",
+				url : '${ctxPath}/imgcode-validate?fieldValue=' + checkCode,
+				success : function(resp) {
+					if (resp[1] == "1") {
+						$(".checkCode").show();
+						$(".e-checkCode").hide();
+						$("#checkCode").attr("success", true);
+					} else {
+						$(".checkCode").hide();
+						$(".e-checkCode").show();
+						$("#checkCode").attr("success", false);
+					}
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+				}
+			});
+		} else {
+			$(".checkCode").hide();
+			$(".e-checkCode").hide();
+			$("#checkCode").attr("success", false);
+		}
+	})
+	
+	//获取焦点重新验证
+	$("input:text").focus(function(){
+		$(this).attr("success",false);
+		$(this).siblings(".error").hide();
+	});
+	//提交控制
+	$("#submitRegistration").mousedown(function(){
+		var isSubmit = true;
+		$(".valueInput").each(function() {
+			if ($(this).attr("success") == "false") {
+				isSubmit = false;
+				$(this).siblings(".error").show();
+			}
+		});
+		//判断同意按钮
+		if (!$("#userProtocolCheckbox").is(":checked")) {
+			isSubmit = false;
+		}
+		return isSubmit;
+	});
+</script>

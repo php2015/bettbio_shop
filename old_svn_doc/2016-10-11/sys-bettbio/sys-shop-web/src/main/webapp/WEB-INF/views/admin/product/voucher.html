@@ -1,0 +1,113 @@
+<%layout("/common/admin/modelLayout.html",{
+css:["dropify/css/dropify.min.css","zTree/css/zTreeStyle/zTreeStyle.css","bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"],
+script:["zTree/js/jquery.ztree.all-3.5.min.js","dropify/js/dropify.min.js",
+"bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+"bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
+"kindeditor-4.1.5/kindeditor-all.min.js",
+"jQuery-File-Upload/js/vendor/jquery.ui.widget.js",
+"jQuery-File-Upload/js/jquery.iframe-transport.js",
+"js/ajaxfileupload.js","js/admin/product.js"]}){ %>
+
+<div class="warp-body warp-dialog">
+      	<!-- 凭证列表开始 -->
+      		<div id="voucherListDiv">
+      			<div class="row" >
+					<div class="col-sm-12">
+					<ul class="nav nav-pills pull-left form-inline">
+							<li>
+								<a class="btn btn-primary btn-sm" href="${ctxPath}/admin/product/createVoucherPage?id=${reagentProduct.id}&code=${reagentProduct.productClass.code}" id="createVouchers">凭证创建</a>
+							</li>
+						</ul>
+						<ul class="nav nav-pills pull-right form-inline">
+							<li>
+								<button class="btn btn-primary btn-sm" onclick="deletes()">删除所选</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+     	 		<div class="row" id="VoucherList">
+					<div class="col-sm-12">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="selectIdAll" name="selectIdAll" value="idChk"> </th>
+									<th>权威买方</th>
+									<th>购买日期</th>
+									<th>排序</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<%
+							for(purchaseVoucher in purchaseVouchers){
+							%>
+							<tr>
+								<td> <input type="checkbox" name="idChk" value="${purchaseVoucher.id!}"></td>
+								<td>
+									${purchaseVoucher.basedataType.name!}
+								</td>
+								<td>
+									${purchaseVoucher.buyingTime,'yyyy/MM/dd'}
+								</td>
+								<td>
+									${purchaseVoucher.index!}
+								</td>
+								<td>
+									<button class="btn btn-primary btn-sm" onclick="deleteVoucher('${purchaseVoucher.id!}')">删除</button>
+								</td>
+							</tr>
+							<%}%>
+						</table>
+					</div>
+				</div>
+			</div>
+		<!-- 凭证列表结束 -->
+		</div>
+<%}%>
+<script type="text/javascript">
+	var verdict = {
+		errInput : function(_this) {
+			_this.closest('.row').find('.text-warning').removeClass('hide');
+			_this.attr("success", "false");
+		},
+		sucInput : function(_this) {
+			_this.closest('.row').find('.text-warning').addClass('hide');
+			_this.attr("success", "true");
+		}
+	}
+
+	$(function() {
+		$.app.initDatetimePicker();
+		$.app.initKindEditor();
+		$.app.initDropify();
+		$('#buyingTime').datetimepicker({
+			language : 'zh-CN',
+			autoclose : true,
+			todayHighlight : true
+		});
+		$("#selectIdAll,#selectAudiAll").change(function() {
+			if(this.checked) {
+				$(this).check();
+			} else {
+				$(this).uncheck();
+			}
+		});
+	})
+	
+	function deletes(){
+				var ids = "";
+				 $('input[name="idChk"]:checked').each(function(){
+					 ids += $(this).val()+",";
+				 })
+				 deleteVoucher(ids);
+			}
+	
+	function deleteVoucher(ids){
+			var productId=$("#id",parent.document).val();
+			$.app.get("${ctxPath}/admin/product/deleteVoucher",{"ids":ids,"productId":productId},function(flag,data){
+				$.app.message(data.message);
+				if(flag){
+					window.location.href="${ctxPath}/admin/product/voucher?id=${reagentProduct.id}"; 
+				}
+			})
+	}
+</script>

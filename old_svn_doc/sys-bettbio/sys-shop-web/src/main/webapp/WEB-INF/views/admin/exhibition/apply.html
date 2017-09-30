@@ -1,0 +1,68 @@
+<%layout("/common/admin/layout.html",{
+css:["dropify/css/dropify.min.css"],
+script:["js/application.js"]
+}){ %>
+
+		<div class="container-fluid warp">
+		<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="${ctxPath}/admin/exhibition/list">返回展会列表</a>
+					</li>
+				</ul>
+			</div>
+			<div>
+			  <div class="exhibition-img">
+			  <img alt="" class="img-rounded" src="${ctxPath}/${exhibition.posterImg}" >
+			  </div>
+			   <div class="jumbotron">
+			  <h1>${exhibition.title!}</h1>
+			  <p>${exhibition.content!}</p>
+			  <p>展会开始时间：${beginDate!}</p>
+			  <p>展会结束时间：${endDate!}</p>
+			  <% 
+			  if(exhibition.status==1){
+			  if(has(exhibitionRecord)){
+			  
+			  if(exhibitionRecord.isAffirm == 0){%>
+			  	<p><a class="btn btn-primary btn-lg" disabled role="button">已报名</a></p>
+			  <%}else{%> 
+			  	<p><a class="btn btn-primary btn-lg" disabled role="button">已参展</a></p>
+			  <%}
+			  
+			  }else{%>
+			  <p><a class="btn btn-primary btn-lg" onclick="join('${exhibition.code}')" role="button">立即参展</a></p>
+			<%}}else{%>
+			<p><a class="btn btn-primary btn-lg" disabled role="button">展会已关闭</a></p>
+			<%}%>
+			</div>
+			</div>
+		</div>
+<%}%>
+<style type="text/css">
+	  		.exhibition-img img{
+	  			width: 100%
+	  		}
+	  		.container{
+	  			padding-top: 70px;
+	  		}
+	  		.jumbotron{
+	  			margin-top:30px;
+	  		}
+	  		.row-table{
+	  			margin-left: 40px;
+	  		}
+	  	</style>
+	  	<script type="text/javascript">
+	  	function join(code){
+	  		$.app.get("${ctxPath}/admin/exhibition/join","code="+code,function(flag,data){
+	  			$.app.message(data.message);
+				if(flag == true){
+					$(".btn").attr("disabled","disabled");
+					$(".btn").removeAttr("onclick");
+					$(".btn").empty();
+					$(".btn").html("已报名");
+				}
+			})
+	  	}
+	  	</script>

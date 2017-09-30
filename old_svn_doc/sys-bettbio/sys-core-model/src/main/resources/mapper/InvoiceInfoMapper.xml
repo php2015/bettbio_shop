@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.InvoiceInfoMapper">
+	<resultMap id="BaseResultMap" type="com.bettbio.core.model.InvoiceInfo">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+		<result column="RISE" jdbcType="VARCHAR" property="rise" />
+		<result column="INVOICE_TYPE" jdbcType="INTEGER" property="invoiceType" />
+		<result column="CORPORATE_NAME" jdbcType="VARCHAR" property="corporateName" />
+		<result column="REGISTER_ADDRESS" jdbcType="VARCHAR" property="registerAddress" />
+		<result column="OPEN_ACCOUNT_BANK" jdbcType="VARCHAR" property="openAccountBank" />
+		<result column="BANK_ACCOUNT" jdbcType="VARCHAR" property="bankAccount" />
+		<result column="REGISTERED_PHONE" jdbcType="VARCHAR" property="registeredPhone" />
+		<result column="IDENTIFICATION_CODE" jdbcType="VARCHAR" property="identificationCode" />
+		<result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+		<result column="IS_DEFAULT" jdbcType="INTEGER" property="isDefault" />
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="CODE" jdbcType="VARCHAR" property="code" />
+	</resultMap>
+
+	<update id="settingDefaultInvoiceInfo">
+		UPDATE INVOICE_INFO set IS_DEFAULT=0 where
+		USER_CODE=#{userCode} and CODE=#{addressCode}
+	</update>
+	
+	<update id="settingNoDefaultInvoiceInfo">
+		UPDATE INVOICE_INFO set IS_DEFAULT=1 where
+		USER_CODE=#{userCode}
+	</update>
+
+	<delete id="deleteInvoiceInfo" parameterType="String">
+		DELETE FROM
+		INVOICE_INFO where CODE=#{addressCode}
+	</delete>
+	<select id="selectDefaultInvoiceInfo" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+		USER_CODE,RISE,INVOICE_TYPE,CORPORATE_NAME,REGISTER_ADDRESS,OPEN_ACCOUNT_BANK,BANK_ACCOUNT,REGISTERED_PHONE,
+		IDENTIFICATION_CODE,REMARKS,IS_DEFAULT,CREATE_DATE,CODE,ID
+		FROM
+		INVOICE_INFO where USER_CODE=#{userCode} and IS_DEFAULT=0
+	</select>
+	
+	<select id="selectInvoiceInfoByCode" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+		USER_CODE,RISE,INVOICE_TYPE,CORPORATE_NAME,REGISTER_ADDRESS,OPEN_ACCOUNT_BANK,BANK_ACCOUNT,REGISTERED_PHONE,
+		IDENTIFICATION_CODE,REMARKS,IS_DEFAULT,CREATE_DATE,CODE,ID
+		FROM INVOICE_INFO where USER_CODE=#{userCode}
+	</select>
+
+	<select id="selectCountByCode" parameterType="String" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM INVOICE_INFO where
+		USER_CODE=#{userCode}
+	</select>
+	 
+	 
+	
+</mapper>

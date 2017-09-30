@@ -1,0 +1,4 @@
+ split -l 2000 -d ShanghaiBaishun.id.list id.part2
+cat all.list | awk '{print "select PRODUCT_DIAMOND from  PRODUCT  where PRODUCT_ID="$1";"}' > query.sql
+find ./ -name "*.req" | awk '{print "curl  -s -XPOST localhost:9200/_bulk --data-binary @"$1";echo "}' | bash
+cat all.list | awk '{print "update PRODUCT set PRODUCT_DIAMOND=1 where PRODUCT_ID="$1";"}' > update.sql

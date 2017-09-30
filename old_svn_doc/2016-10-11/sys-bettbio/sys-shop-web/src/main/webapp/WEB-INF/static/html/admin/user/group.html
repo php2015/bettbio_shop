@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../Font-Awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/admin.css">
+	</head>
+	</head>
+
+	<body>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="user.html">我的介绍</a>
+					</li>
+					<li>
+						<a href="passwd.html">修改密码</a>
+					</li>
+					<li>
+						<a href="list.html">用户群</a>
+					</li>
+					<li>
+						<a href="create.html">创建用户</a>
+					</li>
+					<li class="active">
+						<a href="group.html">组</a>
+					</li>
+				</ul>
+			</div>
+			<div class=" warp-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>组ID</th>
+									<th>名称</th>
+									<th>权限</th>
+								</tr>
+							</thead>
+							<tr>
+								<td>1</td>
+								<td>SUPERADMIN</td>
+								<td>只有一个用户可以是超级管理员，管理员用户是被默认创建作为管理员的。这个用户可以在系统中做任何事，并是唯一可以管理商家的人。</td>
+							</tr>
+
+							<tr>
+								<td>2</td>
+								<td>ADMIN</td>
+								<td>管理员用户拥有管理商家的最高权限。一个管理员用户可以做商家经理所能做的所有事，并且可以创建其他权限受限的账户。</td>
+							</tr>
+
+							<tr>
+								<td>3</td>
+								<td>ADMIN_CATALOGUE</td>
+								<td>本组用户可以创建商品、类别和特别推荐。</td>
+							</tr>
+
+							<tr>
+								<td>4</td>
+								<td>ADMIN_STORE</td>
+								<td>本组用户可以管理被授权的商家。他能够改变品牌和其他任何在商家主菜单上的项目，并且拥有发货和支付的配置权限。</td>
+							</tr>
+
+							<tr>
+								<td>5</td>
+								<td>ADMIN_ORDER</td>
+								<td>本组用户可以管理订单、查找订单、修改客户信息、申请退款。</td>
+							</tr>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="../../../js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../../../bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../../js/application.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$("#selectIdAll,#selectAudiAll").change(function() {
+					if(this.checked) {
+						$(this).check();
+					} else {
+						$(this).uncheck();
+					}
+				})
+			})
+		</script>
+	</body>
+
+</html>

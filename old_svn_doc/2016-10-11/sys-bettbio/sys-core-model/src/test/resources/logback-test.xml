@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration debug="false">
+
+    <!-- 控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+   
+
+    <root level="info"/>
+
+<!--    	<logger name="org.apache" level="debug">
+        <appender-ref ref="STDOUT"/>
+    </logger> -->
+    
+    <logger name="org.springframework.web" level="debug">
+    	<appender-ref ref="STDOUT" />
+    </logger>
+    
+    <logger name="com.bettbio.core.mapper" level="debug">
+    	<appender-ref ref="STDOUT" />
+    </logger>
+    
+    <!--错误日志-->
+    <logger name="sys-error" level="info">
+        <appender-ref ref="ERROR"/>
+    </logger>
+    <!--访问日志-->
+    <logger name="sys-access" level="info">
+        <appender-ref ref="ACCESS"/>
+    </logger>
+    <!--系统用户操作日志-->
+    <logger name="sys-user" level="info">
+        <appender-ref ref="SYS-USER"/>
+    </logger>
+
+    <!-- cache -->
+   <!--  <logger name="com.sishuok.es.extra.aop" level="info">
+         <appender-ref ref="STDOUT"/>
+    </logger> -->
+
+</configuration>
+
+
+

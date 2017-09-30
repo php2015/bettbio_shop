@@ -1,0 +1,101 @@
+<%layout("/common/manager/layout.html",{}){ %>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="${ctxPath}/manager/exhibition/create">创建展会</a>
+					</li>
+					<li class="active">
+						<a href="${ctxPath}/manager/exhibition/exhibitionList">展会列表</a>
+					</li>
+				</ul>
+			</div>
+			<div class="warp-body">
+				<div class="row s_search">
+					<div class="col-sm-12">
+						<ul class="nav nav-pills pull-right form-inline">
+							
+							<li>
+								<form id="searchForm" action="${ctxPath}/manager/exhibition/exhibitionList" method="get">
+									<fieldset>
+										<div class="input-group" style="padding-top:3px;width:250px">
+											<input id="title" name="title" class="form-control " type="text" value="${title!}" placeholder="展会标题">
+											<a href="#" onclick="document.getElementById('searchForm').submit();" class="input-group-addon"><span class="fa fa-search" aria-hidden="true"></span></a>
+										</div>
+									</fieldset>
+								</form>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>展会标题</th>
+									<th>展会状态</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							
+							<%
+							for(exhibition in pageInfo.list){
+							%>
+							<tr class="eExhibitionStore">
+							<input type="hidden" id="id" name="id" value="${exhibition.id!}">
+							<input type="hidden" id="status" name="status" value="${exhibition.status!}">
+								<td>
+								<a href="${ctxPath}/manager/exhibition/list?exhibitionId=${exhibition.id}">${exhibition.title}</a>
+								</td>
+								<td id="status_val">
+								<%if(exhibition.status==0){%>
+												关闭
+											<%}else{%>
+												正常
+											<%}%>
+								</td>
+								<td><a href="javascript:void(0);" id="open">
+								<%if(exhibition.status==0){%>
+												启动
+											<%}else{%>
+												关闭
+											<%}%>
+								</a></td>
+							</tr>
+							<%}%>
+						</table>
+					</div>
+					<%include("/common/pagination.html"){} %>
+				</div>
+			</div>
+		</div>
+		<%}%>
+<script type="text/javascript">
+$(function(){
+	$("#open").click(function(){
+		var _open;
+		var _open_val;
+		var _this = $(this);
+		var _id = _this.closest('.eExhibitionStore').find('#id').val();
+		var _status = _this.closest(".eExhibitionStore").find("#id").val();
+		if(_status == 0){
+			_status = 1;
+			_open = '关闭';
+			_open_val = '开启';
+		}else{
+			_status = 0;
+			_open ='开启';
+			_open_val = '关闭';
+		}
+		$.app.get("${ctxPath}/manager/exhibition/update",{"id":_id,"status":_status},function(flag,data){
+			$.app.message(data.message);
+			if(flag == true){
+				_this.html(_open);
+				_this.closest('.eExhibitionStore').find('#status_val').html(_open_val);
+			}
+		})
+	})
+})
+</script>

@@ -1,0 +1,40 @@
+<footer id="footer">
+		<nav class="navbar-inverse navbar-fixed-bottom">
+		<div class="container">
+			<div class="pull-left " >
+				<ul id="land_left_foot" class="nav navbar-nav">
+					<li><a class="foot-li" href="${ctxPath}/protocol.html">用户协议</a></li>
+					<li><a class="foot-li" href="http://v.youku.com/v_show/id_XMTUyNTM5NzE2NA==.html?from=y1.7-1.2" target="_blank">商家入驻</a></li>
+					<li><a class="foot-li" href="http://v.youku.com/v_show/id_XMTU1MjM2MjkxNg==.html?from=y1.7-1.2" target="_blank">一站下单</a></li>
+					<li><a class="foot-li" href="${ctxPath}/quality.html">质量管控</a></li>
+					<li><a class="foot-li" href="${ctxPath}/detection.html">检测服务</a></li>
+					<li><a class="foot-li" href="">积分兑换</a></li>
+					<li><a class="foot-li" href="${ctxPath}/question.html">兑换政策</a></li>
+					<li><a class="foot-li" href="${ctxPath}/about.html">关于我们</a></li>
+					<li><a class="foot-li" href="${ctxPath}/contact.html">联系我们</a></li>
+					<li><a class="foot-li" href="${ctxPath}/link.html">友情链接</a></li>
+					<li><a class="foot-li" href="http://www.kuaidi.com/" target="_blank">快递查询</a></li>
+				</ul>
+			</div>
+			<div class="pull-right ">
+				<ul id="land_right_foot" class="nav navbar-nav">
+					<li><a class="foot-li" href="">网站备案号：沪ICP备16000440号</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	</footer>
+<script type="text/javascript" src="${ctxPath}/static/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/jQurey-plugin/jquery.blockUI.min.js"></script>
+<%if(isNotEmpty(script)){for(var spt in script){%>
+<script type="text/javascript" src="${ctxPath}/static/${spt}"></script>
+<%}}%>
+<script type="text/javascript" src="${ctxPath}/static/js/application.js"></script>
+<script type="text/javascript">
+$(function(){
+	if($(window).height()<$(document).height()){
+		$("#footer nav").removeClass('navbar-fixed-bottom');
+	}
+})
+</script>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SysJurisdictionMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SysJurisdiction">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="IS_DISABLE" jdbcType="INTEGER" property="isDisable" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+  </resultMap>
+  <resultMap id="resourceResultMap" type="com.bettbio.core.model.permission.bo.Resource" extends="BaseResultMap"></resultMap>
+  
+  <sql id="selectAllField">
+  		SELECT ID,CODE,NAME,CREATE_DATE,URL,IS_DISABLE,PARENT_CODE FROM SYS_JURISDICTION
+  </sql>
+  
+  <select id="findResourceById" parameterType="java.lang.Integer" resultMap="resourceResultMap">
+  		<include refid="selectAllField"></include>
+  		WHERE ID = #{id}
+  </select>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+</mapper>

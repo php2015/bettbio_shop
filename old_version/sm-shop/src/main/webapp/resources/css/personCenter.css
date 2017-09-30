@@ -1,0 +1,130 @@
+/* ��ߵ����� */
+.nav_bar{
+	position : absolute !important;
+	left : 7%;
+	top : 160px;
+	width : 190px;
+	height : 362px;
+	border : 1px solid #d9d9d9;
+	margin : 0;
+	padding : 0;
+}
+body{background-color: #fafafa}
+.li_static{
+	height : 60px;
+	background-color: #fff;
+	text-align: center;
+	font-size : 14px;
+	line-height: 60px;
+}
+.li_static a span{
+	color : #333333;
+	font-size : 14px;
+	font-weight: inherit;
+}
+.li_actived{
+	height : 60px;
+	background-color: #4285f4;
+	text-align: center;
+	font-size : 16px;
+	line-height: 60px;
+	font-weight: inherit;
+}
+.li_actived a span{
+	color : #fafafa;
+	font-size : 16px;
+}
+#leftNavigation{
+	margin : 0;
+}
+/* ------------------------------------- */
+/* �ҵ��˻� */
+.account_baseInfo{
+	width:100%;
+	border : 1px solid #d9d9d9;
+	height:160px;
+}
+.account_orders{
+	width:100%;
+	border : 1px solid #d9d9d9;
+	
+}
+.account_history{
+	width:100%;
+	border-top : 1px solid #d9d9d9;
+	height:288px;
+}
+.out{
+	width:98%;
+	margin-left:22px;
+	margin-top: 30px;
+	background-color: #fafafa;
+}
+.account_title{
+	padding:14px 30px;
+	font-size:14px;
+}
+.per_info{
+	float:left;
+	width:300px;
+	border-right:1px solid #d9d9d9;
+	height:160px;
+	background-color: #fff;
+}
+
+.order_sort{
+	/* float:left; */
+	width:100%;
+	height:52px;
+	line-height: 52px;
+	font-size:14px;
+}
+.order_search{
+	padding-right:24px;
+	padding-top:12px;
+	float:right;
+	line-height: 0;
+}
+.order_search_button{
+	width:66px;
+	height:28px;
+	margin-left:-4px;
+	font-size:12px;
+	background-color: #fafafa;
+	border:1px solid #d9d9d9;
+}
+.table_head{
+	width:100%;
+	height:40px;
+	background-color: #d9d9d9;
+	line-height: 40px;
+	font-size:14px;
+}
+.table_body{
+	width:100%;
+	margin-top: 20px;
+}
+/* ----------------------------------- */
+/* �������� */
+.detail_out{
+	width:1200px;
+	font-size:14px;
+}
+.order_detail{
+	height:44px;
+	width:372px;
+	line-height: 44px;
+	padding-left:30px;
+	background-color: #eee;
+}
+.order_info{
+	padding-left:80px;
+	width:399px;
+	height:100%;
+	float:left;
+}
+.min_info{
+	margin-top:16px;
+	font-size:12px;
+	color:#333;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../Font-Awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../zTree/css/zTreeStyle/zTreeStyle.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/admin.css">
+	</head>
+
+	<body>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="../category/create.html">创建类别</a>
+					</li>
+					<li>
+						<a href="../category/list.html">类别清单</a>
+					</li>
+					<li class="active">
+						<a href="../category/tree.html">类别结构</a>
+					</li>
+					<li>
+						<a href="../brand/list.html">品牌清单</a>
+					</li>
+					<li>
+						<a href="../brand/create.html">创建品牌</a>
+					</li>
+				</ul>
+			</div>
+			<div class="warp-body">
+				<div class="well">拖动类别以重组类别结构</div>
+				<div class="row">
+					<ul id="ZT" class="ztree"></ul>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="../../../js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../../../bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../../zTree/js/jquery.ztree.all-3.5.min.js"></script>
+		<script type="text/javascript" src="../../../js/application.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var zNodes = [{
+					name: "试剂",
+					id: 1,
+					open: true,
+					children: [{
+						name: "化学试剂",
+						id: 11
+					}]
+				}, {
+					name: "耗材",
+					id: 2,
+					children: [{
+						name: "吸头、离心管、移液器",
+						id: 22
+					}]
+				}, {
+					name: "仪器",
+					id: 2,
+					children: [{
+						name: "分子生物学仪器",
+						id: 22
+					}]
+				}, {
+					name: "服务",
+					id: 2,
+					children: [{
+						name: "分子生物学",
+						id: 22
+					}]
+				}];
+				var setting = {
+					edit: {
+						enable: true,
+						showRemoveBtn: false,
+						showRenameBtn: false,
+						drag: {
+							isMove: true,
+							prev: true,
+							inner: true,
+							next: true
+						}
+					},
+					callback: {
+						onDrop: function() {
+							//拖拽结束事件
+						}
+					}
+				};
+
+				var zTree = $.fn.zTree.init($("#ZT"), setting, zNodes);
+			})
+		</script>
+	</body>
+
+</html>

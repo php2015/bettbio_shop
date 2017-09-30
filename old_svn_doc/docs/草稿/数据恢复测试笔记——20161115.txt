@@ -1,0 +1,74 @@
+经测试，原计划的数据备份可行。
+
+整理后的过程如下：
+(注意：
+	1-命令作为参考，具体参数随环境不同需要修改
+	2-MySQL大批导入数据，确定max_allowed_packet参数应该设为较大的数值。我设置的测试环境是100M。 
+	  如何设置参考 http://blog.csdn.net/quincylk/article/details/19401695
+	3-SSH最好先配置密钥登录
+）
+
+第一步，备份数据
+1. 首先，在生产环境建立备份目录
+	目前的目录名字是 /data/clariones/backup/<yyyy_mm_dd>
+	mkdir /data/clariones/backup/2016_11_15
+2. 在这个目录下，建立3个子目录
+	db、infinispan、es
+3. 先备份infinispan
+	生产环境的infinispan路径为/udisk/infinispan
+	使用tar命令将整个目录打包
+	cd /data/clariones/backup/<yyyy_mm_dd>/infinispan
+	tar -czvf infinispan.tar.gz -C /udisk /udisk/infinispan
+4. 再备份数据库
+	先进入对应目录
+	cd /data/clariones/backup/<yyyy_mm_dd>/db
+	然后用mysql的工具备份
+	mysqldump -ubshopizer -pmySQL@2015Bio -h 10.19.136.27 --hex-blob --skip-lock-tables SALESMANAGER > db_backup.sql
+	最后压缩
+	tar -czvf db_backup.tar.gz db_backup.sql
+5. 再备份elasticsearch	
+	先进入对应目录
+	cd /data/clariones/backup/<yyyy_mm_dd>/es
+	《TBD：导出索引数据，并压缩为es_snapshot.tar.gz》
+
+第二步，将备份数据复制到备份服务器上
+	云服务器是106.75.28.20,内网IP 10.9.70.217
+	备份路径还是在 /data/clariones/backup/<yyyy_mm_dd>
+1. 建立目录
+	mkdir /data/clariones/backup/2016_11_15
+2. 进入这个目录
+	cd /data/clariones/backup/2016_11_15
+3. 使用SCP将备份数据拷贝过来
+	scp root@10.9.57.223:/data/clariones/backup/2016_11_15/infinispan.tar.gz .
+	scp root@10.9.57.223:/data/clariones/backup/2016_11_15/db_backup.tar.gz .
+	scp root@10.9.57.223:/data/clariones/backup/2016_11_15/es_snapshot.tar.gz .
+
+要开始恢复数据时，照如下步骤操作
+1. 先在需要恢复的服务器上，建立一个临时目录
+	mkdir /data/clariones/backup/workspace
+	cd /data/clariones/backup/workspace
+2. 然后把对应的3个备份包拷贝过来
+	scp root@10.9.70.217:/data/clariones/backup/2016_11_15/infinispan.tar.gz .
+	scp root@10.9.70.217:/data/clariones/backup/2016_11_15/db_backup.tar.gz .
+	scp root@10.9.70.217:/data/clariones/backup/2016_11_15/es_snapshot.tar.gz .
+3. ！！！！重要！！！！
+   ！！！！重要！！！！
+   ！！！！重要！！！！ 更新数据前，如果必要，要先备份本地的所有数据。 方法同上
+   ！！！！重要！！！！
+   ！！！！重要！！！！
+4. 停止web服务 
+	tomcat下的 shutdown.sh
+5. 先删除并重建SALEMANAGER这个数据库
+	mysql 连接后，执行
+	drop database if existed SALESMANAGER;
+	CREATE DATABASE `SALESMANAGER` character set utf8;
+6. 执行MySQL导入
+	mysql -ubshopizer -pmySQL@2015Bio -h 10.9.70.217 --default-character-set=utf8 SALESMANAGER < db_backup.sql
+7. 恢复infinispan的数据
+	将infinispan.tar.gz解压到正确的路径下即可。
+	需要确定本机的infinispan的配置。 配置文件在/WEB-INF/classes/cms/infinispan_configuration.xml. 注意m和sm的配置要一致。
+8. 恢复索引数据
+	理论上不需要启动web应用，即可恢复索引。
+	恢复索引的方法是《TBD》
+
+9. 再次检查所有数据均已恢复，确定后，启动tomcat

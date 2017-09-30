@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.UserGradeMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.UserGrade">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="LV" jdbcType="INTEGER" property="lv" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="VALUE" jdbcType="VARCHAR" property="value" />
+  </resultMap>
+  
+  <select id="selectGradeByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	SELECT ID,LV,TYPE,VALUE FROM USER_GRADE WHERE TYPE = #{type}
+  </select>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>商家管理</title>
+<link rel="stylesheet" type="text/css" href="${ctxPath}/static/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${ctxPath}/static/Font-Awesome/css/font-awesome.min.css">
+<%if(isNotEmpty(css)){for(var cs in css){%>
+<link rel='stylesheet' type='text/css'	href="${ctxPath}/static/${cs}">
+<%}}%>
+<link rel="stylesheet" type="text/css" href="${ctxPath}/static/css/admin.css">
+<script type="text/javascript">var ctxPath = "${ctxPath}";</script>
+</head>
+<body>
+
+${layoutContent}
+
+<script type="text/javascript" src="${ctxPath}/static/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${ctxPath}/static/jQurey-plugin/jquery.blockUI.min.js"></script>
+<%if(isNotEmpty(script)){for(var spt in script){%>
+<script type="text/javascript" src="${ctxPath}/static/${spt}"></script>
+<%}}%>
+<script type="text/javascript" src="${ctxPath}/static/js/application.js"></script>
+</body>
+</html>

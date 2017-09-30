@@ -1,0 +1,63 @@
+{"product_zh": {
+				"properties" :  {
+					"pname" : { 
+					    		"type":"multi_field",
+					    		"fields":{
+					    		    "pname":{"type":"string","term_vector":"with_positions_offsets","analyzer": "ik","include_in_all": "true"},
+					    		    "pinyinname":{"type":"string","term_vector":"with_positions_offsets","analyzer":"keyword"}
+					    			}													
+								},
+					"penname" : {"type":"string","term_vector":"with_positions_offsets","analyzer": "ik","include_in_all": "true"},
+					"price" : {"type":"long","index":"not_analyzed"},
+					"period" : {"type":"integer","index":"not_analyzed"},
+					"category" : {"type":"long","index":"not_analyzed"},
+					"quality" : {"type":"integer","index":"not_analyzed"},
+					"manufacturer" : {"type":"long","index":"not_analyzed"},
+					"auth" : {
+					    "properties" : {
+			        	    "auth_id" : {"type":"string","index":"not_analyzed"},
+			        	    "auth_type" : {"type":"string","index":"not_analyzed"}
+					        }
+					},
+					"thirdproofs" : {
+					    "properties" : {							        
+					        "pname" : {"type" : "string","index":"not_analyzed"},
+            				"description" : {"type" : "string","index":"not_analyzed"}
+            			}	
+					 },							
+					"proofs" : {
+						"properties" : {							        
+					        "pname" : {"type" : "string","index":"not_analyzed"},
+            				"description" : {"type" : "string","index":"not_analyzed"}
+            			}	
+					},
+					"certificates" : {
+						"properties" : {							        
+					        "pname" : {"type" : "string","index":"not_analyzed"},
+            				"description" : {"type" : "string","index":"not_analyzed"}
+            			}	
+					},
+					"testreports" : {
+						"properties" : {							        
+					        "pname" : {"type" : "string","index":"not_analyzed"},
+            				"description" : {"type" : "string","index":"not_analyzed"}
+            			}	
+					},
+					"chkey" : {"type":"string","index":"not_analyzed"},
+					"enkey" : {"type":"string","index":"not_analyzed"},
+					"lang" : {"type":"string","index":"not_analyzed"},
+					"image" : {"type":"string","index":"not_analyzed"},
+					"simpledesc" : {"type":"string","term_vector": "with_positions_offsets","analyzer": "ik", "include_in_all": "true"},
+					"code" : {"type":"string","index":"not_analyzed"},
+					"friendlyUrl" : {"type":"string","index":"not_analyzed"},
+					"isfree" : {"type":"boolean","index":"not_analyzed"},
+					"store" : { 
+					    		"type":"multi_field",
+					    		"fields":{
+					    		    "store":{"type":"string","term_vector":"with_positions_offsets","analyzer": "ik","include_in_all": "true"},
+					    		    "pinyinname":{"type":"string","term_vector":"with_positions_offsets","analyzer":"keyword"}
+					    			}													
+								}
+				 }
+		}
+}

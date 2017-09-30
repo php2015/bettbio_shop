@@ -1,0 +1,522 @@
+<%layout("/common/layout.html",{css:["css/style.css","Font-Awesome/css/font-awesome.min.css"]}){
+%>
+		<div class="warp">
+			<div class="h_body">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-2">
+							<ul class="c_menu">
+						<li ><a href="${ctxPath}/personalCenter">我的账户</a></li>
+						<li><a href="${ctxPath}/findOrders">我的订单</a></li>
+						<li><a href="${ctxPath}/findUserPorints">查看积分</a></li>
+						<li class="active"><a href="${ctxPath}/billing">开票和收货信息</a></li>
+						<li><a href="${ctxPath}/safe/safe">帐号安全</a></li>
+							</ul>
+						</div>
+						<div class="col-sm-10 ">
+							<div class="panel panel-primary c_adr_box">
+								<div class="panel-heading">
+									<h5>收货地址   您还可添加<span id="addressCount">${5-userAddressCount}</span>个收货地址</h5>
+									<a href="javascript:;" class="btn btn-info c_adrs_add ${userAddressCount==5?'hidden'}" data-toggle="modal" data-target="#addressModal" id="addAddressUser"><span class="fa fa-plus"></span> 添加</a>
+								</div>
+								<div class="panel-body">
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>收货人姓名</th>
+												<th>收货人手机</th>
+												<th>公司名称</th>
+												<th>客户所在城市</th>
+												<th>客户街道地址</th>
+												<th>邮编</th>
+												<th>备注</th>
+												<th>删除</th>
+												<th>默认货地址</th>
+												<th>默认发票邮寄地址</th>
+											</tr>
+										</thead>
+										<tbody>
+										<%for(var address in userAddressList){%>
+										<tr>
+											<td>
+											<a href="javascript::" action="${address.id}" class="editAddress">${address.userName}</a>
+											</td>
+											<td>${address.userPhone}</td>
+											<td>${address.companyName}</td>
+											<td>${address.city}</td>
+											<td>${address.street}</td>
+											<td>${address.postcode}</td>
+											<td>${address.remarks}</td>
+											<td>
+												<a href="javascript::" action="${address.code}" class="userAddressDel">删除</a>
+											</td>
+											<td>
+											<% if(address.isDefault==1){ %>
+												<a href="javascript::" action="${address.code}" class="settingDefaultAddress">设置默认地址</a>
+											 <%}else if(address.isDefault==0){%>
+												<p>默认地址</p>
+											 <%}%>
+											</td>
+											<td>
+											 <% if(address.isDistributionAddress==1){ %>
+												<a href="javascript::" action="${address.code}" class="settingDefaultDistribution">设置默认发票邮寄地址</a>
+											 <%}else if(address.isDistributionAddress==0){%>
+												<p>默认发票邮寄地址</p>
+											 <%}%>		
+											</td>
+										</tr>
+										<%}%>
+										
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="panel panel-primary c_adr_box">
+								<div class="panel-heading">
+									<h5>开票信息   你还可以添加 ${5-invoiceInfoCount} 条发票信息  </h5>
+									<a href="javascript:;" class="btn btn-info c_adrs_add ${invoiceInfoCount==5?'hidden'}" role="button" data-toggle="modal" data-target="#invoiceModel" id="addInvoiceInfo" ><span class="fa fa-plus"></span> 添加</a>
+								</div>
+								<div class="panel-body">
+									<table class="table table-striped table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>注册公司/发票抬头</th>
+												<th>注册地址</th>
+												<th>注册电话</th>
+												<th>开户银行</th>
+												<th>银行账户</th>
+												<th>纳税人识别号</th>
+												<th>备注</th>
+												<th>操作</th>
+												<th>默认发票信息</th>
+											</tr>
+										</thead>
+										<tbody>
+										<%for(var invoiceInfo in invoiceInfoList){%>
+										<tr>
+											<td>
+											<% if(invoiceInfo.invoiceType==0){ %>
+											<a href="javascript::" action="${invoiceInfo.id}" class="editInvoiceInfo">${invoiceInfo.rise}</a>
+											<%}else if(invoiceInfo.invoiceType==1){%>
+											<a href="javascript::" action="${invoiceInfo.id}" class="editInvoiceInfo">${invoiceInfo.corporateName}</a>
+											 <%}%>	
+											</td>
+											<td>${invoiceInfo.registerAddress}</td>
+											<td>${invoiceInfo.registeredPhone}</td>
+											<td>${invoiceInfo.openAccountBank}</td>
+											<td>${invoiceInfo.bankAccount}</td>
+											<td>${invoiceInfo.identificationCode}</td>
+											<td>${invoiceInfo.remarks}</td>
+											<td>
+												<a href="javascript::" action="${invoiceInfo.code}" class="userInvoiceInfoDel">删除</a>
+											</td>
+											<td>
+											<% if(invoiceInfo.isDefault==1){ %>
+												<a href="javascript::" action="${invoiceInfo.code}" class="settingDefaultInvoiceInfoAddress">设置默认开票信息</a>
+											 <%}else if(invoiceInfo.isDefault==0){%>
+												<p>默认开票信息</p>
+											 <%}%>
+											</td>
+										</tr>
+										<%}%>											
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="addressModal" class="modal fade" data-backdrop="static" role="dialog">
+			<div class="modal-dialog" style="width: 80%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">收货信息</h4>
+					</div>
+					<div class="modal-body">			
+						<form id="addressInfo" class="form-horizontal c_user_from" action="${ctxPath}/addUserAddress" method="POST">
+							<input id="id" name="id" type="hidden" value="">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">收货人姓名<span class="must">*</span>:</label>
+								<div class="col-sm-4">
+									<input id="userName" name="userName" class="required form-control ignore" type="text" value="" maxlength="64">
+									<span class="help-inline error">客户姓名不能为空</span>
+								</div>
+								<label class="col-sm-2 control-label">公司名称<span class="must">*</span>:</label>
+								<div class="col-sm-4">
+									<input id="companyName" name="companyName" class="form-control ignore" type="text" value="" maxlength="100">
+									<span class="help-inline error">公司名称不能为空</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">收货人手机<span class="must">*</span>:</label>
+								<div class="col-sm-4">
+									<input id="userPhone" name="userPhone" class="required form-control phone ignore"  type="text" value="" maxlength="11" >
+									<span class="help-inline error">收货人手机不能为空</span>
+								</div>
+								<label class="col-sm-2 control-label">客户所在国家:</label>
+								<div class="col-sm-4">
+									<select id="customer_country"  class="billing-country-list form-control disabled">
+										<option value="CN">中国</option>
+									</select>
+									<span class="help-inline"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">客户所在省/直辖市:</label>
+								<div class="col-sm-4">
+									<select id="province" name="province" class="billing-zone-list form-control ">
+										<option value="HU">上海</option>
+										<option value="DIAN">云南</option>
+										<option value="MENG">内蒙古</option>
+										<option value="JING">北京</option>
+										<option value="TAI">台湾</option>
+										<option value="JILIN">吉林</option>
+										<option value="CHUAN">四川</option>
+										<option value="JIN">天津</option>
+										<option value="NING">宁夏</option>
+										<option value="WAN">安徽</option>
+										<option value="LU">山东</option>
+										<option value="SHANXI">山西</option>
+										<option value="YUE">广东</option>
+										<option value="GUI">广西</option>
+										<option value="XIN">新疆</option>
+										<option value="SU">江苏</option>
+										<option value="JIANGXI">江西</option>
+										<option value="JI">河北</option>
+										<option value="HENAN">河南</option>
+										<option value="ZHE">浙江</option>
+										<option value="QIONG">海南</option>
+										<option value="E">湖北</option>
+										<option value="XIANG">湖南</option>
+										<option value="AO">澳门</option>
+										<option value="GAN">甘肃</option>
+										<option value="MIN">福建</option>
+										<option value="CANG">西藏</option>
+										<option value="QIAN">贵州</option>
+										<option value="LIAO">辽宁</option>
+										<option value="YU">重庆</option>
+										<option value="SHAN">陕西</option>
+										<option value="QING">青海</option>
+										<option value="GANG">香港</option>
+										<option value="HEI">黑龙江</option>
+									</select>
+
+									<input id="hidden_zones" name="state" title="请输入省/直辖市" class="form-control " type="text" value="" maxlength="100" style="display: none;">
+								</div>
+								<label class="col-sm-2 control-label">客户所在城市<span class="must">*</span>:</label>
+								<div class="col-sm-4">
+									<input id="city" name="city" class="required form-control ignore" title="请输入城市" type="text" value="" maxlength="100">
+									<span class="help-inline error">客户所在城市不能为空</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">邮编:</label>
+								<div class="col-sm-4">
+
+							<input id="postcode" name="postcode" class="customer-postalCode form-control" title="请输入账单地址邮编" type="text" value="" maxlength="20">
+									<span class="help-inline"></span>
+								</div>
+								<label class="col-sm-2 control-label">客户街道地址<span class="must">*</span>:</label>
+								<div class="col-sm-4">
+									<input id="street" name="street" class="required form-control ignore" title="请输入邮寄地址" type="text" value="" maxlength="256">
+									<span class="help-inline error">详细地址信息不能为空</span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">备注:</label>
+								<div class="col-sm-10">
+									<input id="remarks" name="remarks" class="input-large form-control form-control-md" type="text" value="" maxlength="256">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-2 col-sm-offset-2">
+									<input type="checkbox" id="isDefault" name="isDefault" checked="checked" value="0" class="ignore">默认收货地址
+									<input type="checkbox" id="isDistributionAddress" name="isDistributionAddress" checked="checked" value="0" class="ignore">默认发票邮寄地址
+								</div>
+								<div class="col-sm-2 col-sm-offset-2">
+									<input id="subAddressInfo" type="submit" value="提交" name="register" class="btn btn-info btn-block">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="invoiceModel" class="modal fade" data-backdrop="static" role="dialog">
+			<div class="modal-dialog" style="width: 80%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">收货信息</h4>
+					</div>
+					<div class="modal-body">
+						<form id="subInvoiceInfo" class="form-horizontal c_user_from" action="${ctxPath}/saveInvoiceInfo" method="POST">
+							<input id="invoiceInfoId" name="invoiceInfoId" type="hidden" value="">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">发票类型:</label>
+								<div class="col-sm-10">
+									<div class="row">
+										<div class="col-sm-12"><input class="invoiceType" id="invoiceType_0" name="invoiceType" type="radio" value="0" checked="checked">&nbsp;普通发票 </div>
+										<div class="col-sm-12"><input class="invoiceType" id="invoiceType_1" name="invoiceType" type="radio" value="1">&nbsp;增值发票</div>
+									</div>
+									<span class="help-inline"></span>
+								</div>
+							</div>
+
+							<div class="invoiceBox">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">发票抬头<span class="must">*</span>:</label>
+									<div class="col-sm-10">
+										<input id="rise" name="rise" class="required form-control " title="发票抬头不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline error">发票抬头不能为空</span>
+									</div>
+								</div>
+							</div>
+							<div class="invoiceBox" style="display:none;">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">公司名称<span class="must">*</span>:</label>
+									<div class="col-sm-4">
+
+										<input id="corporateName" name="corporateName" class="required form-control isNoull" title="公司名不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline error">公司名称不能为空</span>
+									</div>
+									<label class="col-sm-2 control-label">注册地址<span class="must">*</span>:</label>
+									<div class="col-sm-4">
+
+										<input id="registerAddress" name="registerAddress" class="required form-control isNoull" title="公司注册地址不能为空" type="text" value="" maxlength="256">
+										<span class="help-inline error">注册地址不能为空</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">开户银行<span class="must">*</span>:</label>
+									<div class="col-sm-4">
+
+										<input id="openAccountBank" name="openAccountBank" class="required form-control isNoull" title="开户银行不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline error">开户行不能为空</span>
+									</div>
+									<label class="col-sm-2 control-label">银行账户<span class="must">*</span>:</label>
+									<div class="col-sm-4">
+
+										<input id="bankAccount" name="bankAccount" class="required form-control isNoull" title="开户银行账户不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline error">银行账户不能为空</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">注册电话<span class="must">*</span>:</label>
+									<div class="col-sm-4">
+
+										<input id="registeredPhone" name="registeredPhone" class="required form-control isNoull" title="注册电话不能为空" type="text" value="" maxlength="32">
+										<span class="help-inline error">注册电话不能为空</span>
+									</div>
+									<label class="col-sm-2 control-label">纳税人识别号<span class="must">*</span>:</label>
+									<div class="col-sm-4">
+										<input id="identificationCode" name="identificationCode" class="required form-control isNoull" title="纳税人识别号不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline error">纳税人识别号不能为空</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">备注:</label>
+									<div class="col-sm-4">
+										<div class="controls">
+											<input id="invoiceInfoRemarks" name="remarks" class="form-control" type="text" value="" maxlength="256">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2 col-sm-offset-2">
+									<input type="checkbox" id="invoiceInfoIsDefault" name="isDefault" value="0" checked="checked">设置默认开票信息
+								</div>
+								<div class="col-sm-2 col-sm-offset-2">
+									<input id="subInvoiceInfoBtn" type="submit" value="提交" name="register" class="btn btn-info btn-block">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+<%}%>
+<script type="text/javascript">
+			$(function(){
+				$(".invoiceType").click(function(){
+					$(".invoiceBox").eq($(this).val()).show().siblings('.invoiceBox').hide();
+				})
+			})
+			
+			var verdict={
+						errInput : function(_this){
+							_this.siblings(".error").css("visibility","visible");
+							
+						},
+						sucInput : function(_this){
+							_this.siblings(".error").css("visibility","hidden");
+						}
+				}
+			
+			$("#userName,#companyName,#userPhone,#city,#street").blur(function(){
+				var _this = $(this);
+				if("" == $(this).val()){
+					verdict.errInput(_this);
+				}else{
+					verdict.sucInput(_this);
+				}
+				
+				
+			})
+			
+			//提交按钮
+			$("#subAddressInfo").click(function(){
+				var submitForm=true;
+				$("input[class*=ignore]:text").each(function(){
+					if($(this).val()==""){
+						submitForm=false;
+						$(this).siblings(".error").css("visibility","visible");
+					}
+				});
+				return submitForm;
+			});
+			
+			//删除
+			$(".userAddressDel").click(function(){
+				var code=$(this).attr("action");
+				$.app.confirm({title:"删除用户地址",message:"确认执行删除用户地址操作吗?",ok:function(){
+					$.post("${ctxPath}/deleteUserAddress",{"addressCode":code},function(data){
+						$.app.message("i",data.message);
+						setTimeout(function() {
+							window.location.reload();
+						},1100)
+					},"json");
+				}})
+			});
+			
+			$(".userInvoiceInfoDel").click(function(){
+				var code=$(this).attr("action");
+				$.app.confirm({title:"删除用户开票信息",message:"确认执行删除用户开票信息操作吗?",ok:function(){
+					$.post("${ctxPath}/deleteInvoiceInfo",{"code":code},function(data){
+						$.app.message("i",data.message);
+						setTimeout(function() {
+							window.location.reload();
+						},1100)
+					},"json");
+				}})				
+			});
+			//设置默认地址
+			$(".settingDefaultAddress").click(function(){
+				var code=$(this).attr("action");
+				$.app.confirm({title:"设置默认地址",message:"确认设定该地址为默认地址吗?",ok:function(){
+					$.post("${ctxPath}/settingDefaultAddress",{"addressCode":code},function(data){
+						$.app.message("i",data.message);
+						setTimeout(function() {
+							window.location.reload();
+						},1100)
+					},"json");
+				}})
+			});
+			
+			$(".settingDefaultInvoiceInfoAddress").click(function(){
+				var code=$(this).attr("action");
+				$.app.confirm({title:"设置默认开票信息",message:"确认设定该信息为默认开票信息吗?",ok:function(){
+					$.post("${ctxPath}/settingDefaultInvoiceInfo",{"invoiceInfoCode":code},function(data){
+						$.app.message("i",data.message);
+						setTimeout(function() {
+							window.location.reload();
+						},1100)
+					},"json");
+				}})
+			});
+			
+			//设置默认接收发票地址
+			$(".settingDefaultDistribution").click(function(){
+				var code=$(this).attr("action");
+				$.app.confirm({title:"设置默认邮寄发票地址",message:"确认设定该地址为默认邮寄发票地址吗?",ok:function(){
+					$.post("${ctxPath}/settingDefaultDistribution",{"addressCode":code},function(data){
+						$.app.message("i",data.message);
+						setTimeout(function() {
+							window.location.reload();
+						},1100)
+					},"json");
+				}})
+			});
+			//编辑地址
+			$(".editAddress").click(function(){
+				var id=$(this).attr("action");
+				$.post("${ctxPath}/findUserAddresById",{"addressId":id},function(data){
+					$.each(data,function(key,value){
+						if(key=="isDefault"||key=="isDistributionAddress"){
+							if(value==1){
+								$("#"+key).removeAttr("checked");
+							}
+						}else{
+							$("#"+key).val(value);
+						}
+					
+					})
+					$("#addressModal").modal();
+				},"json");
+			});
+			
+			$(".editInvoiceInfo").click(function(){
+				var id=$(this).attr("action");
+				$.post("${ctxPath}/findInvoiceInfoById",{"id":id},function(data){
+					$("#subInvoiceInfo")[0].reset();
+					$.each(data,function(key,value){
+						if(key=="id"){
+							$("#invoiceInfoId").val(value);
+						}
+						if(key=="isDefault"){
+						if(value==1){
+							$("#invoiceInfoIsDefault").removeAttr("checked");
+						}else{
+							$("#invoiceInfoIsDefault").attr("checked",true);
+						}
+						}else if(key!="id"&&key!="invoiceType"&&key!="remarks"){
+							$("#"+key).val(value);
+						}else if(key=="invoiceType"){
+							$(".invoiceBox").hide().eq(value).show();
+							$("#invoiceType_"+value).attr("checked",true);
+						}else if(key=="remarks"){
+							$("#invoiceInfoRemarks").val(value);
+						}
+					})
+					$("#invoiceModel").modal();
+				},"json");
+			});
+			//重置表单
+			$("#addAddressUser").click(function(){
+				$("#addressInfo")[0].reset();
+				$("#addressInfo .error").css("visibility","hidden");
+				$("#isDefault,#isDistributionAddress").attr("checked","checked");
+			});
+			//重置表单
+			$("#addInvoiceInfo").click(function(){
+				$("#subInvoiceInfo")[0].reset();
+				$(".invoiceBox").hide().eq(0).show();
+				$("#invoiceType_0,#invoiceInfoIsDefault").attr("checked",true);
+				$("#subInvoiceInfo .error").css("visibility","hidden");
+			});
+			
+			$("#subInvoiceInfoBtn").click(function(){
+				var returnBoole=true;
+				var index=$("input[type='radio']:checked").val();
+				if(index==0){
+				  if($("#rise").val()==""){
+					  returnBoole=false;
+					  $("#rise").siblings(".error").css("visibility","visible");
+				  }
+				}else{
+					$("input[class*='isNoull']:text").each(function(){
+						if($(this).val()==""){
+							returnBoole=false;
+							$(this).siblings(".error").css("visibility","visible");
+						}
+					});
+				}
+				return returnBoole;
+			});
+</script>

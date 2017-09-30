@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SProductClassificationMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SProductClassification">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="IS_DISABLE" jdbcType="INTEGER" property="isDisable" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="SHORT_NAME" jdbcType="VARCHAR" property="shortName" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="IS_VISUAL" jdbcType="INTEGER" property="isVisual" />
+    <result column="RANK_ORDER" jdbcType="INTEGER" property="rankOrder" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  
+  <resultMap id="ClassificationMap" type="com.bettbio.core.model.bo.ClassifyZtreeBo">
+    <id column="CLASSID" jdbcType="INTEGER" property="classId" />
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="PID" jdbcType="VARCHAR" property="pId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="IS_DISABLE" jdbcType="INTEGER" property="isDisable" />
+  </resultMap>
+  <!-- 根据组件去查询 -->  
+     <select id="findClassByparentCode" parameterType="String" resultMap="ClassificationMap">  
+        select * from S_PRODUCT_CLASSIFICATION where PARENT_CODE=#{parentCode}  
+     </select>
+     
+  <select id="selectClassChild" parameterType="String" resultMap="ClassificationMap">  
+        select * from S_PRODUCT_CLASSIFICATION where CODE = #{parentCode}  
+  </select>  
+  
+  <delete id="deleteClassificationList">
+  delete from S_PRODUCT_CLASSIFICATION where id in
+  	<foreach close=")" collection="array" index="index" item="item" open="(" separator=",">  
+ 		#{item}  
+	</foreach> 
+  </delete>
+  
+  <select id="selectPagebyNameOrCode" resultMap="BaseResultMap">
+  select t.* from S_PRODUCT_CLASSIFICATION t where 1=1
+   <if test="nameOrCode != null and nameOrCode != '' ">
+    AND  t.CODE like CONCAT('%',#{nameOrCode},'%') or t.NAME like CONCAT('%',#{nameOrCode},'%')
+  </if>
+    limit #{page}, #{rows}
+  </select>
+  
+  <delete id="deleteAll">
+  delete from S_PRODUCT_CLASSIFICATION
+  </delete>
+  
+  <select id="selectClassByparentCode" parameterType="String" resultMap="ClassificationMap">  
+        select ID CLASSID,ID ID,NAME,IS_DISABLE,PARENT_CODE PID,CREATE_DATE,UPDATE_DATE from S_PRODUCT_CLASSIFICATION where PARENT_CODE=#{parentCode}  
+     </select>
+     
+      <select id="selectByPage" parameterType="java.util.Map" resultMap="BaseResultMap">  
+        select 
+		ID,
+		CODE,
+		NAME,
+		SHORT_NAME,
+		TITLE,
+		IS_DISABLE,
+		REMARK,
+		PARENT_CODE,
+		IS_VISUAL,
+		RANK_ORDER,
+		CREATE_DATE,
+		UPDATE_DATE
+ 	from S_PRODUCT_CLASSIFICATION
+ 		<if test="name != null and name != '' ">
+  		 where	 NAME like CONCAT('%',#{name},'%')
+ 	 	</if>
+    	limit #{startRow},#{row}
+     </select>
+     
+      <select id="getSProductAllCount" parameterType="java.util.Map" resultType="java.lang.Integer">  
+       select count(1)  from S_PRODUCT_CLASSIFICATION
+       	<if test="name != null and name != '' ">
+  		 	where NAME like CONCAT('%',#{name},'%')
+ 	 	</if> 
+     </select>
+     
+     <select id="selectCategoryByCode" parameterType="java.lang.String" resultMap="CategoryResultMap">
+     	SELECT GROUP_CONCAT(ID) idStr FROM S_PRODUCT_CLASSIFICATION WHERE CODE LIKE CONCAT(#{code},'%')
+     </select>
+     
+     <select id="selectCategoryById" parameterType="java.lang.Integer" resultMap="CategoryResultMap">
+     	SELECT * FROM S_PRODUCT_CLASSIFICATION WHERE ID = #{id}
+     </select>
+     
+     <select id="getSubCategory" parameterType="java.lang.Integer" resultMap="CategoryResultMap">
+    	 SELECT * FROM S_PRODUCT_CLASSIFICATION WHERE PARENT_CODE = #{id}
+     </select>
+     
+     <select id="selectAllCategory" resultMap="CategoryResultMap">
+     	SELECT * FROM S_PRODUCT_CLASSIFICATION
+     </select>
+     
+     <select id="selectTopCategory" resultMap="CategoryResultMap">
+     	SELECT * FROM S_PRODUCT_CLASSIFICATION WHERE PARENT_CODE = 0
+     </select>
+     
+     <select id="selectAllSubCategary" parameterType="java.lang.Integer" resultMap="JoinCategoryResultMap">
+     	SELECT * FROM S_PRODUCT_CLASSIFICATION WHERE PARENT_CODE = #{id}
+     </select>
+     
+     <select id="selectMaxCode" parameterType="java.lang.String" resultType="java.lang.String">
+     	SELECT MAX(CODE) FROM S_PRODUCT_CLASSIFICATION WHERE
+     	CODE like CONCAT(#{CODE},'___')
+     </select>
+     
+     <resultMap type="com.bettbio.core.model.search.Category" extends="BaseResultMap" id="CategoryResultMap"></resultMap>
+  	 
+  	 <resultMap type="com.bettbio.core.model.search.Category" extends="BaseResultMap" id="JoinCategoryResultMap">
+  	 	<collection property="sonCategory" javaType="java.util.List" ofType="com.bettbio.core.model.search.Category"
+  	 	select="getSubCategory" column="id"></collection>
+  	 </resultMap>
+     
+  	 <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

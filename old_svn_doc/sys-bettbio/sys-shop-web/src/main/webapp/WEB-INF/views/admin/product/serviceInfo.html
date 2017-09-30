@@ -1,0 +1,299 @@
+<%layout("/common/admin/modelLayout.html",{
+css:["dropify/css/dropify.min.css","zTree/css/zTreeStyle/zTreeStyle.css","bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"],
+script:["zTree/js/jquery.ztree.all-3.5.min.js","dropify/js/dropify.min.js",
+"bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+"bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
+"kindeditor-4.1.5/kindeditor-all.min.js",
+"jQuery-File-Upload/js/vendor/jquery.ui.widget.js",
+"jQuery-File-Upload/js/jquery.iframe-transport.js",
+"js/ajaxfileupload.js","js/admin/product.js"]}){ %>
+
+<div class="bs-example bs-example-tabs">
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#infoDiv" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">商品详情</a></li>
+      <li role="presentation" ><a href="#literatureDiv" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">文献引用集</a></li>
+      <li role="presentation" ><a href="#buyVouchersDiv" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">购买凭证集</a></li>
+      <li role="presentation" ><a href="#experimentReportDiv" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">实验报告集</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+      <div role="tabpanel" class="tab-pane fade active in" id="infoDiv" aria-labelledby="home-tab">
+        <div class="warp-body warp-dialog">
+			<form class="form-horizontal" id="productFrom" action="" method="post">
+				<div class="row">
+					<div class="col-sm-4">
+						<label class="control-label">货号(必填且最多255位)</label>
+						<input type="hidden" id="id" name="id" value="${serviceProduct.id!}">
+						<input required id="productNo" name="productNo" class="form-control valueInput" success="true" type="text" value="${serviceProduct.productNo!}" maxlength="255">
+						<span class="text-warning hide">货号不能为空</span>
+					</div>
+					<div class="col-sm-4" id="ztControl">
+						<label class="control-label">类别名称(必填)</label>
+						<input id="productClassName" name="productClass.name" class="form-control" success="false" type="text" readonly="readonly">
+						<input id="productClassCode" name="productClass.code"  type="hidden">						<div class="ztree-hd">
+							<ul id="ZT" class="ztree"></ul>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label">服务价格</label>
+						<input id="price" name="price" class="form-control" type="text" value="${serviceProduct.price!}" maxlength="255">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-1">
+						<label class="control-label">是否上架</label>
+						<input id="isEnable" name="isEnable" type="checkbox" value="${serviceProduct.isEnable!}" checked="checked">
+					</div>
+					<div class="col-sm-3">
+						<label class="control-label">上架日期</label>
+						<div class="input-group date" data-date-format="yyyy/mm/dd">
+							<input id="enableDate" name="enableDate" class="form-control" placeholder="" size="16" type="text" value="${serviceProduct.enableDate,'yyyy/MM/dd'}">
+							<span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label">品牌</label>
+						<div class="input-group">
+							<input id="productBrand.code" name="productBrand.code" class="form-control" placeholder="" type="text" value="${serviceProduct.productBrand.code!}" readonly="readonly">
+							<span class="input-group-addon dropdown-toggle" data-toggle="collapse" aria-haspopup="true" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample"> 
+	                         <span class="fa fa-th" aria-hidden="true"></span>
+							</span>
+						</div>
+					</div>
+					<div class="collapse" id="collapseExample" aria-expanded="true">
+						<div class="well" id="storeNameList"></div>
+					</div>
+				</div>
+				<div class="row">
+					<!-- <div class="col-sm-4">
+						<label>合作模式</label>
+						<select class="form-control" id="" name="" value="true">
+							<option value="1" selected="selected">免费商品</option>
+							<option value="0">收费商品</option>
+						</select>
+					</div> -->
+					<!-- <div class="col-sm-8">
+						<label>有效范围</label>
+						<div class="input-daterange input-group">
+							<input type="text" class="form-control datepicker" name="" data-date-format="yyyy-mm-dd">
+							<span class="input-group-addon">to</span>
+							<input type="text" class="form-control datepicker" name="" data-date-format="yyyy-mm-dd">
+						</div>
+					</div> -->
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<label class="control-label">商品名称(必填且最多512位)</label>
+						<input type="text" class="form-control" name="productNameCh" id="productNameCh" value="${serviceProduct.productNameCh!}" />
+					</div>
+					<div class="col-sm-6">
+						<label class="control-label">英文名(最多512位)</label>
+						<input type="text" class="form-control" name="productNameEn" id="productNameEn" value="${serviceProduct.productNameEn!}"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">商品简单描述</label>
+						<textarea class="form-control" name="simpleDescription" id="simpleDescription" rows="3">${serviceProduct.simpleDescription!}</textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">商品描述</label>
+						<textarea id="KE" name="detailedDescription" class="form-control" rows="10">${serviceProduct.detailedDescription!}</textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">图片(上传图片最大为2M且都为png、jpg、jpeg、gif、bmp、pdf格式) </label>
+
+					</div>
+					<div class="col-sm-12">
+						<%
+					 	if(serviceProduct.imgUrls != []){
+						for(productImg in serviceProduct.imgUrls){%>
+						<div class="col-sm-2"><input type="file" id="img1" name="files[]" class="dropify img-file" data-default-file="${ctxPath}/${productImg!}"/><span></span></div>
+						<%if(productImgLP.last){
+						for(var i=0;i<5-productImgLP.size;i++){%>
+						<div class="col-sm-2"><input type="file" id="img1" name="files[]" class="dropify img-file"/><span></span></div>
+						<%}
+						}
+						}}else{%>
+						<div class="col-sm-2"><input type="file" id="img1" name="files[]" class="dropify img-file"/><span></span></div>
+						<div class="col-sm-2"><input type="file" id="img2" name="files[]" class="dropify img-file"/><span></span></div>
+						<div class="col-sm-2"><input type="file" id="img3" name="files[]" class="dropify img-file"/><span></span></div>
+						<div class="col-sm-2"><input type="file" id="img4" name="files[]" class="dropify img-file"/><span></span></div>
+						<div class="col-sm-2"><input type="file" id="img5" name="files[]" class="dropify img-file"/><span></span></div>
+						<%}%>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">附件 </label>
+					</div>
+					<div class="col-sm-12">
+						<div class="col-sm-3"><input class="input-file btn btn-primary" id="file1" name="files[]" type="file"><span></span></div>
+						<div class="col-sm-3"><input class="input-file btn btn-primary" id="file2" name="files[]" type="file"><span></span></div>
+						<div class="col-sm-3"><input class="input-file btn btn-primary" id="file3" name="files[]" type="file"><span></span></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<br />
+						<p>
+							<a href="">小工具提示：您可以访问“常用工具”下载图片处理软件（图片水印和马赛克处理）</a>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 text-right">
+						<button type="button" id="insertProduct" class="btn btn-success">提交</button>
+					</div>
+				</div>
+			</form>
+		</div>
+      </div>
+      <!-- 文献引用集 -->
+      <div role="tabpanel" class="tab-pane fade" id="literatureDiv" aria-labelledby="profile-tab">
+                <iframe src="${ctxPath}/admin/product/literature?id=${serviceProduct.id!}" id="proofs_iframe" width="100%" height="450" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes" allowtransparency="yes"></iframe>
+      </div>
+      <!-- 购买凭证集 -->
+      <div role="tabpanel" class="tab-pane fade" id="buyVouchersDiv" aria-labelledby="dropdown1-tab">
+      	           <iframe src="${ctxPath}/admin/product/voucher?id=${serviceProduct.id!}" id="proofs_iframe" width="100%" height="450" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes" allowtransparency="yes"></iframe>
+      </div>
+      <!-- 实验报告集 -->
+      <div role="tabpanel" class="tab-pane fade" id="experimentReportDiv" aria-labelledby="dropdown2-tab">
+                 <iframe src="${ctxPath}/admin/product/experimentReport?id=${serviceProduct.id!}" id="proofs_iframe" width="100%" height="450" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes" allowtransparency="yes"></iframe>
+      </div>
+    </div>
+  </div>
+<%}%>
+		<script type="text/javascript">
+		var verdict={
+				errInput : function(_this){
+					_this.closest('.row').find('.text-warning').removeClass('hide');
+					_this.attr("success","false");
+				},
+				sucInput : function(_this){
+					_this.closest('.row').find('.text-warning').addClass('hide');
+					_this.attr("success","true");
+				}
+		}
+			$(function() {
+				$.app.initDatetimePicker();
+				$.app.initKindEditor();
+				$.app.initDropify();
+				//$("#storeNameList").load("../data/test.html")
+			})
+			$(function() {
+				$.ajax({
+					type : 'POST',
+					dataType : "json",
+					data : "parentCode=" + 0,
+					url : '${ctxPath}/manager/classified/selectTree',
+					success : function(classifyZtreeBoList) {
+						zNodes = classifyZtreeBoList;
+						loadTree(classifyZtreeBoList);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						
+					}
+				}); 
+				/**
+				*服务类商品保存
+				*/
+				$("#insertProduct").click(function(){
+					var param = {};
+					var isSubmit=true;
+			      	$(".valueInput").each(function(){
+			      		if($(this).attr("success")=="false"){
+			      			verdict.errInput($(this));
+			      			return false;
+			      		}else{
+			      			 $.ajaxFileUpload
+			                 (
+			                     {
+			                         url: "${ctxPath}/ajaxUpload", //用于文件上传的服务器端请求地址
+			                         secureuri: false, //是否需要安全协议，一般设置为false
+			                        	fileElementId : ['file1','file2','file3','img1','img2','img3','img4','img5'],
+			                         dataType: 'json', //返回值类型 一般设置为json
+			                         success: function (data, status, e)  //服务器成功响应处理函数
+				                         {			                         console.log(data);
+				                         var files="";
+				                         var imgUrls="";
+			                        	 for(var i=0; i<3; i++){
+				                        	 if(data.files[i].error ==""){
+				                        		 files += data.files[i].url+','
+				                        	 }
+				                         	}
+				                        	for(var i=3; i<8; i++){
+				                        		if(data.files[i].error ==""){
+				                        			imgUrls += data.files[i].url+','
+					                        	 }
+				                        	}
+				                        	if(files != undefined && files !=""){
+				                        		param.files = files.substr(0,files.length-1);
+				                        	}
+				                        	if(imgUrls != undefined && imgUrls!=""){
+				                        		param.imgUrls = imgUrls.substr(0,imgUrls.length-1);
+				                        	}
+				                        	productSub(param);
+			                         },
+			                         error: function (data, status, e)//服务器响应失败处理函数
+			                         {
+			                        	 alert("图片上传失败");
+			                         }
+			                     }
+			                 )
+			      		}
+			      	})
+				})
+				
+					$("#productNo").blur(function(){
+					var _this = $(this);
+					if($("#productNo").val() == ""){
+						verdict.errInput(_this);
+					}else{
+						verdict.sucInput(_this);
+					}
+				})
+				
+				
+			})
+			
+			function productSub(param){
+			 $("#productFrom input").each(function(i,o){
+				 if(o.name != 'files[]' && $(this).val() != ""){
+					 param[o.name] = $(this).val();
+				 }
+			  }); 
+			$("#productFrom textarea").each(function(i,o){
+				param[o.name] = $(this).val();
+			  });
+			
+			$.app.get("${ctxPath}/admin/product/updateReagentProduct",param,function(flag,data){
+				$.app.message(data.message);
+				if(flag){
+					 window.parent.location.href="${ctxPath}/admin/product/list"; 
+				}
+			})
+		}
+		
+		function zTreeOnExpand(event, treeId, treeNode){
+			if(!$(treeNode).data('type')=='1'){
+				$(treeNode).data('type','1');
+				$.ajax({
+					type : 'POST',
+					dataType : "json",
+					data : "parentCode=" + treeNode.id,
+					url : '${ctxPath}/manager/classified/selectTree',
+					success : function(classifyZtreeBoList) {
+						var newNode = classifyZtreeBoList;
+						newNode = zTree.addNodes(treeNode, newNode);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						
+					}
+				});
+			}
+		}
+		</script>

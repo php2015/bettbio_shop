@@ -1,0 +1,185 @@
+<%layout("/common/manager/layout.html",{
+css:["dropify/css/dropify.min.css","bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"],
+script:["dropify/js/dropify.min.js","js/application.js","bootstrap-datetimepicker/js/bootstrap-datetimepicker.js","bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"]
+}){ %>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="${ctxPath}/manager/exhibition/create">创建展会</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/manager/exhibition/exhibitionList">展会列表</a>
+					</li>
+				</ul>
+			</div>
+			<% if(has(sucMess)){%>
+			<div class="warp-body">
+				<div class="alert alert-success">${sucMess}</div>
+				<div class="row">
+					<ul id="ZT" class="ztree"></ul>
+				</div>
+			</div>
+	<%}%>
+	<% if(has(errMess)){%>
+			<div class="warp-body">
+				<div class="alert alert-danger">${errMess}</div>
+				<div class="row">
+					<ul id="ZT" class="ztree"></ul>
+				</div>
+			</div>
+	<%}%>
+			<div class=" warp-body">
+				<form class="form-horizontal" id="queryForm" enctype="multipart/form-data" action="${ctxPath}/manager/exhibition/save" method="post">
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2">
+								<label class="control-label">展会标题</label>
+							</div>
+							<div class="col-sm-10">
+								<input id="title" name="title" class="form-control valueInput" success="false" type="text" value="${exhibition.title!}">
+								<span class="text-warning hide">展会标题不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2">
+								<label class="control-label">展会内容</label>
+							</div>
+							<div class="col-sm-10">
+								<textarea id="content" name="content" class="form-control" rows="6">${exhibition.content!}</textarea>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2">
+								<label class="control-label">展会海报</label>
+							</div>
+							<div class="col-sm-10">
+								<input type="file" name="file" id="input-file-now" class="dropify" data-default-file="${ctxPath}/${exhibition.posterImg!}" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2">
+								<label class="control-label">展会开始时间</label>
+							</div>
+							<div class="col-sm-10">
+								<input id="beginDate" name="beginDate" class="form-control valueInput" readonly="readonly" success="false" type="text" data-date-format="yyyy/mm/dd hh:ii" value="${beginDate!}">
+								<span class="text-warning hide">开始时间不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2">
+								<label class="control-label">展会结束时间</label>
+							</div>
+							<div class="col-sm-10">
+								<input id="endDate" name="endDate" class="form-control valueInput" readonly="readonly" success="false" type="text" data-date-format="yyyy/mm/dd hh:ii" value="${endDate!}">
+								<span class="text-warning hide">结束时间不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2">
+								<label class="control-label">展会状态</label>
+							</div>
+							<div class="col-sm-10">
+								<select class="form-control" id="status" name="status">
+									<option value="1">有效</option>
+									<option value="0">失效</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2">
+								<label class="control-label">微信url</label>
+							</div>
+							<div class="col-sm-10">
+								<input id="wechatUrl" name="wechatUrl" class="form-control" type="text" value="${exhibition.title!}">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-12 text-right">
+								<button type="submit" class="btn btn-success btn-lg">提交</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+<%}%>
+<style type="text/css">
+.form-control[readonly]{
+     background-color: white;
+}
+</style>
+		<script type="text/javascript">
+		var verdict={
+				errInput : function(_this){
+					_this.closest('.form-group').addClass('has-warning');
+					_this.closest('.form-group').find('.text-warning').removeClass('hide');
+					_this.attr("success","false");
+				},
+				sucInput : function(_this){
+					_this.closest('.form-group').removeClass('has-warning');
+					_this.closest('.form-group').find('.text-warning').addClass('hide');
+					_this.attr("success","true");
+				}
+		}
+			$(function() {
+				if('${exhibition.title!}' != ''){
+					$("#title").attr("success","true");
+					$("#beginDate").attr("success","true");
+					$("#endDate").attr("success","true");
+				}
+				
+				$("#title").blur(function(){
+					var _this = $.trim($(this).val());
+					if(_this == ""){
+						verdict.errInput($(this));
+					}else{
+						verdict.sucInput($(this));
+					}
+				})
+				
+				$("#beginDate,#endDate").change(function(){
+					var _this = $.trim($(this).val());
+					if(_this == ""){
+						verdict.errInput($(this));
+					}else{
+						verdict.sucInput($(this));
+					}
+				})
+				
+				$.app.initDropify();
+				$('#beginDate,#endDate').datetimepicker({
+		                language: 'zh-CN',
+		                autoclose: true,
+		                todayHighlight: true
+				});
+				
+				$("#queryForm").submit(function(){
+					var isSubmit=true;
+			      	$(".valueInput").each(function(){
+			      		if($(this).attr("success")=="false"){
+			      			verdict.errInput($(this));
+			      			isSubmit = false;
+			      		}
+			      	})
+			      	return isSubmit;
+				})
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,745 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/** {
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei";
+}
+ul, ol {
+	list-style: none
+}
+*/
+
+.cx_img{ margin:0 auto ; display:block; width: 600px; margin-bottom: 50px;  }
+
+
+.big_box {
+	width: 590px;
+	height: 222px;
+	background-color: #d7e3f4;
+	float: right;
+	
+}
+.left_box {
+	width: 227px;
+	height: 164px;
+	margin-top: 29px;
+	margin-left: 72px;
+}
+.x_box1 {
+	width: 110px;
+	height: 80px;
+	/*background: url(img/zn_logo.png);*/
+	float: left;
+	position: relative;
+}
+.x_box1_hover  {
+	width: 110px;
+	height: 80px;
+	background-color: #333;
+	opacity: 0.8;
+	color: #fff;
+	display: none;
+	text-align: center;
+	line-height: 80px;
+	position: absolute;
+	top:0px;	
+	
+}
+	
+
+	
+	
+	
+.img_more{ margin: 0 auto;margin-top: 25px;display: none; }
+	
+	
+.x_box1:hover .zn_logo {
+	-webkit-filter: blur(1px);
+	-moz-filter: blur(1px);
+	-ms-filter: blur(1px);
+	filter: blur(1px);
+		
+}
+	
+
+.erweima_img:hover{box-shadow: 1px 1px 8px #999; transition: 0.5s;}
+
+
+.x_box1:hover .x_box1_hover {
+	display: block;
+}
+	
+	
+	
+
+.x_box2 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/zhengneng_1.png);
+	float: right;
+	position:relative;
+}
+	
+.x_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+.x_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+.x_box3 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/zhengneng_1.png);
+	float: left;
+}
+
+.x_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.x_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+.x_box4 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/zhengneng_1.png);
+	float: right;
+}
+
+.x_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.x_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+.right_box {
+	width: 280px;
+	height: 120px;
+	float: right;
+	margin-top: 50px;
+	margin-right: 10px;
+}
+
+
+.right_box span {
+	text-align: center;
+	display: block
+}
+
+span.span_time {
+	position: relative;
+	top: 9px;
+	display: inline;
+}
+
+
+p {
+	display: inline;
+	color: black;
+}
+.click_nav {
+	width: 82px;
+	height: 30px;
+	background-color: #d81100;
+	border-radius: 5px;
+	margin: 0 auto;
+	margin-top: 10px;
+	color: #fff;
+	text-align: center;
+	line-height: 30px;
+	box-shadow: 2px 4px 20px #b2b2b2;
+}
+.img_time {
+	position: relative;
+	top: 7px;
+	
+}
+
+.cuxiao_p{font-weight:bold; font-size:28px;}
+
+
+/*---------------------------------fuheng-----------------------------------*/
+
+.fh_box2 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/fh_img1.png);
+	float: right;
+}
+
+.fh_box3{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/fh_img3.png); float: right;}
+
+
+.fh_box4{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/fh_img2.png);float: left;}
+
+
+.fh_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.fh_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.fh_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.fh_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.fh_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.fh_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+
+/*
+---------------------------------------saibaikang----------------------------*/
+.sbk_box2 {
+	width: 110px;
+	height: 79px;
+	background: url(/sm-shop/resources/img/cximages/img/zn_tu3.png);
+	float: right;
+}
+
+.sbk_box3{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/zn_tu1.png); float: right;}
+
+
+.sbk_box4{width: 110px;
+	height: 79px;background:url(/sm-shop/resources/img/cximages/img/zn_tu2.png);float: left;}
+
+
+.sbk_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.sbk_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.sbk_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.sbk_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.sbk_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.sbk_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+
+/*
+------------------------------中乔新舟----------------------------------------*/
+
+.zq_box2 {
+	width: 110px;
+	height: 80px;
+	background:url(/sm-shop/resources/img/cximages/img/zq_1.png) ;
+	float: right;
+}
+
+.zq_box3{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/zq_3.png); float: right;}
+
+
+.zq_box4{width: 110px;
+	height: 79px;background:url(/sm-shop/resources/img/cximages/img/zq_2.png);float: left;}
+
+
+.zq_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.zq_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.zq_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.zq_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.zq_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.zq_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+/*
+-----------------------------------------翊圣--------------------------------*/
+
+.ys_box2 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/sh_img1.png);
+	float: right;
+}
+
+.ys_box3{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/sh_img3.png); float: right;}
+
+
+.ys_box4{width: 110px;
+	height: 79px;background:url(/sm-shop/resources/img/cximages/img/sh_img2.png);float: left;}
+
+
+.ys_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.ys_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.ys_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.ys_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.ys_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.ys_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+/*--------------------------------------------索莱宝----------------------------*/
+
+
+.slb_box2 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/slb_img1.png);
+	float: right;
+}
+
+.slb_box3{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/slb_img3.png); float: right;}
+
+
+.slb_box4{width: 110px;
+	height: 79px;background:url(/sm-shop/resources/img/cximages/img/slb_img2.png);float: left;}
+
+
+.slb_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.slb_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.slb_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.slb_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.slb_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.slb_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+/*
+------------------------------neb------------------------------------------*/
+
+
+.neb_box2 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/neb_img1.png);
+	float: right;
+}
+
+.neb_box3{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/neb_img3.png); float: right;}
+
+
+.neb_box4{width: 110px;
+	height: 79px;background:url(/sm-shop/resources/img/cximages/img/neb_img2.png);float: left;}
+
+
+.neb_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.neb_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.neb_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.neb_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.neb_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.neb_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+/*------------------------------------------xinjing---------------------------*/
+
+.xinjing_box2 {
+	width: 110px;
+	height: 80px;
+	background:url(/sm-shop/resources/img/cximages/img/xinjing_img1.png);
+	float: right;
+}
+
+.xinjing_box3{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/xinjing_img3.png); float: right;}
+
+
+.xinjing_box4{width: 110px;
+	height: 79px;background:url(/sm-shop/resources/img/cximages/img/xinjing_img2.png);float: left;}
+
+
+.xinjing_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.xinjing_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.xinjing_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.xinjing_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.xinjing_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.xinjing_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+
+/*--------------------------------威高斯-------------------------------------*/
+
+
+.weigaosi_box2 {
+	width: 110px;
+	height: 80px;
+	background:url(/sm-shop/resources/img/cximages/img/weigaosi_img1.png);
+	float: right;
+}
+
+.weigaosi_box3{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/weigaosi_img3.png);
+	float: right;}
+
+
+.weigaosi_box4{width: 110px;
+	height: 79px;background:url(/sm-shop/resources/img/cximages/img/weigaosi_img2.png);
+	float: left;}
+
+
+.weigaosi_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.weigaosi_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.weigaosi_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.weigaosi_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.weigaosi_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.weigaosi_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+/*
+-----------------------------------强耀---------------------------------------*/
+
+.qiangyao_box2 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/qiangyao_img.png);
+	float: right;
+}
+
+.qiangyao_box3{width: 110px;
+	height: 79px;background:  url(/sm-shop/resources/img/cximages/img/qiangyao_img1.png);
+	float: right;}
+
+
+.qiangyao_box4{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/qiangyao_img.png);
+	float: left;}
+
+
+.qiangyao_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.qiangyao_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.qiangyao_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.qiangyao_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.qiangyao_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.qiangyao_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+
+
+/*-----------------------------------fisher---------------------------------------*/
+
+
+.fisher_box2 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/Nalgene-logo.png);
+	float: right;
+}
+
+.fisher_box3{width: 110px;
+	height: 79px;background:url(/sm-shop/resources/img/cximages/img/Fisherbrand_img3.png);
+	float: right;}
+
+
+.fisher_box4{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/maidikang_logo.png);
+	float: left;}
+
+
+.fisher_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.fisher_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.fisher_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.fisher_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.fisher_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.fisher_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+
+/*-----------------------------------generay---------------------------------------*/
+
+
+.generay_box2 {
+	width: 110px;
+	height: 80px;
+	background: url(/sm-shop/resources/img/cximages/img/generay_img1.png);
+	float: right;
+}
+
+.generay_box3{width: 110px;
+	height: 79px;background:  url(/sm-shop/resources/img/cximages/img/generay_img3.png);
+	float: right;}
+
+
+.generay_box4{width: 110px;
+	height: 79px;background: url(/sm-shop/resources/img/cximages/img/generay_img2.png);
+	float: left;}
+
+
+.generay_box2:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.generay_box3:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+.generay_box4:hover {
+	
+	opacity: 0.8;
+	cursor: pointer;
+	transition: 0.5s;
+	box-shadow: 1px 2px 10px #999;
+		/*transform: translateX(-5px);*/
+}
+
+
+.generay_box2:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.generay_box3:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+.generay_box4:hover .img_more{display: block;	transition: 0.5s; z-index: 1; }
+
+
+
+
+
+
+
+
+
+
+
+.box_red{  width: 186px; height: 45px;background:#759df0; color: #fff; font-size: 26px; text-align: center; line-height: 45px;float: left;
+	margin-top: 20px;
+}
+
+.box_red span{ font-weight: bold;font-size: 30px;}
+.border_line{ width: 1200px; height: 2px; background:#759df0;margin-top: 4px;float: left }
+

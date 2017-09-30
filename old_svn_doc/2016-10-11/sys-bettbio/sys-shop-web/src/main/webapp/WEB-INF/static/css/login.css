@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+/*用户手机*/
+.userLogin #phone,.storeLogin #phone{
+	width: 190px!important;
+}

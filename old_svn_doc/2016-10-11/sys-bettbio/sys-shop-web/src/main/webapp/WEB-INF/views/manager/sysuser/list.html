@@ -1,0 +1,97 @@
+<%layout("/common/manager/layout.html"){ %>
+<div class="container-fluid warp">
+	<div class="row warp-tabs">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="${ctxPath}/manager/sysuser/list">员工列表</a></li>
+			<li><a href="${ctxPath}/manager/sysuser/create">创建员工</a></li>
+		</ul>
+	</div>
+	<div class="warp-body">
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>帐号</th>
+							<th>姓名</th>
+							<th>性别</th>
+							<th>联系电话</th>
+							<th>电子邮件</th>
+							<th>QQ</th>
+							<th>工号</th>
+							<th width="15%">创建时间</th>
+							<th width="10%">操作</th>
+						</tr>
+					</thead>
+					<%for(var sysuser in pageInfo.list){%>
+						<tr>
+							<td>${sysuser.account}</td>
+							<td>${sysuser.name}</td>
+							<td>${sysuser.sex==1?"男":"女"}</td>
+							<td>${sysuser.phone}</td>
+							<td>${sysuser.email}</td>
+							<td>${sysuser.qq}</td>
+							<td>${sysuser.jobNumber}</td>
+							<td>${sysuser.createDate,"yyyy-MM-dd HH:mm:ss"}</td>
+							<td>
+								<%if(sysuser.isDisable==0){%>
+								<a href="javascript:void(0);" class="un-disable">启用</a>
+								<%}else if(sysuser.isDisable==1){%>
+								<a href="javascript:void(0);" class="disable">禁用</a>
+								<%}%>
+								<a href="javasript:;" class="del">删除</a>
+								<input type="hidden" class="id" name="id" value="${sysuser.id}">
+							</td>
+						</tr>
+					<%}%>
+				</table>
+			</div>
+		</div>
+		<%include("/common/manager/pagination.html"){} %>
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+$(function(){
+	var optPath = ctxPath + "/manager/sysuser";
+	$('.disable').click(function(){
+		var ids = { "ids" : $(this).closest('td').find('.id').val() };
+		$.app.get(optPath+"/disable",ids,function(flag,data){
+			if(flag){
+				$.app.message(data.message);
+				setTimeout(function(){
+					$.app.location("${currentURL}")
+				}, 1000)
+			}
+		})
+	})
+	$('.un-disable').click(function(){
+		var ids = { "ids" : $(this).closest('td').find('.id').val() };
+		$.app.get(optPath+"/undisable",ids,function(flag,data){
+			if(flag){
+				$.app.message(data.message);
+				setTimeout(function(){
+					$.app.location("${currentURL}")
+				}, 1000)
+			}
+		})
+	})
+	$('.del').click(function(){
+		var _id = $(this).closest('td').find('.id');
+		$.app.confirm({
+			title : "确定删除该员工?",
+			message : "操作不可逆，请谨慎操作!",	
+			ok : function(){
+				$.app.get(optPath+"/delete",_id.serialize(),function(flag,data){
+					if(flag){
+						$.app.message(data.message);
+						setTimeout(function(){
+							$.app.location("${currentURL}")
+						}, 1000)
+					}
+				})
+			}
+		})
+	})
+})
+</script>

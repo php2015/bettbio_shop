@@ -1,0 +1,76 @@
+<header id="header">
+		<nav class="navbar navbar-inverse ">
+			<div class="container">
+				<div class="pull-left " style="text-align: center;">
+					<ul id="left_head" class="nav navbar-nav">
+						<li><a style="color: #fafafa;">欢迎来到百图生物！</a></li>
+						<li><a class="foot-li"	href="${ctxPath}/contact.html">联系我们</a></li>
+						<li class="vertical-divider"></li>
+						<li><a class="foot-li" href="${ctxPath}/">常用工具</a></li>
+					</ul>
+				</div>
+				<div class="pull-right " style="text-align: center;">
+					<ul id="right_head" class="nav navbar-nav">
+						<li><a class="foot-li"	href="${ctxPath}/">百图首页</a></li>
+						<li class="vertical-divider"></li>
+						<%if(session.user != null){%>
+						<input id="isLogin" type="hidden" value="0" />
+						<%if(session.userType == 1){%>
+						<li><a class="foot-li"  href="${ctxPath}/personalCenter" >${session.user.name!}</a></li>
+						<%}else if(session.userType == 2){%>
+						<li><a class="foot-li"  href="${ctxPath}/admin/index" >${session.user.name!}</a></li>
+						<%}else{%>
+						<li><a class="foot-li"  href="${ctxPath}/manager/index" >${session.user.name!}</a></li>
+						<%}}else{%>
+						<input id="isLogin" type="hidden" value="1" />
+						<li><a class="foot-li"  href="${ctxPath}/login" id="signin" >[登录]</a></li>
+						<li><a class="foot-li" href="${ctxPath}/register">[注册]</a></li>
+						<%}%>
+						<li class="vertical-divider"></li>
+						<li class="dropdown" id="open-cart">
+							<a class="foot-li" href="#" role="button" data-toggle="dropdown" > 
+								<span class="carticon fa fa-shopping-cart icon-style"></span>
+								<span>购物车<b class="caret"></b></span>
+							</a>
+							<div id="dropcartlist" class="dropdown-menu pull-right">
+								<div class="cartbox" id="cart-box">
+									<p id="shoppingcarttitle" class="lbw">购物车</p>
+									<br>
+									<div id="cartMessage" style="width: 100%;">暂无商品信息</div>
+									<div id="shoppingcart">
+										<table style="margin-bottom: 5px" class="table miniCartBox">
+										    <thead id="thMessage">
+										     <tr>
+										     <td>商品名称</td>
+										     <td>数量</td>
+										     <td>规格</td>
+										     <td>单价</td>
+										     <td>操作</td>
+										     </tr>
+										    </thead>
+											<tbody id="shoppingcartProducts">
+											</tbody>
+										</table>
+										<button class="btn btn-large checkoutButton btn-info" style="width: 100%" type="button" id="settlementBtn">结算</button>
+									</div>
+								</div>
+							</div></li>
+						<li class="vertical-divider"></li>
+						<li><a class="foot-li" target="_blank"
+							href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&amp;key=XzgwMDA2NTQ0MF80MDQ3OThfODAwMDY1NDQwXzJf">
+							<span class="fa fa-qq icon-style"></span>在线客服</a>
+						</li>
+						<li class="vertical-divider"></li>
+						<%if(session.userType == null){%>
+						<li><a class="foot-li buss-m" href="${ctxPath}/storelogin">商家管理</a></li>
+						<%}else if(session.userType == 2){%>
+						<li><a class="foot-li buss-m" href="${ctxPath}/admin/index">商家管理</a></li>
+						<%}%>
+						<%if(session.user != null){%>
+						<li><a href="${ctxPath}/logout">退出</a></li>
+						<%}%>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>

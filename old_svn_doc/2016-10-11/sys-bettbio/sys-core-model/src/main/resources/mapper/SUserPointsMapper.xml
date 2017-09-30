@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SUserPointsMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SUserPoints">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="POINTS_TYPE" jdbcType="INTEGER" property="pointsType" />
+    <result column="POINTS" jdbcType="INTEGER" property="points" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="STATE" jdbcType="INTEGER" property="state" />
+  </resultMap>
+  
+  <select id="selectByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+	 SELECT POINTS_TYPE,POINTS,CREATE_DATE,CODE,STATE FROM S_USER_POINTS where CODE=#{userCode} ORDER BY CREATE_DATE DESC
+	 limit #{startRow},#{endRow}   	
+  </select>
+  
+  <select id="getUserPointsCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	  SELECT COUNT(*) FROM S_USER_POINTS where CODE=#{userCode}
+  </select>
+  
+</mapper>

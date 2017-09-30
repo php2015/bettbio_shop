@@ -1,0 +1,113 @@
+<%layout("/common/manager/layout.html",{
+css:["css/admin.css","zTree/css/zTreeStyle/zTreeStyle.css"],
+script:["zTree/js/jquery.ztree.all-3.5.min.js","js/application.js"]
+}){ %>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="${ctxPath}/manager/classified/create">创建类别</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/manager/classified/list">类别清单</a>
+					</li>
+					<li class="active">
+						<a href="${ctxPath}/manager/classified/tree">类别结构</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/manager/brand/list">品牌清单</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/manager/brand/create">创建品牌</a>
+					</li>
+				</ul>
+			</div>
+			<div class="warp-body">
+				<div class="well">拖动类别以重组类别结构</div>
+				<div class="row">
+					<ul id="ZT" class="ztree"></ul>
+				</div>
+			</div>
+		</div>
+<%}%>
+		<script type="text/javascript">
+			$(function() {
+				 $.ajax({
+					type : 'POST',
+					dataType : "json",
+					data : "parentCode=" + 0,
+					url : '${ctxPath}/manager/classified/selectTree',
+					success : function(classifyZtreeBoList) {
+						zNodes = classifyZtreeBoList;
+						loadTree(classifyZtreeBoList);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						
+					}
+				}); 
+			})
+			var setting;
+			var zTree;
+			var treeIds={};
+			function loadTree(zNodes){
+				 setting = {
+							edit: {
+								enable: true,
+								showRemoveBtn: false,
+								showRenameBtn: false,
+								drag: {
+									isMove: true,
+									prev: true,
+									inner: true,
+									next: true
+								}
+							},
+							callback: {
+								onDrop: zTreeOnDrop,
+								onExpand:zTreeOnExpand,
+								onClick:function(){
+								}
+							},
+						};
+				zTree = $.fn.zTree.init($("#ZT"), setting, zNodes);
+			}
+			
+			function zTreeOnExpand(event, treeId, treeNode){
+				if(!$(treeNode).data('type')=='1'){
+					$(treeNode).data('type','1');
+					$.ajax({
+						type : 'POST',
+						dataType : "json",
+						data : "parentCode=" + treeNode.id,
+						url : '${ctxPath}/manager/classified/selectTree',
+						success : function(classifyZtreeBoList) {
+							var newNode = classifyZtreeBoList;
+							newNode = zTree.addNodes(treeNode, newNode);
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							
+						}
+					});
+				}
+			}
+			
+			function zTreeOnDrop(event, treeId, treeNode, targetNodeJSON){
+				console.log(targetNodeJSON);
+				treeNode[0].classId;
+				targetNodeJSON.id;
+				 $.ajax({
+					type : 'POST',
+					dataType : "json",
+					data : {"id":treeNode[0].classId,
+							"parentCode":targetNodeJSON.id},
+					url : '${ctxPath}/manager/classified/update',
+					success : function(classifyZtreeBoList) {
+						var newNode = classifyZtreeBoList;
+						newNode = zTree.addNodes(treeNode, newNode);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						
+					}
+				});
+			}
+		</script>

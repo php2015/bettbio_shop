@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bettbio.core.mapper.BasedataTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.BasedataType" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="PRODUCT_AUDIT" property="productAudit" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDT_ID" property="updtId" jdbcType="VARCHAR" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="SORT_ORDER" property="sortOrder" jdbcType="INTEGER" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="VALUE" property="value" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="PinYinNameMap" type="com.bettbio.core.model.bo.PinYinName" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PINYING" property="pinyin" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="selectAllField">
+  SELECT ID,PRODUCT_AUDIT,CREATE_DATE,UPDT_ID,CODE,NAME,SORT_ORDER,TYPE,VALUE FROM EXHIBITION_RECORD
+  </sql>
+  
+  <select id="selectBasedataByType" parameterType="java.lang.String" resultMap="PinYinNameMap">
+  SELECT DISTINCT
+	ID,
+	NAME AS NAME,
+	IFNULL(
+		ELT(
+			INTERVAL (
+				CONV(HEX(LEFT (CONVERT(NAME USING gbk), 1)),16,10),
+				0xB0A1,
+				0xB0C5,
+				0xB2C1,
+				0xB4EE,
+				0xB6EA,
+				0xB7A2,
+				0xB8C1,
+				0xB9FE,
+				0xBBF7,
+				0xBFA6,
+				0xC0AC,
+				0xC2E8,
+				0xC4C3,
+				0xC5B6,
+				0xC5BE,
+				0xC6DA,
+				0xC8BB,
+				0xC8F6,
+				0xCBFA,
+				0xCDDA,
+				0xCEF4,
+				0xD1B9,
+				0xD4D1
+			),
+			'A',
+			'B',
+			'C',
+			'D',
+			'E',
+			'F',
+			'G',
+			'H',
+			'J',
+			'K',
+			'L',
+			'M',
+			'N',
+			'O',
+			'P',
+			'Q',
+			'R',
+			'S',
+			'T',
+			'W',
+			'X',
+			'Y',
+			'Z'
+		),
+		LEFT (NAME, 1)
+	) AS PINYIN
+	FROM
+		BASEDATA_TYPE
+	WHERE
+		type = #{type}
+	ORDER BY
+		PINYIN,
+		NAME
+  </select>
+</mapper>

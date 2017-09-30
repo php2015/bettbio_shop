@@ -1,0 +1,185 @@
+<%layout("/common/admin/modelLayout.html",{
+css:["dropify/css/dropify.min.css","zTree/css/zTreeStyle/zTreeStyle.css","bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"],
+script:["zTree/js/jquery.ztree.all-3.5.min.js","dropify/js/dropify.min.js",
+"bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+"bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
+"kindeditor-4.1.5/kindeditor-all.min.js",
+"jQuery-File-Upload/js/vendor/jquery.ui.widget.js",
+"jQuery-File-Upload/js/jquery.iframe-transport.js",
+"js/ajaxfileupload.js","js/admin/product.js"]}){ %>
+
+
+<div class="warp-body warp-dialog">
+      <!-- 第三方认证列表开始 -->
+      		<div id="attestationListDiv">
+      			<div class="row" >
+					<div class="col-sm-12">
+					<ul class="nav nav-pills pull-left form-inline">
+							<li>
+								<button class="btn btn-primary btn-sm" onclick="showCreateAttestation()" id="createVouchers">第三方认证创建</button>
+							</li>
+						</ul>
+						<ul class="nav nav-pills pull-right form-inline">
+							<li>
+								<button class="btn btn-primary btn-sm" onclick="deletes()">删除所选</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+     	 		<div class="row" id="VoucherList">
+					<div class="col-sm-12">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="selectIdAll" name="selectIdAll" value="idChk"> </th>
+									<th>检测机构名称</th>
+									<th>排序</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<%for(authorityCertification in authorityCertifications){%>
+							<tr>
+								<td> <input type="checkbox" name="idChk" value="${authorityCertification.id!}"></td>
+								<td>
+									${authorityCertification.buyers.name!}
+								</td>
+								<td>
+									${authorityCertification.index!}
+								</td>
+								<td>
+									<button class="btn btn-primary btn-sm" onclick="deleteAttestation('${authorityCertification.id!}')">删除</button>
+								</td>
+							</tr>
+							<%}%>
+						</table>
+					</div>
+				</div>
+			</div>
+		<!-- 第三方认证列表结束 -->
+		<!-- 第三方认证列创建开始 -->
+				<div  id="createAttestationDiv" style="display:none">
+				<div class="row" >
+					<div class="col-sm-12">
+					<ul class="nav nav-pills pull-left form-inline">
+							<li>
+								<a href="${ctxPath}/admin/product/attestation?id=${reagentProduct.id!}" class="btn btn-default btn-sm">返回列表</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<form class="form-horizontal">
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">检测机构名称</label>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" class="form-control valueInput" success="false" id="certificationName" name="certificationName"/>
+								<span class="text-warning hide">检测机构名称</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group form-group-lg">
+					<div class="col-sm-2 col-sm-offset-1">
+						<label class="control-label">第三方认证图片</label>
+					</div>
+					<div class="col-sm-8">
+						<input type="file" id="certificationImgUrl" name="files[]" class="dropify img-file"/>
+					</div>
+				</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">第三方认证说明</label>
+							</div>
+							<div class="col-sm-8">
+								<textarea id="certificationContent" name="certificationContent" class="form-control" rows="8"></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="row">
+					<div class="form-group form-group-lg">
+						<div class="col-sm-12 text-right">
+							<button type="button" class="btn btn-success btn-lg" id="saveCertification">保存</button>
+						</div>
+					</div>
+				</div>
+				</div>
+		<!-- 第三方认证列创建结束 -->
+     	</div>	
+<%}%>
+		<script type="text/javascript">
+		var verdict={
+				errInput : function(_this){
+					_this.closest('.row').find('.text-warning').removeClass('hide');
+					_this.attr("success","false");
+				},
+				sucInput : function(_this){
+					_this.closest('.row').find('.text-warning').addClass('hide');
+					_this.attr("success","true");
+				}
+		}
+			$(function() {
+				$.app.initDatetimePicker();
+				$.app.initKindEditor();
+				$.app.initDropify();
+				
+				$("#selectIdAll,#selectAudiAll").change(function() {
+					if(this.checked) {
+						$(this).check();
+					} else {
+						$(this).uncheck();
+					}
+				});
+				
+				/*
+				*保存购买凭证集
+				*/
+				$("#saveCertification").click(function(){
+					$.ajaxFileUpload
+	                (
+	                    {
+	                        url: "${ctxPath}/ajaxUpload", //用于文件上传的服务器端请求地址
+	                        secureuri: false, //是否需要安全协议，一般设置为false
+	                       	fileElementId : ['certificationImgUrl'],
+	                        dataType: 'json', //返回值类型 一般设置为json
+	                        success: function (data, status, e)  //服务器成功响应处理函数
+		                         {			                        
+	                        	console.log(data);
+		                        var imgUrl = data.files[0].url;
+		                        var certificationName = $("#certificationName").val();
+		         				var certificationContent = $("#certificationContent").val();
+		         				var productId=$("#id",parent.document).val();
+		         				$.app.get("${ctxPath}/admin/product/updateAuthorityCertification",{"certificationName":certificationName,"certificationContent":certificationContent,"productId":productId,"imgUrl":imgUrl},function(flag,data){
+		         					$.app.message(data.message);
+		         				})  
+		                        	return; 
+	                        },
+	                        error: function (data, status, e)//服务器响应失败处理函数
+	                        {
+	                       	 alert("图片上传失败");
+	                        }
+	                    }
+	                )
+				});
+			})
+			
+			function deletes(){
+				var ids = "";
+				 $('input[name="idChk"]:checked').each(function(){
+					 ids += $(this).val()+",";
+				 })
+				 deleteAttestation(ids);
+			}
+			
+			function deleteAttestation(ids){
+				var productId=$("#id",parent.document).val();
+				$.app.get("${ctxPath}/admin/product/deleteCertification",{"ids":ids,"productId":productId},function(flag,data){
+					$.app.message(data.message);
+					if(flag){
+						window.location.href="${ctxPath}/admin/product/attestation?id=${reagentProduct.id!}"; 
+					}
+				})
+			}
+		</script>

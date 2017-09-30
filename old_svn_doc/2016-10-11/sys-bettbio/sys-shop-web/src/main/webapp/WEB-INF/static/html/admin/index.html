@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../../Font-Awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../../css/admin.css">
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active">
+						<a href="index.html">
+							<span class="fa fa-home" aria-hidden="true"></span> 百图首页
+						</a>
+					</li>
+					<li>
+						<a href="store/store.html">
+							<span class="fa fa-stop-circle" aria-hidden="true"></span> 商家
+						</a>
+					</li>
+					<li>
+						<a href="user/user.html">
+							<span class="fa fa-info-circle" aria-hidden="true"></span> 用户信息
+						</a>
+					</li>
+					<li>
+						<a href="brand/list.html">
+							<span class="fa fa-tags" aria-hidden="true"></span> 分类/品牌
+						</a>
+					</li>
+					<li>
+						<a href="audit/list.html">
+							<span class="fa fa-fire" aria-hidden="true"></span> 质量审核
+						</a>
+					</li>
+					<li>
+						<a href="product/list.html">
+							<span class="fa fa-th-large" aria-hidden="true"></span> 商品
+						</a>
+					</li>
+					<li>
+						<a href="customer/list.html">
+							<span class="fa fa-user" aria-hidden="true"></span> 客户
+						</a>
+					</li>
+					<li>
+						<a href="order/list.html">
+							<span class="fa fa-shopping-cart" aria-hidden="true"></span> 订单
+						</a>
+					</li>
+					<li>
+						<a href="cache/index.html">
+							<span class="fa fa-th" aria-hidden="true"></span> 缓存管理
+						</a>
+					</li>
+					<li>
+						<a href="resource/index.html">
+							<span class="fa fa-gears" aria-hidden="true"></span> 权限管理
+						</a>
+					</li>
+					<li>
+						<a href="config/account.html">
+							<span class="fa fa-wrench" aria-hidden="true"></span> 配置
+						</a>
+					</li>
+					<li class="dropdown">
+						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+							<span class="fa fa-user" aria-hidden="true"></span> ezybio
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu" style="z-index:999999">
+							<li>
+								<a href="/conf.html">我的配置文件</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="">退出</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="container-fluid warp">
+			<div class="row placeholders">
+				<div class="col-sm-4">
+					<div class="row btn btn-lg btn-primary hoder-hd">
+						<div class="col-sm-4"><img src="../../img/admin/address.png"></div>
+						<div class="col-sm-8 text-center hoder-text">
+							<h1>23</h1>订单总计</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="row btn btn-lg btn-primary hoder-hd">
+						<div class="col-sm-4"><img src="../../img/admin/coins.png"></div>
+						<div class="col-sm-8 text-center hoder-text">
+							<h1>￥27,370.00</h1>金额总计</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="row btn btn-lg btn-primary hoder-hd">
+						<div class="col-sm-4"><img src="../../img/admin/custmerinfo.png"></div>
+						<div class="col-sm-8 font-size-13 font-row-hieht">
+							<strong>百图生物</strong><br> 杨浦区,HU,200000
+							<br> 021-61552790
+							<br>
+							<span class="fa fa-user" aria-hidden="true"></span> ezybio
+							<span class="fa fa-calendar" aria-hidden="true"></span> 上次访问: Mar 15, 2016</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<h4>最近的订单</h4></div>
+				<table id="orderlist" class="table table-striped table-bordered table-hover">
+					<tr class="order-detail-title">
+						<td colspan="5" class="order-title-hd">
+							<div class="row">
+								<div class="col-sm-12 order-title">
+									<input type="text" hidden="hidden" id="suborderid" value="750">
+									<a href="/admin/orders/orderDetails.html?orderId=700">2016-06-02 11:47:42 &nbsp;订单编号: 700&nbsp;订单状态:待发货&nbsp;收货人姓名:徐锋
+									</a>
+								</div>
+
+							</div>
+
+						</td>
+					</tr>
+					<tr>
+						<td width="59%">
+							<a href="/shop/product/95742.html">Annexin V流式细胞凋亡检测试剂盒 细胞凋亡</a>
+							<br>英文名&nbsp;:&nbsp;<span>Annexin V FITC/PI</span>
+						</td>
+						<td width="7%">￥498.00</td>
+						<td width="7%">1</td>
+						<td width="7%">￥498.00</td>
+						<td width="20%" rowspan="1">
+							小计:￥498.00<br>
+							<span id="status_950">
+							订单状态:待发货
+							<br>
+						<a href="javascript:void(0);" onclick="doDelivery(950)">填写发货信息</a>
+				</span>
+						</td>
+					</tr>
+					<tr class="order-detail-title">
+						<td colspan="5" class="order-title-hd">
+							<div class="row">
+								<div class="col-sm-12 order-title">
+									<input type="text" hidden="hidden" id="suborderid" value="750">
+									<a href="/admin/orders/orderDetails.html?orderId=700">2016-06-02 11:47:42 &nbsp;订单编号: 700&nbsp;订单状态:待发货&nbsp;收货人姓名:徐锋
+									</a>
+								</div>
+
+							</div>
+
+						</td>
+					</tr>
+					<tr>
+						<td width="59%">
+							<a href="/shop/product/1724905.html">POLL (untagged) - Mouse polymerase (DNA directed)</a>
+						</td>
+						<td width="7%">￥1,624.00</td>
+						<td width="7%">1</td>
+						<td width="7%">￥1,624.00</td>
+						<td width="20%" rowspan="2">
+							小计:￥3,248.00<br>
+							<span id="status_900">
+					订单状态:待发货
+							<br>
+								<a href="javascript:void(0);" onclick="showSplit(900)">拆分订单</a>
+							<br>
+						<a href="javascript:void(0);" onclick="doDelivery(900)">填写发货信息</a>
+				</span>
+						</td>
+					</tr>
+
+					<tr>
+						<td width="59%">
+							<a href="/shop/product/1724903.html">POLL (untagged)-Human polymerase (DNA directed)</a>
+
+						</td>
+						<td width="7%">￥1,624.00</td>
+						<td width="7%">1</td>
+						<td width="7%">￥1,624.00</td>
+					</tr>
+
+					<tr class="order-detail-title">
+						<td colspan="5" class="order-title-hd">
+							<div class="row">
+								<div class="col-sm-12 order-title">
+									<input type="text" hidden="hidden" id="suborderid" value="750">
+									<a href="/admin/orders/orderDetails.html?orderId=700">2016-06-02 11:47:42 &nbsp;订单编号: 700&nbsp;订单状态:待发货&nbsp;收货人姓名:徐锋
+									</a>
+								</div>
+
+							</div>
+
+						</td>
+					</tr>
+
+					<tr>
+						<!-- order -->
+						<td width="59%">
+							<a href="/shop/product/84150.html">细胞活力细胞毒性检测试剂盒</a>
+
+							<br>英文名&nbsp;:&nbsp;<span>CELL COUNTING KIT-8(CCK-8)</span>
+
+						</td>
+						<td width="7%">￥100.00</td>
+						<td width="7%">1</td>
+						<td width="7%">￥100.00</td>
+						<td width="20%" rowspan="1">
+							小计:￥100.00<br>
+							<span id="status_850">
+					订单状态:待付款
+					
+					
+					    
+						<br>
+						<a href="javascript:void(0);" onclick="confirmPaid(800, 850)">确认付款</a>
+					
+				</span>
+						</td>
+					</tr>
+
+					<tr>
+						<!-- order -->
+						<td width="59%">
+							<a href="/shop/product/84150.html">细胞活力细胞毒性检测试剂盒</a>
+
+							<br>英文名&nbsp;:&nbsp;<span>CELL COUNTING KIT-8(CCK-8)</span>
+
+						</td>
+						<td width="7%">￥246.00</td>
+						<td width="7%">1</td>
+						<td width="7%">￥246.00</td>
+						<td width="20%" rowspan="1">
+							小计:￥246.00<br>
+							<span id="status_851">
+					订单状态:待付款
+						<br>
+						<a href="javascript:void(0);" onclick="confirmPaid(800, 851)">确认付款</a>
+					
+				</span>
+						</td>
+					</tr>
+
+					<tr class="order-detail-title">
+						<td colspan="5" class="order-title-hd">
+							<div class="row">
+								<div class="col-sm-12 order-title">
+									<input type="text" hidden="hidden" id="suborderid" value="750">
+									<a href="/admin/orders/orderDetails.html?orderId=700">2016-06-02 11:47:42 &nbsp;订单编号: 700&nbsp;订单状态:待发货&nbsp;收货人姓名:徐锋
+									</a>
+								</div>
+
+							</div>
+
+						</td>
+					</tr>
+					<tr>
+						<td width="59%">
+							<a href="/shop/product/1276803.html">6.0cm细胞培养皿（标准型） 21.2cm2, 表面处理</a>
+						</td>
+						<td width="7%">￥525.00</td>
+						<td width="7%">1</td>
+						<td width="7%">￥525.00</td>
+						<td width="20%" rowspan="1">
+							小计:￥525.00<br>
+							<span id="status_800">
+					订单状态:待发货
+					
+						
+							<br>
+						<a href="javascript:void(0);" onclick="doDelivery(800)">填写发货信息</a>
+					
+					
+				</span>
+						</td>
+					</tr>
+
+					<tr class="order-detail-title">
+						<td colspan="5" class="order-title-hd">
+							<div class="row">
+								<div class="col-sm-12 order-title">
+									<input type="text" hidden="hidden" id="suborderid" value="750">
+									<a href="/admin/orders/orderDetails.html?orderId=700">2016-06-02 11:47:42 &nbsp;订单编号: 700&nbsp;订单状态:待发货&nbsp;收货人姓名:徐锋
+									</a>
+								</div>
+
+							</div>
+
+						</td>
+					</tr>
+
+					<tr>
+						<td width="59%">
+							<a href="/shop/product/113999.html">聚丙烯酰胺(PHIII),CAS 9003-05-8,麦克林试剂</a>
+							<br>英文名&nbsp;:&nbsp;<span>Polyacrylamide</span>
+						</td>
+						<td width="7%">￥64.00</td>
+						<td width="7%">1</td>
+						<td width="7%">￥64.00</td>
+						<td width="20%" rowspan="1">
+							小计:￥64.00<br>
+							<span id="status_750">
+					订单状态:待发货
+							<br>
+						<a href="javascript:void(0);" >填写发货信息</a>
+				</span>
+						</td>
+					</tr>
+				</table>
+				<p>
+					<a href="">小工具提示：您可以访问“常用工具”下载图片处理软件（图片水印和马赛克处理）</a>
+				</p>
+			</div>
+		</div>
+		<footer class="container-fluid">
+			<p>© Bettbio 2015-2016</p>
+		</footer>
+		<script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../../bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../js/application.js"></script>
+		<script>
+			$(document).ready(function(){
+				
+			})
+		</script>
+	</body>
+
+</html>

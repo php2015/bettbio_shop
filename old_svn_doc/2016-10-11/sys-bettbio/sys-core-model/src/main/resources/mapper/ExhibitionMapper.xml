@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bettbio.core.mapper.ExhibitionMapper" >
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.Exhibition" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="CONTENT" property="content" jdbcType="VARCHAR" />
+    <result column="POSTER_IMG" property="posterImg" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="BEGIN_DATE" property="beginDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="WECHAT_URL" property="wechatUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="selectAllField">
+  select ID,CODE,TITLE,CONTENT,POSTER_IMG,CREATE_DATE,BEGIN_DATE,END_DATE,STATUS,WECHAT_URL from EXHIBITION
+  </sql>
+  
+  <select id="selectExhibition" resultMap="BaseResultMap">
+  <include refid="selectAllField"></include>
+  <where>
+  STATUS = 1
+  </where>
+  </select>
+  
+  <update id="setExhibition">
+  update EXHIBITION set STATUS = 0 where STATUS = 1
+  </update>
+  
+  <select id="selectByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <include refid="selectAllField"></include>
+  <where>
+  	<if test="title != null">
+ 	 TITLE  like CONCAT('%',#{title},'%')
+ 	</if>
+ 	</where>
+  limit #{startRow},#{row}
+  </select>
+  
+   <select id="getExhibitionAllCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  select count(1) from EXHIBITION
+  <where>
+  <if test="title != null">
+ 	 TITLE  like CONCAT('%',#{title},'%')
+ 	</if>
+ 	</where>
+  </select>
+</mapper>

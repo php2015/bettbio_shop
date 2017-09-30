@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../Font-Awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+	</head>
+
+	<body>
+
+		<div class="warp">
+			<div class="container">
+				<h2>结算</h2>
+			</div>
+			<div class="selement">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-7">
+							<table class="table table-bordered table-hover">
+								<caption class="table-out-title">收货信息
+									<a href="javascript:;" class="btn btn-info sl-arrow pull-right" role="button" data-toggle="modal" data-target="#addressModal"><span class="fa fa-plus"></span> 添加</a>
+									<a href="javascript:;" class="btn btn-info sl-arrow pull-right" role="button" data-toggle="modal" data-target="#addressListModal"><span class="fa fa-th"></span> 全部</a>
+								</caption>
+								<thead>
+									<tr>
+										<th>收货人姓名</th>
+										<th>公司名称</th>
+										<th>客户所在省/直辖市</th>
+										<th>客户所在城市</th>
+										<th>客户街道地址</th>
+										<th>邮编</th>
+										<th>收货人手机</th>
+										<th>备注</th>
+									</tr>
+								</thead>
+								<tr>
+									<td>guo</td>
+									<td></td>
+									<td>上海</td>
+									<td>sh</td>
+									<td>ssh</td>
+									<td></td>
+									<td>13122221111</td>
+									<td></td>
+								</tr>
+							</table>
+							<table class="table table-bordered table-hover">
+								<caption class="table-out-title">开票信息
+									<a href="javascript:;" class="btn btn-info sl-arrow pull-right" role="button" data-toggle="modal" data-target="#invoiceModel"><span class="fa fa-plus"></span> 添加</a>
+									<a href="javascript:;" class="btn btn-info sl-arrow pull-right" role="button" data-toggle="modal" data-target="#invoiceListModel"><span class="fa fa-th"></span> 全部</a>
+								</caption>
+								<thead>
+									<tr>
+										<th>注册公司/发票抬头</th>
+										<th>注册地址</th>
+										<th>注册电话</th>
+										<th>开户银行</th>
+										<th>银行账户</th>
+										<th>纳税人识别号</th>
+										<th>备注</th>
+									</tr>
+								</thead>
+								<tr>
+									<td>sh</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+							<div class="alert">
+								<h4>支付方法</h4>
+								<p>月度结算</p>
+							</div>
+						</div>
+						<div class="col-sm-5">
+							<table class="table table-bordered table-hover">
+								<caption class="table-out-title">订单总览</caption>
+								<thead>
+									<tr>
+										<th width="45%">项目</th>
+										<th width="15%">规格</th>
+										<th width="10%">数量</th>
+										<th width="15%">价格</th>
+										<th width="15%">金额</th>
+									</tr>
+								</thead>
+								<tr>
+									<td colspan="5">上海中乔新舟生物科技有限公司</td>
+								</tr>
+								<tr>
+									<td>星形胶质细胞培养基</td>
+									<td>500 ml</td>
+									<td>1</td>
+									<td><strong>CNY1,764.00</strong></td>
+									<td><strong>CNY1,764.00</strong></td>
+								</tr>
+							</table>
+							<div class="total-pric">
+								总计<span class="total-rmb">￥1,764.00</span>
+							</div>
+							<div class="alert alert-success selement-hint" role="alert">
+								订单可以提交
+							</div>
+							<div class="alert alert-warning selement-hint" role="alert">
+								请先完善订单信息
+							</div>
+							<div class="shopcart-btn text-right">
+								<button type="button" class="btn btn-success">提交订单</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="addressListModal" class="modal fade" data-backdrop="static" role="dialog">
+			<div class="modal-dialog" role="document" style="width:80%">
+				<div class="modal-content">
+					<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button> \
+						<h4 class="modal-title">请选择收货地址</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>收货人姓名</th>
+									<th>公司名称</th>
+									<th>客户所在省/直辖市</th>
+									<th>客户所在城市</th>
+									<th>客户街道地址</th>
+									<th>邮编</th>
+									<th>收货人手机</th>
+									<th>备注</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="1800">
+									<td>guo</td>
+									<td></td>
+									<td>上海</td>
+									<td>sh</td>
+									<td>ssh</td>
+									<td></td>
+									<td>13122221111</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<a href="javascript:;" class="btn" data-dismiss="modal"><strong>关闭</strong></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="addressModal" class="modal fade" data-backdrop="static" role="dialog">
+			<div class="modal-dialog" style="width: 80%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">收货信息</h4>
+					</div>
+					<div class="modal-body">
+						<form id="" class="form-horizontal c_user_from" action="" method="POST">
+							<input id="id" name="id" type="hidden" value="">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">收货人姓名:</label>
+								<div class="col-sm-4">
+									<input id="name" name="name" class="required form-control " type="text" value="" maxlength="64">
+									<span class="help-inline error">客户姓名不能为空</span>
+								</div>
+								<label class="col-sm-2 control-label">公司名称:</label>
+								<div class="col-sm-4">
+									<input id="company" name="company" class="form-control " type="text" value="" maxlength="100">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">收货人手机:</label>
+								<div class="col-sm-4">
+
+									<input id="telephone" name="telephone" class="required form-control phone" title="请输入账单电话" type="text" value="" maxlength="32">
+									<span class="help-inline"></span>
+								</div>
+								<label class="col-sm-2 control-label">客户所在国家:</label>
+								<div class="col-sm-4">
+									<select id="customer_country" name="country" class="billing-country-list form-control ">
+										<option value="CN">中国</option>
+										<option value="CA">加拿大</option>
+										<option value="AG">安提瓜与巴布达</option>
+										<option value="DE">德国</option>
+										<option value="SG">新加坡</option>
+										<option value="JP">日本</option>
+										<option value="BE">比利时</option>
+										<option value="FR">法国</option>
+										<option value="CH">瑞士</option>
+										<option value="US">美国</option>
+										<option value="GB">英国</option>
+										<option value="NL">荷兰</option>
+										<option value="MY">马来西亚</option>
+									</select>
+									<span class="help-inline"></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">客户所在省/直辖市:</label>
+								<div class="col-sm-4">
+									<select id="customer_zones" name="zone" class="billing-zone-list form-control ">
+										<option value="HU">上海</option>
+										<option value="DIAN">云南</option>
+										<option value="MENG">内蒙古</option>
+										<option value="JING">北京</option>
+										<option value="TAI">台湾</option>
+										<option value="JILIN">吉林</option>
+										<option value="CHUAN">四川</option>
+										<option value="JIN">天津</option>
+										<option value="NING">宁夏</option>
+										<option value="WAN">安徽</option>
+										<option value="LU">山东</option>
+										<option value="SHANXI">山西</option>
+										<option value="YUE">广东</option>
+										<option value="GUI">广西</option>
+										<option value="XIN">新疆</option>
+										<option value="SU">江苏</option>
+										<option value="JIANGXI">江西</option>
+										<option value="JI">河北</option>
+										<option value="HENAN">河南</option>
+										<option value="ZHE">浙江</option>
+										<option value="QIONG">海南</option>
+										<option value="E">湖北</option>
+										<option value="XIANG">湖南</option>
+										<option value="AO">澳门</option>
+										<option value="GAN">甘肃</option>
+										<option value="MIN">福建</option>
+										<option value="CANG">西藏</option>
+										<option value="QIAN">贵州</option>
+										<option value="LIAO">辽宁</option>
+										<option value="YU">重庆</option>
+										<option value="SHAN">陕西</option>
+										<option value="QING">青海</option>
+										<option value="GANG">香港</option>
+										<option value="HEI">黑龙江</option>
+									</select>
+
+									<input id="hidden_zones" name="state" title="请输入省/直辖市" class="form-control " type="text" value="" maxlength="100" style="display: none;">
+									<span class="help-inline"></span>
+								</div>
+								<label class="col-sm-2 control-label">客户所在城市:</label>
+								<div class="col-sm-4">
+
+									<input id="customer_city" name="city" class="required form-control " title="请输入城市" type="text" value="" maxlength="100">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">邮编:</label>
+								<div class="col-sm-4">
+
+									<input id="billingPostalCode" name="postCode" class="customer-postalCode form-control " title="请输入账单地址邮编" type="text" value="" maxlength="20">
+									<span class="help-inline"></span>
+								</div>
+								<label class="col-sm-2 control-label">客户街道地址:</label>
+								<div class="col-sm-4">
+
+									<input id="streetAdress" name="streetAdress" class="required form-control" title="请输入邮寄地址" type="text" value="" maxlength="256">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">备注:</label>
+								<div class="col-sm-10">
+									<input id="memo" name="memo" class="input-large form-control form-control-md" type="text" value="" maxlength="256">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-2 col-sm-offset-2">
+									<input type="checkbox" id="setdefaultaddress" name="setdefaultaddress" checked="checked">设置默认收货地址
+								</div>
+								<div class="col-sm-2 col-sm-offset-2">
+									<input id="" type="submit" value="提交" name="register" class="btn btn-info btn-block">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="invoiceListModel" class="modal fade" data-backdrop="static" role="dialog">
+			<div class="modal-dialog" role="document" style="width:80%">
+				<div class="modal-content">
+					<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
+						<h4>请选择开票信息</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-hover" id="modaltable">
+							<thead>
+								<tr>
+									<th>注册公司/发票抬头</th>
+									<th>注册地址</th>
+									<th>注册电话</th>
+									<th>开户银行</th>
+									<th>银行账户</th>
+									<th>纳税人识别号</th>
+									<th>备注</th>
+								</tr>
+							</thead>
+								<tr id="1600">
+									<td>sh</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn" data-dismiss="modal"><strong>关闭</strong></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="invoiceModel" class="modal fade" data-backdrop="static" role="dialog">
+			<div class="modal-dialog" style="width: 80%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title">收货信息</h4>
+					</div>
+					<div class="modal-body">
+						<form id="" class="form-horizontal c_user_from" action="" method="POST">
+							<input id="id" name="id" type="hidden" value="">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">发票类型:</label>
+								<div class="col-sm-10">
+									<div class="row">
+										<div class="col-sm-12"><input class="invoiceType" name="type" type="radio" value="0" checked="checked">&nbsp;普通发票 </div>
+										<div class="col-sm-12"><input class="invoiceType" name="type" type="radio" value="1">&nbsp;增值发票</div>
+									</div>
+									<span class="help-inline"></span>
+								</div>
+							</div>
+
+							<div class="invoiceBox">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">发票抬头:</label>
+									<div class="col-sm-10">
+										<input id="ncompanyname" name="company" class="required form-control " title="发票抬头不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline"></span>
+									</div>
+								</div>
+							</div>
+							<div class="invoiceBox" style="display:none;">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">公司名称:</label>
+									<div class="col-sm-4">
+
+										<input id="scompanyname" name="company" class="required form-control " title="公司名不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline"></span>
+									</div>
+									<label class="col-sm-2 control-label">注册地址:</label>
+									<div class="col-sm-4">
+
+										<input id="companyAddress" name="companyAddress" class="required form-control " title="公司注册地址不能为空" type="text" value="" maxlength="256">
+										<span class="help-inline"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">开户银行:</label>
+									<div class="col-sm-4">
+
+										<input id="bankName" name="bankName" class="required form-control " title="开户银行不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline"></span>
+									</div>
+									<label class="col-sm-2 control-label">银行账户:</label>
+									<div class="col-sm-4">
+
+										<input id="bankAccount" name="bankAccount" class="required form-control " title="开户银行账户不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">注册电话:</label>
+									<div class="col-sm-4">
+
+										<input id="companyTelephone" name="companyTelephone" class="required form-control " title="注册电话不能为空" type="text" value="" maxlength="32">
+										<span class="help-inline"></span>
+									</div>
+									<label class="col-sm-2 control-label">纳税人识别号:</label>
+									<div class="col-sm-4">
+										<input id="taxpayerNumber" name="taxpayerNumber" class="required form-control " title="纳税人识别号不能为空" type="text" value="" maxlength="100">
+										<span class="help-inline"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">备注:</label>
+									<div class="col-sm-4">
+										<div class="controls">
+											<input id="memo" name="memo" class="form-control" type="text" value="" maxlength="256">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2 col-sm-offset-2">
+									<input type="checkbox" id="" name="" checked="checked">设置默认开票信息
+								</div>
+								<div class="col-sm-2 col-sm-offset-2">
+									<input id="" type="submit" value="提交" name="register" class="btn btn-info btn-block">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../jQurey-plugin/jquery.blockUI.min.js"></script>
+		<script type="text/javascript" src="../js/application.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$(".invoiceType").click(function() {
+					$(".invoiceBox").eq($(this).val()).show().siblings('.invoiceBox').hide();
+				})
+			})
+		</script>
+	</body>
+
+</html>

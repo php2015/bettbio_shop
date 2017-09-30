@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SStoreUserMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SStoreUser">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="QQ" jdbcType="VARCHAR" property="qq" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="SEX" jdbcType="INTEGER" property="sex" />
+    <result column="STORE_CODE" jdbcType="VARCHAR" property="storeCode" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="ROLE_IDS" jdbcType="VARCHAR" property="roleIds" />
+  </resultMap>  
+  <resultMap id="storeUserResultMap" type="com.bettbio.core.model.permission.bo.StoreUser" extends="BaseResultMap"></resultMap>
+  <select id="adminLogin" parameterType="com.bettbio.core.model.SStoreUser" resultMap="BaseResultMap">
+  select * from S_STORE_USER where (ACCOUNT = #{account} or EMAIL=#{account}) and PASSWORD = #{password} and IS_DELETED=1
+  </select>
+  
+  <select id="verify" parameterType="com.bettbio.core.model.SStoreUser" resultMap="BaseResultMap">
+  select * from S_STORE_USER where PHONE = #{phone} and IS_DELETED=1
+  </select>
+  
+  <select id="selectByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select * from S_STORE_USER 
+  	<where>
+  		<if test="countryName != null">
+  			STORE_CODE like CONCAT('%',#{storeCode}) 
+  		</if>
+  	</where>
+  	limit #{startRow},#{row}
+  </select>
+  
+  <select id="getSStoreUserAllCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select count(1) from S_STORE_USER
+  	<where>
+  		<if test="storeCode != null">
+  			STORE_CODE like CONCAT('%',#{storeCode}) 
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="findByAccount" parameterType="java.lang.String" resultMap="storeUserResultMap">
+  		<include refid="selectAllField"></include>
+  		WHERE ACCOUNT = #{account}
+  		LIMIT 1
+  </select>
+  
+  <update id="updateUserRoles" parameterType="com.bettbio.core.model.SStoreUser">
+  		UPDATE S_STORE_USER
+		SET
+			ROLE_IDS = #{roleIds}
+		WHERE ID = #{id}
+  </update>
+  
+  <sql id="selectAllField">
+  		SELECT ID,ACCOUNT,PASSWORD,PHONE,EMAIL,NAME,QQ,CODE,IS_DELETED,PARENT_CODE,SEX,STORE_CODE,UPDATE_DATE,CREATE_DATE,ROLE_IDS FROM S_STORE_USER
+  </sql>
+  
+  <select id="selectByPhone" parameterType="com.bettbio.core.model.SStoreUser" resultMap="BaseResultMap">
+  select * from S_STORE_USER where PHONE = #{phone}
+  </select>
+  
+  <select id="selectByStroeCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <include refid="selectAllField"></include>
+  where	STORE_CODE = #{storeCode} and PARENT_CODE = 'defult'
+  </select>
+  
+  <update id="update">
+	delete from S_STORE_USER
+  </update>
+  
+  <select id="verifyStoreUserName" parameterType="String" resultType="Integer">
+  	SELECT COUNT(0) from S_STORE_USER WHERE ACCOUNT=#{name}
+  </select>
+</mapper>

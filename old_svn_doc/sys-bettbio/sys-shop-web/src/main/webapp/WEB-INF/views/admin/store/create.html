@@ -1,0 +1,267 @@
+<%layout("/common/admin/layout.html",{
+css:["dropify/css/dropify.min.css"],
+script:["dropify/js/dropify.min.js","js/admin/store.js"]}){ %>
+<div class="container-fluid warp">
+	<div class="row warp-tabs">
+		<ul class="nav nav-tabs">
+			<!-- <li><a href="${ctxPath}/admin/store/store">商家详情</a></li> -->
+			<li class="active"><a href="${ctxPath}/admin/store/create">创建商家</a></li>
+			<li><a href="${ctxPath}/admin/store/list">商家清单</a></li>
+			<!-- <li><a href="${ctxPath}/admin/store/logo">商家LOGO</a></li> -->
+		</ul>
+	</div>
+	<% if(has(sucMess)){%>
+			<div class="warp-body">
+				<div class="alert alert-success">${sucMess}</div>
+				<div class="row">
+					<ul id="ZT" class="ztree"></ul>
+				</div>
+			</div>
+	<%}%>
+	<% if(has(errMess)){%>
+			<div class="warp-body">
+				<div class="alert alert-danger">${errMess}</div>
+				<div class="row">
+					<ul id="ZT" class="ztree"></ul>
+				</div>
+			</div>
+	<%}%>
+	<div class=" warp-body">
+		<form id="createForm" class="form-horizontal" enctype="multipart/form-data" action="${ctxPath}/admin/store/save" method="post">
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">商家名称</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="name" name="name" class="form-control valueInput" success="false" type="text" value="${storeAndUser.name}">
+						<span class="text-warning hide">名称不能为空</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">联系人</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="linkman" name="linkman" class="form-control" success="false" type="text" value="${storeAndUser.linkman}">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+					<label class="control-label">座机电话</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="landline" name="landline" success="true" class="form-control valueInput" type="text" value="${storeAndUser.landline}">
+						<span class="text-warning hide">电话格式有误</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">手机</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="phone" name="phone" success="true" class="form-control valueInput" type="text" value="${storeAndUser.phone}">
+						<span class="text-warning hide">手机格式有误</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">商家邮箱地址</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="email" name="email" class="form-control" type="text" value="${storeAndUser.email}">
+						<span class="text-warning hide">邮箱已存在或者格式错误</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">商家所在省/直辖市</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="provincial" name="provincial" class="form-control" type="text" value="${storeAndUser.provincial}">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">商家所在城市</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="city" name="city" class="form-control" type="text" value="${storeAndUser.city}">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">商家所在区/县</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="area" name="area" class="form-control" type="text" value="${storeAndUser.area}">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">商家地址</label>
+					</div>
+					<div class="col-sm-7">
+						<input id="address" name="address" class="form-control" type="text" value="${storeAndUser.address}">
+					</div>
+					<div class="col-sm-3">
+						<h5>请填写街道信息</h5>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">商家中文简介</label>
+					</div>
+					<div class="col-sm-10">
+						<textarea id="chineseAbout" name="chineseAbout" class="form-control" rows="6">${storeAndUser.chineseAbout!}</textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">商家英文简介</label>
+					</div>
+					<div class="col-sm-10">
+						<textarea id="englishAbout" name="englishAbout" class="form-control" rows="6">${storeAndUser.englishAbout!}</textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">使用QQ在线咨询</label>
+					</div>
+					<div class="col-sm-7">
+						<input id="qq" name="qq" class="form-control" type="text" value="${storeAndUser.qq}">
+					</div>
+					<div class="col-sm-3">
+						<a href="">QQ在线咨询开通说明 </a>
+						<p>多个QQ(最多5个)请用逗号分隔，如：QQ1，QQ2</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">商家网址</label>
+					</div>
+					<div class="col-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon">http://</span> <input
+								id="storeUrl" name="storeUrl" class="form-control" type="text"
+								value="${storeAndUser.storeUrl}">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">营业执照</label>
+					</div>
+					<div class="col-sm-10">
+						<input type="file" id="input-file-now" name="file" class="dropify" data-default-file="${ctxPath}/${storeAndUser.licenseImageUrl!}"/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">种子用户</label>
+					</div>
+					<div class="col-sm-1">
+						<input id="check_isSeedUser" name="check_isSeedUser" class="form-control" type="checkbox">
+					<input id="isSeedUser" name="isSeedUser" type="hidden" value="${storeAndUser.isSeedUser!'1'}">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-12 text-right">
+						<button type="submit" class="btn btn-success btn-lg">提交</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+	var verdict={
+			errInput : function(_this){
+				_this.closest('.form-group').addClass('has-warning');
+				_this.closest('.form-group').find('.text-warning').removeClass('hide');
+				_this.attr("success","false");
+			},
+			sucInput : function(_this){
+				_this.closest('.form-group').removeClass('has-warning');
+				_this.closest('.form-group').find('.text-warning').addClass('hide');
+				_this.attr("success","true");
+			}
+	}
+$(function(){
+	$.app.initDropify();
+	
+	var drEvent = $('.dropify').dropify();
+	drEvent.on('dropify.afterClear', function(event, element){
+		deleteLogo();
+	})
+	
+	var isSeedUser = '${storeAndUser.isSeedUser}';
+	if(isSeedUser=='0'){
+		$("input[name='check_isSeedUser']").prop("checked","true");
+		}
+	if('${storeAndUser.name!}' != ''){
+		$("#name").attr("success","true");
+	}
+	
+	//验证邮箱
+	$("#email").blur(function() {
+		var email_name = $.trim($("#email").val());
+		var re = /^\w[-\w.+]*@.+(com|cn)$/;
+		if (email_name != "") {
+			if (re.test(email_name)) {
+				$.ajax({
+					type : 'get',
+					dataType : "json",
+					data : "email=" + email_name,
+					url : '${ctxPath}/verifyEmail',
+					success : function(ajaxResponse) {
+						if (ajaxResponse.success == true) {
+							verdict.sucInput($("#email"));
+						} else {
+							verdict.errInput($("#email"));
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+					}
+				});
+			} else {
+				verdict.errInput($("#email"));
+			}
+		} else {
+			verdict.sucInput($("#email"));
+		}
+	});
+})
+
+</script>

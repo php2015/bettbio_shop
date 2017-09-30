@@ -1,0 +1,266 @@
+<%layout("/common/layout.html",{
+script:["js/search.js","js/navmenu.js"]}){ %>
+<div class="warp" id="warp">
+	<%layout("/common/navheader.html"){} %>
+	<div class="container">
+		<div id="breadcrumb">
+			<ol class="nav-hd">
+				<li>
+					<a href="${ctxPath}/">首页</a>
+				</li>
+				<%for(var item in pageInfo.breadCrumb.breadCrumbs){ %>
+					<li class="sep"><i class="fa fa-angle-right"></i></li>
+					<li>
+						<a href="${item.url}">${item.label}</a>
+					</li>
+				<%}%>
+			</ol>
+		</div>
+		<div class="selector" id="b-selector">
+			<div class="sl-item sl-line">
+				<div class="sl-label">类别：</div>
+				<div class="sl-value">
+					<ul>
+					<%if(pageInfo.categorys!=null){for(var cate in pageInfo.categorys){%>
+						<%if(cate.productCount>0){%>
+							<li>
+								<a href="${cate.id}.html">${cate.name}<span class="sl-count">(${cate.productCount})</span></a>
+							</li>
+							<%for(var sonCate in cate.sonCategory){%>
+								<li>
+									<a href="${sonCate.id}.html">${sonCate.name}<span class="sl-count">(${sonCate.productCount})</span></a>
+								</li>
+							<%}%>
+						<%}%>
+					<%}}%>
+					</ul>
+				</div>
+				<div class="sl-ext">
+					<a class="sl-more" href="javascript:;">更多<i class="fa fa-angle-down"></i></a>
+				</div>
+			</div>
+			<div class="sl-item sl-line" id="qty">
+				<div class="sl-label">质量：</div>
+				<div class="sl-value">
+					<ul>
+						<li>
+							<a href="?qty=0" data-id="0"><i class="fa fa-square-o fa-check-square-o"></i>文献引用</a>
+						</li>
+						<li>
+							<a href="?qty=1" data-id="1"><i class="fa fa-square-o fa-check-square-o"></i>第三方认证</a>
+						</li>
+						<li>
+							<a href="?qty=2" data-id="2"><i class="fa fa-square-o fa-check-square-o"></i>购买凭证</a>
+						</li>
+						<li>
+							<a href="?qty=3" data-id="3"><i class="fa fa-square-o fa-check-square-o"></i>实验报告</a>
+						</li>
+					</ul>
+				</div>
+				<div class="sl-btns">
+					<a href="javascript:;" class="btn btn-info sl-btn-ok disabled" data-type="qty">确定</a>
+					<a href="javascript:;" class="btn btn-default sl-btn-cancel">取消</a>
+				</div>
+				<div class="sl-ext">
+					<a class="sl-plus" href="javascript:;">多选<i class="fa fa-plus"></i></a>
+				</div>
+			</div>
+			<div class="sl-item" id="bra">
+				<div class="sl-label">品牌：</div>
+				<div class="sl-value">
+					<ul>
+						<%if(pageInfo.brands!=null){for(var brand in pageInfo.brands){%>
+						<li>
+							<a href="?bra=${brand.id}" data-id="${brand.id}"><i class="fa fa-square-o fa-check-square-o"></i>${brand.name}</a>
+						</li>
+						<%}}%>
+					</ul>
+				</div>
+				<div class="sl-btns">
+					<a href="javascript:;" class="btn btn-info sl-btn-ok disabled" data-type="bra">确定</a>
+					<a href="javascript:;" class="btn btn-default sl-btn-cancel">取消</a>
+				</div>
+				<div class="sl-ext">
+					<a class="sl-plus" href="javascript:;">多选<i class="fa fa-plus"></i></a>
+					<a class="sl-more" href="javascript:;">更多<i class="fa fa-angle-down"></i></a>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="filter" id="b-filter">
+			<div class="fl-item">
+				<div class="fl-label">排序：</div>
+				<div class="fl-value">
+					<ul>
+						<li class="active">
+							<a href="javascript:;">综合</a>
+						</li>
+						<li>
+							<a href="?qty=0">文献引用</a>
+						</li>
+						<li>
+							<a href="?qty=1">第三方认证</a>
+						</li>
+						<li>
+							<a href="?qty=2">购买凭证</a>
+						</li>
+						<li>
+							<a href="?qty=3">实验报告</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div> -->
+		<div class="b-main">
+			<div class="b-warp">
+				<table class="b-table">
+					<thead>
+						<tr>
+							<th width="10%"></th>
+							<th width="30%">商品名称</th>
+							<th width="10%">品牌/货号</th>
+							<th width="35%">商品价格</th>
+							<th width="15%">质量</th>
+						</tr>
+					</thead>
+					
+					<%if(pageInfo.list!=null){for(var item in pageInfo.list){%>
+					<tr>
+						<td>
+							<a href="${ctxPath}/product"><img src="${item.image}" width="90" height="90" /></a>
+						</td>
+						<td>
+							<a href="${ctxPath}/product-${item.id}.html" class="b-pname">${item.pname}</a>
+							<p class="b-enname">${item.enname}</p>
+							<p class="b-comp">${item.store}</p></td>
+						<td><p>${item.code}</p></td>
+						<td class="b-item-pga" data-id="${item.id}">
+							<!-- <div class="b-pitem">
+								<div class="b-pspec">200mg</div>
+								<div class="b-rmb">CNY1,198.15</div>
+								<i class="fa fa-shopping-cart icon-red b-cart"></i>
+							</div>
+							<div class="b-pitem">
+								<a href="" class="b-more">更多...</a>
+							</div> -->
+						</td>
+						<td>
+							<%if(item.quality/20>0){%>
+								<p>
+									<%for(var i = 1; i <= item.quality/20; i++){%>
+										<span class='fa fa-star icon-red'></span>
+									<%}%>
+									<%if(item.quality%20 > 0 && item.quality/20 > 0){%>
+										<i class="fa fa-star-half-full icon-red"></i>
+									<%}%>
+								</p>
+								<p><span class="b-soure">${item.quality/20}</span>分</p>
+							<%}%>
+						</td>
+					</tr>
+					<%}}%>
+				</table>
+			</div>
+			<div class="b-aside">
+				<div class="b-brand">
+					<h2 class="b-aside-title">推荐企业</h2>
+					<ul>
+						<li><a href=""><img src="" ></a></li>
+						<li><a href=""><img src="" ></a></li>
+						<li><a href=""><img src="" ></a></li>
+						<li><a href=""><img src="" ></a></li>
+						<li><a href=""><img src="" ></a></li>
+						<li><a href=""><img src="" ></a></li>
+					</ul>
+				</div>
+				<div class="b-histy">
+					<h2 class="b-aside-title">最近浏览</h2>
+					<div class="b-his-item">
+						<div class="b-his-img">
+							<a href=""><img src=""></a>
+						</div>
+						<div class="b-his-des">
+							<a href="">Vorinost</a>
+							<p class="b-his-pirc">￥10000.10</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%if(pageInfo.total>0){%>
+			<div class="row" id="b-pagination">
+				<div class="col-sm-3">
+					<p class="hint">显示 ${pageInfo.startRow} - ${pageInfo.endRow} 包含 ${pageInfo.total} 结果</p>
+				</div>
+				<div class="col-sm-6 text-center">
+					<ul class="pagination">
+					
+					<%if(!pageInfo.isFirstPage){%>
+						<li>
+							<a href="?page=1&row=${pageInfo.pageSize}${paramMap.pageUrl}">首页</a></li>
+					<%}%>
+					
+					<%if(pageInfo.hasPreviousPage){%>
+					<li>
+						<a href="?page=${pageInfo.prePage}&row=${pageInfo.pageSize}${paramMap.pageUrl}"><span class="fa fa-backward padding-height" aria-hidden="true"></span></a></li>
+					<%}%> 
+						
+					<%for(var cur in pageInfo.navigatepageNums){%> 
+						<%if(cur == pageInfo.pageNum){%>
+						<li class="active">
+							<a href="javascript:;">${cur}<span class="sr-only">$(cur)</span></a></li> 
+						<%}else{%>
+						<li><a href="?page=${cur}&row=${pageInfo.pageSize}${paramMap.pageUrl}">${cur}</a></li>
+						<%}%> 
+					<%}%> 
+					
+					<%if(pageInfo.hasNextPage){%>
+						<li><a href="?page=${pageInfo.nextPage}&row=${pageInfo.pageSize}${paramMap.pageUrl}"><span class="fa fa-forward padding-height" aria-hidden="true"></span></a></li>
+					<%}%>
+			
+					<%if(!pageInfo.isLastPage){%>
+						<li><a href="?page=${pageInfo.pages}&row=${pageInfo.pageSize}${paramMap.pageUrl}">末页</a></li>
+					<%}%>
+					</ul>
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
+		<%}%>
+	</div>
+</div>
+<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-hidden="true" >
+	<div class="modal-dialog">  
+		<div class="modal-content">
+			<div class="modal-header"><button class="close" type="button" data-dismiss="modal">×</button>
+				<h3 id="cartModalLabel"><img src="${ctxPath}/static/img/icon_success.png" width="40">&nbsp;<strong>商品已经成功添加到了购物车</strong></h3>
+			</div>
+			<div class="modal-body">
+				<a href="shopcart.html" class="btn btn-success btn-lg btn-block"><strong>去购物车结算</strong></a>
+				<br>
+				<a href="javascript:;" class="btn btn-info btn-lg btn-block" data-dismiss="modal">继续购物</a>
+		    </div>
+		    <div class="modal-footer">
+				<a href="javascript:;" class="btn" data-dismiss="modal"><strong>关闭</strong></a>
+			</div>
+	   </div>
+	</div> 
+</div>
+<%}%>
+<script type="text/javascript">
+$(function() {
+	$("#footer nav").removeClass('navbar-fixed-bottom');
+	var selectI = $('.search-group li').eq("${paramMap.qt}");
+	selectI.addClass('active').siblings().removeClass('active');
+	$('#searchInput').attr("placeholder", selectI.data("prop"));
+	
+	/* if("${paramMap.qty}"){
+		$("#bra .sl-value a").each(function(i,n){
+			$(this).attr('href',$(this).attr('href')+"&qty="+"${paramMap.qty}");
+		})
+	}
+	if("${paramMap.bra}"){
+		$("#qty .sl-value a").each(function(i,n){
+			$(this).attr('href',$(this).attr('href')+"&bra="+"${paramMap.bra}");
+		})
+	} */
+})
+</script>

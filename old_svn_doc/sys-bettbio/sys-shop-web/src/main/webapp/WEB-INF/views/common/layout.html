@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<%include("/common/header.html"){} %>
+</head>
+<body>
+<%include("/common/navbar.html"){} %>
+${layoutContent}
+<%include("/common/footer.html"){} %>
+</body>
+</html>
+<script>
+ $("#open-cart a").click(function(){
+	 if($(this).attr("aria-expanded")=="true"){
+		 $(this).attr("aria-expanded",false).parent().removeClass("open");
+		 return false;
+	 }
+	 $.post("${ctxPath}/shoppingCart/shoppingCarts",{},function(data){
+		 if(data.length>=1){
+			var html="";
+			$("#cartMessage").hide();
+			$("#thMessage").show();
+			$.each(data,function(i){
+			  html+="<tr>";	
+			  html+="<td>"+data[i].productNameCh+"</td>";
+			  html+="<td>"+data[i].number+"</td>";
+			  html+="<td class='spec'>"+data[i].productSpec+"</td>";
+			  html+="<td>"+$.app.formatCurrencyTenThou(data[i].unitPrice)+"</td>";
+			  html+="<td><button class='removeBtn btn-info btn-sm'>移除</button><span style='display:none'>"+data[i].productCode+"</span></td>";
+			  html+="</tr>";	
+			});
+			$("#shoppingcartProducts").empty().append(html);
+		 }else{
+				$("#cartMessage").show();
+				$("#thMessage").hide();
+		 }
+	 },"json");
+ });
+ /*
+ *移除购物车按钮点击
+ */
+ $("#shoppingcartProducts").delegate("button","mousedown",function(){
+	 var _this=$(this);
+	 $.post("${ctxPath}/shoppingCart/remove",{productCode:_this.siblings("span").text(),productSpec:_this.parent().siblings(".spec").text()},function(){
+		 _this.parents("tr").remove();
+	 },"json");
+ });
+ /*
+  *结算按钮点击
+  */ 
+ $("#shoppingcart").delegate("#settlementBtn","mousedown",function(){
+	 if($("#shoppingcartProducts").children().length>0){
+		 $.app.location("${ctxPath}/shoppingCart/shopcart");
+	 }
+ });
+ 
+ 
+</script>
+	

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SysRole">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="IS_DISABLE" jdbcType="INTEGER" property="isDisable" />
+    <result column="JURISDICTION_IDS" jdbcType="VARCHAR" property="jurisdictionIds" />
+    <result column="STORE_CODE" jdbcType="VARCHAR" property="storeCode" />
+  </resultMap>
+  <resultMap id="roleResultMap" type="com.bettbio.core.model.permission.bo.Role" extends="BaseResultMap"></resultMap>
+  
+  <sql id="selectAllField">
+  		SELECT ID,NAME,CODE,CREATE_TIME,UPDATE_TIME,IS_DISABLE,JURISDICTION_IDS,STORE_CODE FROM SYS_ROLE
+  </sql>
+  
+  <select id="findRoleById" parameterType="java.lang.Integer" resultMap="roleResultMap">
+  	<include refid="selectAllField"></include>
+  	WHERE ID = #{id}
+  </select>
+  
+  <insert id="add" parameterType="com.bettbio.core.model.SysRole">
+  		INSERT INTO SYS_ROLE VALUES(NULL,#{name},#{code},NOW(),#{updateTime},#{isDisable},#{jurisdictionIds})
+  </insert>
+  
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+</mapper>

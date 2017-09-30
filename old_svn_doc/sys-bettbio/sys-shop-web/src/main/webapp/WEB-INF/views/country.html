@@ -1,0 +1,42 @@
+<%layout("/common/admin/layout.html",{title:"国家列表"}){ %>
+<div class="container-fluid warp">
+<div class="row">
+<form class="form-horizontal" action="${ctxPath}/country" method="get">
+<div class="col-sm-3"><input type="text" class="form-control" name="countryName" value="${paramMap.countryName}"></div>
+<div class="col-sm-1"><input type="submit" class="btn btn-default" value="查询"></div>
+</form>
+<div class="col-sm-8">
+<input type="text" id="tt" class="form-control" name="" value="" />
+<button id="dd" class="btn btn-default">发送</button>
+</div>
+<div class="col-sm-12">
+<table class="table">
+	<tr>
+		<td>id</td>
+		<td>name</td>
+		<td>code</td>
+	</tr>
+	<%for(country in pageInfo.list){%>
+	<tr>
+		<td>${country.id}</td>
+		<td>${country.countryName}</td>
+		<td>${country.countryCode}</td>
+	</tr>
+	<%}%>
+</table>
+</div>
+<div class="col-sm-12">
+<%include("/common/pagination.html"){} %>
+</div>
+</div>
+</div>
+<%}%>
+		<script type="text/javascript">
+			$(function(){
+				$("#dd").click(function(){
+					$.app.get("${ctxPath}/"+$("#tt").val(),null,function(flag,data){
+						console.log(flag + " > 执行自己的成功操作方法");
+					})
+				})
+			})
+		</script>

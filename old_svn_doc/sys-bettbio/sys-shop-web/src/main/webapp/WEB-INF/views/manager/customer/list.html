@@ -1,0 +1,279 @@
+<%layout("/common/manager/layout.html"){ %>
+<div class="container-fluid warp">
+
+	<div class="warp-body">
+		<div class="row s_search">
+			<div class="col-sm-12">
+				<ul id="" class="nav nav-pills pull-right form-inline">
+					<li><a href="javascript:;" class="c_form_sa" data-activate="-1">全部</a></li>
+					<li><a href="javascript:;" class="c_form_sa" data-activate="0">待激活</a></li>
+					<li><a href="javascript:;" class="c_form_sa" data-activate="1">已激活</a></li>
+					<li class="vertical-divider"></li>
+					<li><a href="javascript:;"  class="resetPwds">批量重置密码</a></li>
+					<li class="dropdown"><a data-toggle="dropdown"
+						class="dropdown-toggle" href="javascript:;" aria-expanded="true">
+							批量客户状态操作 <span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="javascript:void(0);" class="activates">激活</a></li>
+							<li class="divider"></li>
+							<li><a href="javascript:void(0);" class="un-activates">冻结</a></li>
+						</ul></li>
+					<li><a data-toggle="collapse" href="#collapseOne" id="f-collapse" class="collapsed" aria-expanded="false">高级查询</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="collapseOne" class="panel-collapse collapse ${paramMap.isOpen}" style="position: relative; height: 0px;" aria-expanded="false">
+					<form id="searchForm" class="form-horizontal" action="" method="get">
+						<div class="col-sm-3 ">
+							<div class="form-group">
+								<label class="control-label" for="name">姓名</label> 
+								<input id="name" name="name" class="form-control" type="text" value="${paramMap.name}">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="phone">已验证手机</label> 
+								<input id="phone" name="phone" class="form-control" type="text" value="${paramMap.phone}">
+							</div>
+						</div>
+						<div class="col-sm-3 col-sm-offset-1">
+							<div class="form-group">
+								<label class="control-label" for="email">电子邮件</label> 
+								<input id="email" name="email" class="form-control" type="text" value="${paramMap.email}">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="company">学校/公司</label> 
+								<input id="company" name="company" class="form-control" type="text" value="${paramMap.company}">
+							</div>
+						</div>
+						<div class="col-sm-3 col-sm-offset-1">
+							<div class="form-group">
+								<label class="control-label" for="mechanismSubCode">课题组</label> 
+								<input id="mechanismSubCode" name="mechanismSubCode" class="project find form-control" type="text" value="${paramMap.mechanismSubCode}">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="grade">等级$</label> 
+								<select id="grade" name="grade" class="find form-control">
+									<option value=""></option>
+									<%for(var ug in userGrades){%>
+										<option value="${ug.id}">${ug.lv}</option>
+									<%}%>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-1 text-right">
+							<br><input type="hidden" name="isOpen" value="">
+							<br><input type="hidden" name="activate" value="${paramMap.activate}">
+							<button type="submit" class="btn btn-success btn-block">提交</button>
+							<br> 
+							<button type="button" class="btn btn-default btn-block reset-form">清除</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="selectIdAll" name="selectIdAll" value="ids" data-select="all"></th>
+							<th>姓名</th>
+							<th>学校/公司</th>
+							<th>课题组</th>
+							<th>已验证手机</th>
+							<th>电子邮件</th>
+							<th>用户积分</th>
+							<th>用户等级</th>
+							<th>性别</th>
+							<th>激活</th>
+							<th>重置密码</th>
+							<th>设置等级</th>
+						</tr>
+					</thead>
+					<%for(var user in pageInfo.list){%>
+					<tr>
+						<td><input type="checkbox" name="ids" class="idChk" value="${user.id}"></td>
+						<td>${user.name}</td>
+						<td>${user.company}</td>
+						<td>${user.mechanismSubCode}</td>
+						<td>${user.phone}</td>
+						<td>${user.email}</td>
+						<td>${user.integral}</td>
+						<td class="c_star_hd">
+							<%for(var i = 0;i< user.grade;i++){%><span class="fa fa-star star-red"></span><%}%>
+						</td>
+						<td>${user.sex}</td>
+						<td><input type="hidden" name="ids" value="${user.id}" class="id">
+							<%if(user.isActivation==0){%>
+								<a href="javascript:void(0);" class="activate">激活</a>
+							<%}else if(user.isActivation==1){%>
+								<a href="javascript:void(0);" class="un-activate">冻结</a>
+							<%}%>
+						</td>
+						<td><a href="javascript:void(0);" class="resetPwd">重置密码</a></td>
+						<td><a href="javascript:void(0);" class="setGrade" data-title="当前用户等级<%for(var i = 0;i< user.grade;i++){%><span class='fa fa-star star-red'></span><%}%>">设置等级</a></td>
+					</tr>
+					<%}%>
+				</table>
+			</div>
+		</div>
+		<%include("/common/manager/pagination.html"){} %>
+	</div>
+</div>
+<div id="gradeModal" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="gradeModalLabel" aria-hidden="true">
+	<div class="modal-dialog ">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>  
+				<h4 class="modal-title" id="gradeModalLabel"></h4>
+			</div>
+			<div class="modal-body">
+				<form id="gradeForm" method="post">
+					<div class="row">
+						<div class="col-sm-9">
+							<%for(var ug in userGrades){%>
+								<div class="radio">
+								  <label><input type="radio" name="grade" class="grade-radio" value="${ug.lv}" >
+								  	最高下单额度：￥${ug.value} ${printStar(ug.lv)}
+								  </label>
+								</div>
+							<%}%>
+						</div>	
+					</div>
+					<div class="row">
+						<div class="col-sm-12 text-right">
+							<input type="hidden" name="id" value="">
+							<button type="submit" class="btn btn-success" ><strong>提交</strong></button> 
+							<button type="button" class="btn" data-dismiss="modal"><strong>取消</strong></button> 
+						</div>
+					</div>
+				</form>
+		    </div>  
+		</div> 
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+	$(function() {
+		var _activeIdx = '${paramMap.activate}'==''?0:${paramMap.activate}+1;
+		var _gradeIdx = '${paramMap.grade}'==''?0:'${paramMap.grade}';
+		var _tr;
+		var _star;
+		var _starLen;
+		if(_gradeIdx!=0) $('#grade option').eq(_gradeIdx).attr('selected','selected');
+		$('.s_search li:eq('+_activeIdx+')').addClass('active');
+		$('.c_form_sa').click(function(){
+			if(!$(this).parent().hasClass('active')){
+				$('#searchForm :input[name="activate"]').val($(this).data('activate'));
+				$('#searchForm').submit();
+			}
+		})
+		$('.reset-form').click(function(){
+			$.app.resetForm($('#searchForm'));
+		})
+		$('.setGrade').click(function(){
+			_tr = $(this).closest('tr');
+			_star = _tr.find('.c_star_hd');
+			_starLen = _star.children().length;
+			$('#gradeModalLabel').html('当前用户等级'+_star.html());
+			$('#gradeModal .grade-radio').eq(_starLen-1).attr('checked','');
+			$('#gradeModal :input[name="id"]').val(_tr.find('.idChk').val());
+			$('#gradeModal').modal('show');
+		})
+		$('#gradeForm').submit(function(e){
+			var rdio = $('#gradeModal .grade-radio:checked');
+			if(_starLen != rdio.val()){
+				$.app.get(cuts.optPath+"/setGrade",$(this).serialize(),function(flag,data){
+					if(flag){
+						$.app.message(data.message)
+						_star.html($.app.printStar(rdio.val()));
+						$('#gradeModal').modal('hide');
+					}else{
+						$.app.message(data.message,"w")
+					}
+				})
+			}else{
+				$('#gradeModal').modal('hide');
+			}
+			return false;
+		})
+		$('.resetPwd,.resetPwds').click(function(){
+			if(!cuts.isAOrAll(this, 'resetPwd')) return;
+			cuts.resetPwd(cuts.getAOrAllData(this, 'resetPwd'));
+		})
+		$('.activate,activates').click(function(){
+			if(!cuts.isAOrAll(this, 'activate')) return;
+			cuts.activate(cuts.getAOrAllData(this, 'activate'));
+		})
+		$('.un-activate,.un-activates').click(function(){
+			if(!cuts.isAOrAll(this, 'un-activate')) return;
+			cuts.unactivate(cuts.getAOrAllData(this, 'un-activate'));
+		})
+		$('#searchForm').submit(function(){
+			var _isOpen = $('#searchForm :input[name="isOpen"]');
+			if($('#collapseOne').hasClass('in')){
+				_isOpen.val('in');
+			}else {
+				_isOpen.val('');
+			}
+		});
+	})
+	var cuts={
+			optPath : ctxPath+"/manager/customer",
+			ids : [],
+			alertUnChk : function(){
+				$.app.message("请先选择!","w");
+			},
+			isChk : function(_this){
+				return $(_this).closest('tr').find('.idChk').serialize().length > 0;
+			},
+			isChks : function(){
+				return $('.idChk').serialize().length > 0;
+			},
+			isAOrAll : function(_this,cls){
+				if(!$(_this).hasClass(cls)){
+					if(!this.isChks(_this)){
+						cuts.alertUnChk();
+						return false;
+					}
+				}
+				return true;
+			},
+			getAOrAllData : function(_this,cls){
+				return $(_this).hasClass(cls) ? this.getId(_this) : this.getIds(_this);
+			},
+			getId : function(_this){
+				return $(_this).closest('tr').find('.id').serialize();
+			},
+			getIds : function(){
+				return $('.idChk').serialize();
+			},
+			resetPwd : function(ids){
+				$.app.get(this.optPath+"/resetPwd",ids,function(flag,data){
+					$.app.message(data.message);
+				})
+			},
+			activate : function(ids){
+				$.app.get(this.optPath+"/activate",ids,function(flag,data){
+					$.app.message(data.message);
+					if(flag){
+						setTimeout(function(){
+							$("#searchForm").submit();
+						}, 1000)
+					}
+				})
+			},
+			unactivate : function(ids){
+				$.app.get(this.optPath+"/unactivate",ids,function(flag,data){
+					$.app.message(data.message);
+					if(flag){
+						setTimeout(function(){
+							$("#searchForm").submit();
+						}, 1000)
+					}
+				})
+			}
+	}
+</script>

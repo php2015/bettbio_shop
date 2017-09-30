@@ -1,0 +1,189 @@
+<%layout("/common/layout.html",{css:["css/style.css","Font-Awesome/css/font-awesome.min.css"]}){
+%>
+		<div class="warp">
+			<div class="h_body">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-2">
+							<ul class="c_menu">
+								<li ><a href="${ctxPath}/personalCenter">我的账户</a></li>
+						<li><a href="${ctxPath}/findOrders">我的订单</a></li>
+						<li><a href="${ctxPath}/findUserPorints">查看积分</a></li>
+						<li ><a href="${ctxPath}/billing">开票和收货信息</a></li>
+						<li class="active"><a href="${ctxPath}/safe/safe">帐号安全</a></li>
+							</ul>
+						</div>
+						<div class="col-sm-10">
+							<h3>修改邮箱</h3>
+							<form id="emailInfo" class="form-horizontal c_user_from s_register_from" action="" method="post">
+							    <input type="hidden" value="${userInfo.phone}" id="phone"/>
+								<div class="form-group">
+									<div class="col-sm-2  text-left">
+										<label class="control-label">当前邮箱:</label>
+									</div>
+									<div class="col-sm-6">
+										<input id="oldEmail" name="oldEmail" class="required userName form-control" type="text" value="${userInfo.email}" readonly="">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2  text-left">
+										<label class="control-label">新邮箱：</label>
+									</div>
+									<div class="col-sm-6">
+										<input id="newEmail" name="newEmail" class="required company form-control checkInput" type="text" value="" success="false" >
+										<span class="help-inline error">邮箱格式不正确</span>
+									</div>
+									<div class="col-sm-3 success">
+										<span class="success-icon"></span>
+									</div>									
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2  text-left">
+										<label class="control-label">手机验证码：</label>
+									</div>
+									<div class="col-sm-3 padding-right-clear">
+										<input id="phoneCode" name="phoneCode" class="form-control checkInput" type="text" value="" maxlength="255" success="false">
+										<span class="help-inline error">手机验证不正确</span>
+									</div>
+									<div class="col-sm-3 padding-left-clear">
+										<button type="button" id="sendCode" class="btn btn-info btn-block">获取验证码</button>
+									</div>
+									<div class="col-sm-3 success">
+										<span class="success-icon"></span>
+									</div>										
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2 col-sm-offset-2">
+										<input id="subBtn" type="submit" value="提交" name="register" class="btn btn-info btn-block">
+									</div>
+									<div class="col-sm-2 col-sm-offset-1">
+										<input type="reset" value="返回" class="btn btn-default btn-block">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	<div class="modal fade" id="sendCodeModel" tabindex="-1" role="dialog"
+	aria-hidden="true" data-backdrop='static'>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<p id="mess"></p>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" id="url" /> <a href="javascript:void(0);"
+					class="btn btn-success" data-dismiss="modal" id="btncSuccess">确定</a>
+			</div>
+		</div>
+	</div>
+	</div>	
+<%}%>
+
+<script type="text/javascript">
+   //新邮箱校验
+   $("#newEmail").blur(function(){
+	   var re = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
+	   var new_email=$(this).val();
+	   if(new_email==""){
+		   $(this).attr("success","false").siblings(".error").css("visibility","visible");
+		   return false;
+	   }else{
+		   if(re.test(new_email)){
+			   $(this).attr("success","true");
+			   $(this).parents(".form-group").find(".success").show()
+			   $(this).siblings(".error").html("邮箱格式不正确").css("visibility","hidden");
+		   }else{
+			   $(this).attr("success","false").siblings(".error").html("邮箱格式不正确").css("visibility","visible");
+		   }
+	   }
+   });
+   
+ //发送验证码
+   $("#sendCode").click(function() {
+   				$.ajax({
+   					type : 'get',
+   					dataType : "json",
+   					data : "phone=" + $("#phone").val(),
+   					url : '${ctxPath}/sms/register',
+   					success : function(ajaxResponse) {
+   						if (ajaxResponse.success == true) {
+   							$("#mess").html(ajaxResponse.message);
+   							$('#sendCodeModel').modal('show');
+   							$("#sendCode").addClass("disabled");
+   							var index = 30;
+   							setInterval(function() {
+   								index--;
+   								$("#sendCode").text(index + "后重新获取");
+   								if (index < 0) {
+   									$("#sendCode").removeClass("disabled")
+   											.text("获取验证码");
+   									clearInterval();
+   								}
+   							}, 1000);
+   						} else {
+   							$("#mess").html(ajaxResponse.message);
+   							$('#sendCode').modal('show');
+   						}
+   					},
+   					error : function(jqXHR, textStatus, errorThrown) {
+   					}
+   				});
+   		});
+
+   /**
+    * 校验手机验证码
+    */
+   $("#phoneCode").blur(function(){
+   	var _this=$(this);
+   	var phone_code=$(this).val();
+   	if(phone_code==""){
+   		_this.siblings(".error").css("visibility","visible");
+   		_this.attr("success","false");
+   	}else{
+   		$.post("${ctxPath}/sms/validate",{"code" : phone_code,"phone" : $("#phone").val()},function(data){
+   			if(data.success==true){
+   				_this.siblings(".error").css("visibility","hidden");
+   				_this.attr("success","true");
+   				_this.parents(".form-group").find(".success").show();
+   			}else{
+   				_this.attr("success","false");
+   				_this.siblings(".error").css("visibility","visible");
+   			}		
+   		},"json");
+   	}
+   });
+   
+   /**
+    *提交表单
+    */
+   $("#subBtn").mousedown(function(){
+   	var booleanValue=true;
+   	$("#emailInfo input[class*=checkInput]:text").each(function(){
+   		if($(this).attr("success")==false){
+   			$(this).siblings(".error").css("visibility","visible");
+   			booleanValue=false;
+   		}
+   	})
+   	if(booleanValue==true){
+   		$.post("${ctxPath}/changeEmail",{newEamil:$("#newEmail").val()},function(data){
+   			$.app.message("i",data.message);
+   			setTimeout(function() {
+   				window.location.href="${ctxPath}/login";
+   			},1100)
+   		},"json");
+   	}
+   });
+   
+
+   /**
+    * 获取焦点样式
+    */
+   $("#emailInfo input[class*=checkInput]:text").focus(function(){
+   	$(this).siblings(".error").css("visibility","hidden");
+   	$(this).parents(".form-group").find(".success").hide();
+   });
+</script>

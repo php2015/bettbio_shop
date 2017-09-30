@@ -1,0 +1,81 @@
+.product-header{
+	background-color: #fff;
+	
+	/**border:1px solid #ccc;**/
+}
+.product-img {
+	border:1px solid #ccc;
+	
+}
+.product-header .product-title{
+	padding:3px;
+	margin-left:7px;
+}
+.product-table{
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.product-main{
+	padding:3px;
+	margin-left:7px;
+}
+.productdesc {
+	padding-top: 10px;
+	color:#000;
+}
+.productdesc p{
+	padding-top: 10px;
+	color:#000!important;
+	font-size:12px;
+}
+.productdesc-even-background {
+	/**background:#E6F1FA;**/
+}
+.productdesc-title{
+	margin: 10px 0px; 
+	width: 100%; 
+	height: 30px; 
+	font-size: 18px; 
+	text-align: center; 
+	line-height: 30px; 
+	font-weight: bold;
+	background: #5cb85c;
+	color:#fff;
+}
+.navbar-wrapper {
+  margin-top:3px;
+  position: relative;
+  z-index: 15;
+  background: #3498DB;
+  font-weight: bold;
+}
+
+.navbar-wrapper a {
+	color:#fff;
+}
+
+.navbar.navbar-inverse.navbar-static-top {
+  background: #3498DB;
+}
+.navbar.navbar-inverse.navbar-static-top a{
+  color:#fff;
+}
+.navbar.navbar-inverse.navbar-static-top a:hover{
+  background:#2672C8;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus{
+  background:#FFF;
+  color:#000;
+  font-weight:700;
+  border-top: 2px solid #2672C8;
+}
+.navbar-inverse .navbar-nav>.active>a:hover {
+  background:#FFF;
+  color:#000;
+  font-weight:700;
+}
+/* Navbar positioning foo */
+.navbar-wrapper {
+
+}

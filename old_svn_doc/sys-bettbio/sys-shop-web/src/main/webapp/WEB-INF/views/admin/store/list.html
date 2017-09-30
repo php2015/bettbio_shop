@@ -1,0 +1,141 @@
+<%layout("/common/admin/layout.html",{ 
+dynscript:"$(function() {" +
+	"$(\"#selectIdAll,#selectAudiAll\").change(function() {" + 
+		"if(this.checked) {" + 
+			" $(this).check();" + 
+		" } else {" + 
+			"$(this).uncheck();" + 
+		" }" + 
+		"})" + 
+	"})"
+}){ %>
+<div class="container-fluid warp">
+	<div class="row warp-tabs">
+		<ul class="nav nav-tabs">
+			<!-- <li><a href="${ctxPath}/admin/store/store">商家详情</a></li> -->
+			<li><a href="${ctxPath}/admin/store/create">创建商家</a></li>
+			<li class="active"><a href="${ctxPath}/admin/store/list">商家清单</a></li>
+			<!-- <li><a href="${ctxPath}/admin/store/logo">商家LOGO</a></li> -->
+		</ul>
+	</div>
+	<div class=" warp-body">
+		<div class="row">
+			<div class="col-sm-12 s_search">
+				<ul class="nav nav-pills pull-right form-inline">
+					<li><a href="javascript:void(0);"onclick="deleteAll()">删除所有</a></li>
+					<li><a href="javascript:void(0);"onclick="deletes()">删除所选</a></li>
+					<li>
+						<form id="listForm" action="list" method="get">
+							<fieldset>
+								<div class="input-group" style="padding-top: 3px; width: 250px">
+									<input id="name" name="name" class="form-control "
+										type="text" value="${sStore.name!}" placeholder="商家名称/商家代码/邮箱地址"> <a
+										href="javascript:void(0);" class="input-group-addon"><span
+										class="fa fa-search" aria-hidden="true"></span></a>
+								</div>
+							</fieldset>
+						</form>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="selectIdAll"name="selectIdAll" value="idChk"></th>
+							<th>代码</th>
+							<th>名称</th>
+							<th>电子邮件</th>
+							<th>种子用户</th>
+							<th>删除</th>
+						</tr>
+					</thead>
+					<%for(sStore in pageInfo.list){%>
+					<tr>
+						<td><input type="checkbox" name="idChk" value="${sStore.id}"></td>
+						<td><a href="${ctxPath}/admin/store/info?code=${sStore.code}">${sStore.code}</a>
+						</td>
+						<td>${sStore.name}<input type="hidden" name="id" value="${sStore.id}"></td>
+						<td>${sStore.email}</td>
+						<td><span>
+						<%if(sStore.isSeedUser==0){%>
+						true
+						<%}else{%>
+						false
+						<%}%>
+						</span>
+						</td>
+						<td><a href="javascript:void(0);" onclick="delstore(${sStore.id})">删除</a></td>
+					</tr>
+					<%}%>
+				</table>
+			</div>
+		</div>
+		<%include("/common/admin/pagination.html"){} %>
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+$(function(){
+	$(".input-group-addon").click(function(){
+		$("#listForm").submit();
+	})
+})
+	function delstore(id){
+		$("#confirmHref").bind("click",function(){
+			delById(id);
+		 });
+		$('#delcfmModel').modal('show');
+	}
+	
+	function delById(id){
+		$.app.get("${ctxPath}/admin/store/delete","id="+id,function(flag,data){
+			$.app.message(data.message);
+			if(flag == true){
+				setTimeout(function(){
+					$("#listForm").submit();
+				}, 1000)
+			}
+		})
+	}
+	
+	function deletes(){
+		$("#confirmHref").bind("click",function(){
+			deletestores();
+		 });
+		$('#delcfmModel').modal('show');
+	}
+	function deletestores(){
+		var ids = [];
+		 $('input[name="idChk"]:checked').each(function(){
+			 ids.push( $(this).val());
+		 })
+		 
+		 $.app.get("${ctxPath}/admin/store/deletes","ids="+ids,function(flag,data){
+			 $.app.message(data.message);
+			 if(flag == true){
+				setTimeout(function(){
+					$("#listForm").submit();
+				}, 1000)
+			}
+		})
+	}
+	function deleteAll(){
+		$("#confirmHref").bind("click",function(){
+			deleteAllStore();
+		 });
+		$('#delcfmModel').modal('show');
+	}
+	function deleteAllStore(){
+		$.app.get("${ctxPath}/admin/store/deleteAll",null,function(flag,data){
+			$.app.message(data.message);
+			if(flag == true){
+				setTimeout(function(){
+					$("#listForm").submit();
+				}, 1000)
+			}
+		})
+	}
+</script>

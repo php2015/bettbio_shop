@@ -1,0 +1,106 @@
+<%layout("/common/manager/layout.html",{}){ %>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="${ctxPath}/manager/exhibition/exhibitionList">返回展会列表</a>
+					</li>
+				</ul>
+			</div>
+			<div class="warp-body">
+				<div class="row s_search">
+					<div class="col-sm-12">
+						<ul class="nav nav-pills form-inline">
+							<li class="navbar-left"><h5>参展商家列表</h5></li>
+							<li class="navbar-right">
+								<form id="searchForm" action="${ctxPath}/manager/exhibition/list" method="get">
+									<fieldset>
+										<div class="input-group" style="padding-top:3px;width:250px">
+											<input id="name" name="name" class="form-control " type="text" value="${name!}" placeholder="商家名称">
+											<a href="#" onclick="document.getElementById('searchForm').submit();" class="input-group-addon"><span class="fa fa-search" aria-hidden="true"></span></a>
+											<input type="hidden" id="exhibitionId" name="exhibitionId" value="${exhibitionId!}">
+										</div>
+									</fieldset>
+								</form>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-sm-12">
+					<div class="pre-scrollable">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>商家代码</th>
+									<th>商家名称</th>
+									<th>商家申请表</th>
+									<th>确认参展</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							
+							<%
+							for(eExhibitionStore in eExhibitionStoreBoList){
+							%>
+							<tr class="eExhibitionStore">
+								<td>${eExhibitionStore.code!}</td>
+								<td>${eExhibitionStore.name!}</td>
+								<td><a href="${ctxPath}/${eExhibitionStore.fileUrl!}">商家申请表</a></td>
+								<td id="isAffirm">
+								<%if(eExhibitionStore.isAffirm==0){%>
+												false
+											<%}else{%>
+												true
+											<%}%>
+								</td>
+								<td>
+									<a href="javascript:void(0);" class="checkTrue" >
+									<%if(eExhibitionStore.isAffirm==0){%>
+												确认参展
+											<%}else{%>
+												取消参展
+											<%}%>
+									</a>
+									<input type="hidden" id="eExhibitionStore_Id" value="${eExhibitionStore.ExhibitionId}">
+								</td>
+							</tr>
+							<%}%>
+						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%}%>
+		<script type="text/javascript">
+		$(function(){
+			$(".checkTrue").click(function(){
+				var _this = $(this);
+				var id = _this.closest('.eExhibitionStore').find('#eExhibitionStore_Id').val();
+				var isAffirm = _this.closest('.eExhibitionStore').find('#isAffirm').html();
+				
+				$.app.get("${ctxPath}/manager/exhibition/affirm",{"id":id,"isAffirm":isAffirm},function(flag,data){
+					$.app.message(data.message);
+					if(flag){
+						if($.trim(isAffirm) == "true"){
+							_this.empty();
+							_this.html("确认参展");
+							_this.closest('.eExhibitionStore').find('#isAffirm').empty();
+							_this.closest('.eExhibitionStore').find('#isAffirm').html("false");
+						}else{
+							_this.empty();
+							_this.html("取消参展");
+							_this.closest('.eExhibitionStore').find('#isAffirm').empty();
+							_this.closest('.eExhibitionStore').find('#isAffirm').html("true");
+						}
+					}
+				})
+				
+				
+				
+			})
+		})
+		
+		</script>

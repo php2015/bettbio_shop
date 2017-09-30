@@ -1,0 +1,101 @@
+<%layout("/common/layout.html",{css:["css/style.css","Font-Awesome/css/font-awesome.min.css"]}){
+%>
+		<div class="warp">
+			<div class="container">
+				<h2>订单详情</h2>
+				<h5>订单号:${subOrder.orderCode}&nbsp;&nbsp;下单时间:${subOrder.createDate,'yyyy-MM-dd HH:ss:mm'}&nbsp;&nbsp;订单状态:${subOrder.orderState}</h5>
+			</div>
+			<div class="selement">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-7">
+							<table class="table table-bordered table-hover">
+								<caption class="table-out-title">收货信息
+								</caption>
+								<thead>
+									<tr>
+										<th>收货人姓名</th>
+										<th>公司名称</th>
+										<th>收货地址</th>
+										<th>邮编</th>
+										<th>收货人手机</th>
+									</tr>
+								</thead>
+								<tbody id="selectedAddress">
+								    <% if(order!=null) {%>
+									<tr>
+									<td>${order.userName}</td>
+									<td>${order.corporateName}</td>
+									<td>${order.userAddress}</td>
+									<td>${order.postcode}</td>
+									<td>${order.userPhone}</td>
+									</tr>								    
+								    <%}%>
+								</tbody>
+							</table>
+							<table class="table table-bordered table-hover">
+								<caption class="table-out-title">开票信息
+								</caption>
+								<thead>
+									<tr>
+										<th>注册公司/发票抬头</th>
+										<th>注册地址</th>
+										<th>注册电话</th>
+										<th>开户银行</th>
+										<th>银行账户</th>
+										<th>纳税人识别号</th>
+									</tr>
+								</thead>
+								<tbody id="selectedInvoice">
+									<% if(order!=null) {%>
+									<tr>
+										<td>
+										     <% if(order.invoiceType==0){ %>
+												${order.rise}
+												<%}else if(order.invoiceType==1){%>
+												${order.companyRegisteredName}
+											<%}%>	
+										</td>
+										<td>${order.registerAddress}</td>
+										<td>${order.registeredPhone}</td>
+										<td>${order.openAccountBank}</td>
+										<td>${order.bankAccount}</td>
+										<td>${order.identificationCode}</td>
+									</tr>
+									<%}%>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-sm-5">
+							<table class="table table-bordered table-hover">
+								<caption class="table-out-title">订单总览</caption>
+								<thead>
+									<tr>
+										<th width="45%">产品名称</th>
+										<th width="15%">规格</th>
+										<th width="10%">数量</th>
+										<th width="15%">价格</th>
+										<th width="15%">金额</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% for(orderDetail in subOrder.orderDatails){ %>
+										<tr>
+											<td>${orderDetail.productNameCh}</td>
+											<td>${orderDetail.productSpce}</td>
+											<td>${orderDetail.productNum}</td>
+											<td>${orderDetail.productPrice}</td>
+											<td>${orderDetail.productCountPrice}</td>
+										</tr>										
+									<% } %>	
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="shopcart-btn text-right">
+						<a href="${ctxPath}/adminHome" class="btn btn-success">返回</a>
+					</div>
+				</div>
+			</div>
+		</div>
+<%}%>

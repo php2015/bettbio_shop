@@ -1,0 +1,149 @@
+"product_zh": {
+				"properties": {
+					"enkey": {
+						"type": "string"
+					},
+					"store": {
+						"type": "string"
+					},
+					"storeCode": {
+						"type": "string"
+					},
+					"pcode": {
+						"type": "string"
+					},
+					"query": {
+						"properties": {
+							"bool": {
+								"properties": {
+									"must": {
+										"properties": {
+											"query_string": {
+												"properties": {
+													"default_field": {
+														"type": "string"
+													},
+													"query": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"thirdproofs": {
+						"properties": {
+							"description": {
+								"type": "string"
+							},
+							"pname": {
+								"type": "string"
+							}
+						}
+					},
+					"from": {
+						"type": "long"
+					},
+					"@version": {
+						"type": "string"
+					},
+					"lang": {
+						"type": "string"
+					},
+					"id": {
+						"type": "string"
+					},
+					"proofs": {
+						"properties": {
+							"description": {
+								"type": "string"
+							},
+							"pname": {
+								"type": "string"
+							}
+						}
+					},
+					"aggs": {
+						"type": "object"
+					},
+					"certificates": {
+						"properties": {
+							"description": {
+								"type": "string"
+							},
+							"pname": {
+								"type": "string"
+							}
+						}
+					},
+					"testreports": {
+						"properties": {
+							"description": {
+								"type": "string"
+							},
+							"pname": {
+								"type": "string"
+							}
+						}
+					},
+					"chkey": {
+						"type": "string"
+					},
+					"isfree": {
+						"type": "boolean"
+					},
+					"image": {
+						"type": "string"
+					},
+					"code": {
+						"type": "string"
+					},
+					"period": {
+						"type": "long"
+					},
+					"size": {
+						"type": "long"
+					},
+					"@timestamp": {
+						"format": "dateOptionalTime",
+						"type": "date"
+					},
+					"penname": {
+						"type": "string"
+					},
+					"friendlyUrl": {
+						"type": "string"
+					},
+					"category": {
+						"type": "long"
+					},
+					"price": {
+						"type": "long"
+					},
+					"manufacturer": {
+						"type": "long"
+					},
+					"pname": {
+						"type": "string"
+					},
+					"quality": {
+						"type": "long"
+					},
+					"simpledesc": {
+						"type": "string"
+					},
+					"auth": {
+						"properties": {
+							"auth_id": {
+								"type": "string"
+							},
+							"auth_type": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}

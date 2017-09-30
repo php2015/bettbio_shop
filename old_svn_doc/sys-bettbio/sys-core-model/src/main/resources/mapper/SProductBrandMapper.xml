@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SProductBrandMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SProductBrand">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="IS_DISABLE" jdbcType="INTEGER" property="isDisable" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="MECHANISM_NAME" jdbcType="VARCHAR" property="mechanismName" />
+    <result column="BRAND_URL" jdbcType="VARCHAR" property="brandUrl" />
+    <result column="BRAND_REMARK" jdbcType="VARCHAR" property="brandRemark" />
+    <result column="SHORT_NAME" jdbcType="VARCHAR" property="shortName" />
+    <result column="BRAND_LOGO" jdbcType="VARCHAR" property="brandLogo" />
+  </resultMap>
+  <select id="getSProductBrandByCode" parameterType="String" resultType="java.util.Map">
+  		SELECT d.* from S_PRODUCT t, S_PRODUCT_BRAND d 
+			WHERE t.BRAND_CODE = d.CODE
+ 				and t.STORE_CODE = #{code}
+  </select>
+  
+  <delete id="deleteBrandList">
+  	delete 
+	from S_PRODUCT_BRAND where ID in  
+	<foreach close=")" collection="array" index="index" item="item" open="(" separator=",">  
+ 	#{item}  
+	</foreach> 
+  </delete>
+  
+  <delete id="deleteAll">
+  	delete  from S_PRODUCT_BRAND;
+  </delete>
+  
+  <select id="selectPagebyNameOrCode" resultMap="BaseResultMap">
+  select t.* from S_PRODUCT_BRAND t where 1=1
+   <if test="nameOrCode != null and nameOrCode != '' ">
+    AND  t.CODE like CONCAT('%',#{nameOrCode},'%') or t.NAME like CONCAT('%',#{nameOrCode},'%')
+  </if>
+    limit #{page}, #{rows}
+  </select>
+  
+  <select id="selectByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+	t.ID,
+	t.CODE,
+	t.NAME,
+	t.SHORT_NAME,
+	t.IS_DISABLE,
+	t.CREATE_DATE,
+	t.UPDATE_DATE,
+	t.MECHANISM_NAME,
+	t.BRAND_URL,
+	t.BRAND_REMARK,
+	t.BRAND_LOGO
+	 from S_PRODUCT_BRAND t where 1=1
+   <if test="name != null and name != '' ">
+    AND t.NAME like CONCAT('%',#{name},'%')
+  </if>
+    limit #{startRow},#{row}
+  </select>
+  
+  <select id="getBrandAllCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  select count(1) from S_PRODUCT_BRAND t where 1=1
+   <if test="name != null and name != '' ">
+   AND t.NAME like CONCAT('%',#{name},'%')
+  </if>
+  </select>
+  <select id="selectBrandById" parameterType="java.lang.Integer" resultMap="BrandResultMap">
+   	SELECT * FROM S_PRODUCT_BRAND WHERE ID = #{id}
+  </select>
+  
+  <select id="selectAllBrand" resultMap="BrandResultMap">
+  	SELECT * FROM S_PRODUCT_BRAND
+  </select>	
+  	
+  <resultMap type="com.bettbio.core.model.search.Brand" extends="BaseResultMap" id="BrandResultMap"></resultMap>
+     
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

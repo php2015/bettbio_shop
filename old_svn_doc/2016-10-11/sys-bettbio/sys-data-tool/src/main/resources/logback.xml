@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration debug="false">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info"/>
+
+    <logger name="org.springframework.web" level="debug">
+    	<appender-ref ref="STDOUT" />
+    </logger>
+    
+    <logger name="com.bettbio" level="debug">
+    	<appender-ref ref="STDOUT" />
+    </logger>
+    
+</configuration>
+
+
+

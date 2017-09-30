@@ -1,0 +1,6 @@
+DELETE /product_zh_default/product_zh/_query -d '{
+    "query" : {
+        "match_all" : {}
+    }
+}'
+

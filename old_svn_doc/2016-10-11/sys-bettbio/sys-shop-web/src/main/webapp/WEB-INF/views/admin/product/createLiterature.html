@@ -1,0 +1,208 @@
+<%layout("/common/admin/modelLayout.html",{
+css:["dropify/css/dropify.min.css","zTree/css/zTreeStyle/zTreeStyle.css","bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"],
+script:["zTree/js/jquery.ztree.all-3.5.min.js","dropify/js/dropify.min.js",
+"bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+"bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
+"kindeditor-4.1.5/kindeditor-all.min.js",
+"jQuery-File-Upload/js/vendor/jquery.ui.widget.js",
+"jQuery-File-Upload/js/jquery.iframe-transport.js",
+"js/ajaxfileupload.js","js/admin/product.js","js/admin/selectList.js"]}){ %>
+<div class="warp-body warp-dialog">
+		<!-- 文献创建开始 -->
+				<div  id="createVoucherDiv">
+				<div class="row" >
+					<div class="col-sm-12">
+					<ul class="nav nav-pills pull-left form-inline">
+							<li>
+								<a href="${ctxPath}/admin/product/literature?id=${id!}" class="btn btn-default btn-sm">返回列表</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<form class="form-horizontal" id="voucherForm">
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">期刊名称</label>
+							</div>
+							<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control valueInput" success="false" id="searchstorename" name="searchstorename" readonly="readonly"/>
+								<input type="hidden" name="storenamehidden" id="storenamehidden"/>
+								<span class="input-group-addon dropdown-toggle" data-toggle="collapse" aria-haspopup="true" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample"> 
+	                         	<span class="fa fa-th" aria-hidden="true"></span>
+								</span>
+							</div>	
+								<span class="text-warning hide">期刊名称不能为空</span>
+							</div>
+						</div>
+						<div class="collapse" id="collapseExample" aria-expanded="true">
+							<div class="well" id="storeNameList"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">期刊号</label>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" class="form-control valueInput" success="false" id="periodicalCode" name="periodicalCode"/>
+								<span class="text-warning">输入格式：年份+卷号+页码;示例：2015, 518(7538):258-262.</span>
+								<span class="text-warning hide">期刊号不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">论文标题</label>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" class="form-control valueInput" success="false" id="title" name="title"/>
+								<span class="text-warning hide">论文标题不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">论文引用链接</label>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" class="form-control valueInput" success="false" id="url" name="url"/>
+								<span class="text-warning hide">论文引用链接不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group form-group-lg">
+					<div class="col-sm-2 col-sm-offset-1">
+						<label class="control-label">文献图片</label>
+					</div>
+					<div class="col-sm-8">
+						<div class="upload-hd">
+							<a href="javascript:;" class="a-upload">
+							    <i class="fa fa-cloud-upload fa-5x"></i>
+							    <p>点击添加文件</p>
+							</a>
+							<input type="file" name="files[]" id="imgUrl">
+							<a href="javascript:;" class="upload-delete">删除文件</a>
+							<div class="upload-preview">
+								<img src=""/>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">文献引用内容</label>
+							</div>
+							<div class="col-sm-8">
+								<textarea id="KE" name="content" class="form-control" rows="8"></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="row">
+					<div class="form-group form-group-lg">
+						<div class="col-sm-12 text-right">
+							<button class="btn btn-success" id="saveLiterature">保存</button>
+						</div>
+					</div>
+				</div>
+				</div>
+		<!-- 文献创建结束 -->
+		</div>
+<%}%>
+		<script type="text/javascript">
+		var verdict={
+				errInput : function(_this){
+					_this.closest('.row').find('.text-warning').removeClass('hide');
+					_this.attr("success","false");
+				},
+				sucInput : function(_this){
+					_this.closest('.row').find('.text-warning').addClass('hide');
+					_this.attr("success","true");
+				}
+		}
+			$(function() {
+				$.app.initDatetimePicker();
+				$.app.initKindEditor();
+				$.app.initDropify();
+				$("#selectIdAll,#selectAudiAll").change(function() {
+					if(this.checked) {
+						$(this).check();
+					} else {
+						$(this).uncheck();
+					}
+				})
+				
+			})
+			$(function() {
+				$('#imgUrl').bind('change',function(){
+					var _this = $(this);
+					if(!$.app.isImage(_this.val())){
+						_this.parent().removeClass('has-preview');
+						alert("请上传指定格式图片");
+						return false;
+					}
+					var _id = _this.attr('id');
+					 $.ajaxFileUpload
+		             (
+		                 {
+		                     url: "${ctxPath}/ajaxUpload", //用于文件上传的服务器端请求地址
+		                     secureuri: false, //是否需要安全协议，一般设置为false
+		                    	fileElementId : _this.attr('id'),
+		                     dataType: 'json', //返回值类型 一般设置为json
+		                     success: function (data, status, e)  //服务器成功响应处理函数
+		                         {			                         
+		                	 		console.log(data);
+		                	 		$("#"+_id).closest(".upload-hd").find("img").attr("src","${ctxPath}/"+data.files[0].url);
+		                	 		$("#"+_id).attr("url", data.files[0].url);
+		                         },
+		                     error: function (data, status, e)//服务器响应失败处理函数
+		                     {
+		                    	 alert("图片上传失败");
+		                     }
+		                 }
+		             ) 
+				})
+				
+				/*
+				*文件
+				*/
+				$("#saveLiterature").click(function(){
+					var imgUrl=$("#imgUrl").attr("url");
+					var dataTypeId = $("#storenamehidden").val();
+    				var periodicalCode = $("#periodicalCode").val();
+    				var content = $("#KE").val();
+    				var title = $("#title").val();
+    				var url = $("#url").val();
+    				var productId=$("#id",parent.document).val();
+    				$.app.get("${ctxPath}/admin/product/updateLiterature",{"productId":productId,"imgUrl":imgUrl,"dataTypeId":dataTypeId,"periodicalCode":periodicalCode,"content":content,"title":title,"url":url},function(flag,data){
+    					$.app.message(data.message);
+    				})
+				});
+			})
+			
+			function deletes(){
+				var ids = "";
+				 $('input[name="idChk"]:checked').each(function(){
+					 ids += $(this).val()+",";
+				 })
+				 deleteLiterature(ids);
+			}
+			
+			function deleteLiterature(ids){
+				var productId=$("#id",parent.document).val();
+				$.app.get("${ctxPath}/admin/product/deleteLiterature",{"ids":ids,"productId":productId},function(flag,data){
+					$.app.message(data.message);
+					if(flag){
+						window.location.href="${ctxPath}/admin/product/literature?id=${id!}"; 
+					}
+				})
+			}
+			window.onload=function(){
+				getStores("${ctxPath}/admin/proof/literatureList",null,"${code}");
+			}
+		</script>

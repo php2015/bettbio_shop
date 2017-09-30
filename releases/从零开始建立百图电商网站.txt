@@ -1,0 +1,276 @@
+目录：
+1. 先建立EC2实例
+2. 做好连接准备
+3. 挂载HDD
+4. 划分目录结构
+5. 安装 orcale JDK 1.7
+6. 安装 git
+7. 安装maven
+8. 安装mysql数据库
+9. 安装elasticsearch
+10. 获得工程文件
+11. 安装tomcat
+12. 安装nginx
+13. 恢复最后的备份数据
+14. 配置并启动elasticsearch
+15. 配置并启动tomcat
+16. 全量索引
+17. nginx配置并启动
+======================================================================================
+1. 先建立EC2实例
+    首先选择 Amazon Linux AMI 2017.03.1 (HVM), SSD Volume Type 这个类型。64位的。
+    然后选择‘Compute optimized c4.2xlarge’这种类型的硬件配置
+    引导盘分配100G，再加500G HDD作为普通数据的存储。计划是数据库使用SSD，其他的都使用HDD。
+    在配置端口
+    选择 security group。
+    launch，可以看到成功消息，例如
+        
+        Your instances are now launching
+        The following instance launches have been initiated: i-055681c80b3736421 View launch log
+
+    记下这个实例的IP，例如54.223.116.13什么的。
+
+2. 做好连接准备
+    先用命令
+         ssh -i /space/jobs/Baitu/amazonws/clariones.pem ec2-user@54.223.116.13
+    连接到服务器上，然后把自己的isa_pub 加入服务器上的认证列表
+    以后就可以用 ssh ec2-user@54.223.116.13 直接连接了
+
+3. 挂载HDD
+    使用 sudo fdisk -l 可以看到
+            Disk /dev/xvdb: 536.9 GB, 536870912000 bytes, 1048576000 sectors
+    这样的显示
+    格式化这个HDD： sudo mkfs.ext4 /dev/xvdb
+    创建挂载点： sudo mkdir /mnt/xvbd
+    手动mount一下，检查是否可以使用了 sudo mount /dev/xvdb /mnt/xvdb
+    正常了以后，先卸载： sudo umount /mnt/xvdb/
+    然后修改fstab：sudo vi /etc/fstab
+    添加 /dev/xvdb   /mnt/xvdb   ext4    defaults        0   0
+    重启以检查自动挂载
+
+4. 划分目录结构
+    /udisk 用于存储用户文件，应该放在SSD上，这个是elasticsearch和infinispan的数据
+    /work 用于存放源代码，文档，脚本等，不太需要吞吐量的数据，应该放到HDD上
+    /data 目录用来存放apache tomcat，nginx等，启动时用一下，也放到HDD上
+    在 ~/jobs里存放工作相关的若干文档，也放置在 HDD上
+    /work/downloads目录用于存放setup environment过程中需要下载的任何文件
+
+5. 检查/安装 orcale JDK 1.7
+    使用 java -version检查java版本，得到
+            java version "1.7.0_141"
+            OpenJDK Runtime Environment (amzn-2.6.10.1.73.amzn1-x86_64 u141-b02)
+            OpenJDK 64-Bit Server VM (build 24.141-b02, mixed mode)
+    这样的回应。 因为我们需要oracle JDK 1.7，不能用 open JDK，所以还需要安装JDK。
+    先去Oracle网站找到 JDK 的下载包，然后wget下载的链接，例如我这个就是
+    wget http://download.oracle.com/otn/java/jdk/7u80-b15/jdk-7u80-linux-x64.rpm?AuthParam=1501065762_5de91c3787058cb9787cf2aa4e0e38b1
+    可以看到，不可复制，下次安装还需要重新生成
+    rpm安装命令     rpm -ivh jdk-7u80-linux-x64.rpm
+    然后把新安装的jdk加入 alternatives： sudo alternatives --install /usr/java/jdk1.7.0_80 java /usr/java/jdk1.7.0_80/bin/java 2
+    其实加不加感觉问题不大，因为后面都是用命令行使用环境变量 JAVA_HOME 的。加了保险。
+    接着编辑 ~/.bashrc 文件，把 JAVA_HOME 和 PATH 设置好
+    退出，重新登录，验证 java -version 还有 javac -version
+
+6. 安装 git
+    sudo yum install git
+    这个是最简单的一步了
+
+7. 安装maven
+    去maven官网 http://maven.apache.org/
+    找到需要的下载包，例如 http://apache.fayea.com/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
+    注意这个包需要配合你的环境中的JDK版本，目前3.5是支持JDK1.7的，可以用
+    cd /work/downloads  #还记得下载包应该都放在哪里么？
+    wget http://apache.fayea.com/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
+    趁下载个10分钟左右时间，去看看官网的安装说明：http://maven.apache.org/install.html
+    根据“4. 划分目录结构”，maven作为一个应用程序，应该安装到 /data/maven 下
+    cd /data
+    mkdir maven
+    cd maven
+    tar -zxvf /work/downloads/apache-maven-3.5.0-bin.tar.gz
+    解压完成后，maven的可执行文件在 /data/maven/apache-maven-3.5.0/bin
+    因为我们磁盘100G够大，所以这里不用设置maven的若干路径，全部使用缺省值即可。
+    接着设置环境变量： vi ~/.bashrc
+    最后应该是这么几行
+            export JAVA_HOME=/usr/java/jdk1.7.0_80
+            export MAVEN_HOME=/data/maven/apache-maven-3.5.0
+            export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
+    退出，重新登录，验证安装完成
+
+8. 安装mysql数据库
+    先把软件装上：
+        sudo yum install mysql
+        sudo yum install mysql-server
+    启动mysql服务
+        sudo service mysqld start
+    设置mysql root用户密码
+        先用root登录，刚安装好,不用密码： mysql -uroot
+        进入mysql提示符后，执行 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('newpass');
+    添加应用重新数据库账号
+        insert into mysql.user(Host,User,Password) values("localhost","test",password("1234"));
+        GRANT ALL PRIVILEGES ON *.* TO 'bshopizer'@'%' IDENTIFIED BY "mySQL@2015Bio";
+    这个权利可大啦。
+    然后修改mysql的配置文件： sudo vi /etc/my.cnf
+    内容类似如下：
+        [mysqld]
+        datadir=/var/lib/mysql
+        socket=/var/lib/mysql/mysql.sock
+        max_allowed_packet=100M
+        symbolic-links=0
+        sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+        [mysqld_safe]
+        log-error=/var/log/mysqld.log
+        pid-file=/var/run/mysqld/mysqld.pid
+        bind-address = 0.0.0.0
+        lower_case_table_names=1
+    然后重启mysql：sudo service mysqld restart
+    注意：不设置 max_allowed_packet,会导致数据导入失败
+-------------------------------------
+
+[ec2-user@ip-172-31-11-106 db]$ time mysql -ubshopizer -pmySQL@2015Bio -h 127.0.0.1 --default-character-set=utf8 SALESMANAGER < db_backup.sql
+
+real    7m15.985s
+user    0m36.488s
+sys    0m1.956s
+[ec2-user@ip-172-31-11-106 db]$
+
+--------------------------------------
+
+
+9. 安装elasticsearch
+    原系统使用的版本号是 rtf-1.6.0
+    所有使用这个URL： wget https://github.com/medcl/elasticsearch-rtf/archive/1.6.0.zip
+    然后，还是/data目录
+    cd /data
+    unzip /work/downloads/1.6.0.zip
+    接着本来应该配置es
+    在git上有es和tomcat的配置文件备份，所以先用git获得工程
+
+10. 获得工程文件
+    工程原来是放在 /data/baitu下的
+    cd /data
+    git clone     https://git.coding.net/Clariones/baitu
+    然后编译
+    cd /data/baitu/old_version
+    mvn clean compile package -DskipTests
+    首次编译需要很长很长很长很长很长很长很长很长很长很长很长很长的时间
+
+
+INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] sm-search .......................................... SUCCESS [11:24 min]
+[INFO] shopizer ........................................... SUCCESS [ 13.467 s]
+[INFO] sm-core-model ...................................... SUCCESS [09:15 min]
+[INFO] sm-core-modules .................................... SUCCESS [ 17.328 s]
+[INFO] sm-core ............................................ SUCCESS [04:53 min]
+[INFO] sm-shop ............................................ SUCCESS [06:39 min]
+[INFO] m .................................................. SUCCESS [  8.429 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 32:57 min
+[INFO] Finished at: 2017-07-26T13:40:44Z
+[INFO] Final Memory: 152M/470M
+[INFO] ------------------------------------------------------------------------
+
+
+11. 安装tomcat
+    原系统使用的版本是8.0.36，所以使用如下URL下载对应的包：
+    cd /data/downloads
+    wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.0.36/bin/apache-tomcat-8.0.36.tar.gz
+    然后去data解压：
+    cd /data
+    tar -xzvf /work/downloads/apache-tomcat-8.0.36.tar.gz
+
+12. 安装nginx
+    sudo yum install nginx
+
+必需的软件都安装完成了，下面开始为启动应用程序做准备工作
+
+13. 恢复最后的备份数据
+    之前的系统一直有定时备份功能。
+    在原文档服务器，每天备份DB，每周备份一次infinispan。因为是测试服务器，所以只要取最后一次完整的备份即可，不需要最新的。
+    先建个目录，用来放置备份数据，然后再scp过来。
+            mkdir /work/backup
+            cd /work/backup
+            scp -r root@106.75.28.20:/data/clarions/backup/20170722_00_00_02 .
+    里面有db 和 infinispan 两个目录，分别有一个tar.gz 文件
+    数据库恢复：
+    将DB现场解压，然后用命令restore：mysql -ubshopizer -pmySQL@2015Bio -h 127.0.0.1 --default-character-set=utf8 SALESMANAGER < db_backup.sql
+    infinispan恢复：
+    infinispan的数据目录是 /udisk, 所以要解压到这个位置
+            cd /udisk
+            tar -xzvf /work/backup/20170722_00_00_02/infinispan/infinispan.tar.gz
+
+14. 配置并启动elasticsearch
+    在git上有配置备份包：/data/baitu/releases/elasticsearch_config/search.tar.gz
+    将其解压到某个目录，例如 /work/temp
+    然后将其内容拷贝到ES的安装目录下对应处。 因为我们前面就是简单的解压，所以不需要备份，直接覆盖就可以，搞错了就删掉，从头来过。
+            cd /data/elasticsearch-rtf-1.6.0/
+            cp -r /work/temp/elasticsearch-rtf-1.6.0/* .
+    然后启动ES：
+            bin/elasticsearch -d
+    可以用网页检查ES是否正常启动：
+            http://52.80.99.161:9200/_plugin/head/
+
+15. 配置并启动tomcat
+    在git上有配置备份包：/data/baitu/releases/baitu/releases/tomcat_config/tomcat_conf.tar.gz
+    将其解压到某个目录，例如 /work/temp
+    然后将其内容拷贝到tomcat的对应目录下。同理，我们是解压得到的tomcat，所以不用考虑原配置的备份问题，直接覆盖，大不了重来。
+            cd /data/apache-tomcat-8.0.36/
+            cp -r /work/temp/apache-tomcat-8.0.36/* .
+    接着修改tomcat的运行端口（假设有必要的话）。因为EC2的80/1080/8080端口都被封了，需要认证申请才能开通，所以将它的端口设置为 8380
+            cd /data/apache-tomcat-8.0.36/conf
+            vi server.xml
+    将：
+            <Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+    的8080改为8380，保存退出。
+    再下来是配置应用程序的env_config, 文件在git上有，路径在启动脚本中可以看到：
+    catalina.sh:JAVA_OPTS="-Xms3072m -Xmx3072m -Xmn512m -XX:SurvivorRatio=4 -XX:PermSize=512m -XX:MaxPermSize=512m -XX:ParallelGCThreads=2 -Denv_conf_path=/data/apache-tomcat-8.0.36/env_conf/test"，也就是说，我们应该把文件放置在/data/apache-tomcat-8.0.36/env_conf/test下。
+    所以先建立目录：
+            mkdir -p /data/apache-tomcat-8.0.36/env_conf/test
+    然后从git里拷贝过来：
+            cd /data/apache-tomcat-8.0.36/env_conf/test
+            cp /data/baitu/env_conf/test/* .
+    然后修改配置
+            configs.properties： search_clusterHost=123.59.49.58 改成search_clusterHost=127.0.0.1
+            database.properties：
+                    db.jdbcUrl=jdbc:mysql://123.59.49.58:3306/SALESMANAGER?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+                    改成
+                    db.jdbcUrl=jdbc:mysql://127.0.0.1:3306/SALESMANAGER?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8
+        根据配置：internal_folder_root=/udisk/internalFiles
+        创建目录：mkdir /udisk/internalFiles
+
+        注意：奇怪的jar包冲突问题需要注意一下。
+        目前发现有概率出现以下3个jar包冲突
+            mv asm-4.1.jar asm-4.1.jar.not_used
+            mv asm-commons-4.1.jar asm-commons-4.1.jar.not_used
+            mv jboss-logging-spi-2.0.5.GA.jar jboss-logging-spi-2.0.5.GA.jar.not_used
+        这些文件都是在webapps/m|sm-shop/WEB-INF/lib下
+        具体为什么会出现这个问题，暂时尚未研究出来，
+            在UCloud的机器上没有问题，在我的Windows环境下也没有问题，在我的ubuntu环境下有问题，在EC2上有问题。
+            JDK都是 oracle的，tomcat版本和配置完全一样，源代码的pom.xml也是git上完全一致的。
+        目前暂时用上面这些mv命令取消这些jar包的加载
+
+        准备就绪后，就可以启动tomcat了
+
+16. 全量索引
+        第一次运行，ES数据需要导入，以管理员 ezybio 登录 百图生物 网站，然后执行全量更新即可。
+        界面在 卖家->批量数据操作，选全量更新索引，按提示操作即可。
+
+17. nginx配置并启动
+        测试环境这个不是必须的。根据实际情况配置即可，不再赘述。
+        在git上有一个生产环境使用的nginx配置，可供参考： /data/baitu/releases/nginx_config
+        这里有一个 bettbio_ad的启动参数包配置。和百图电商网站没有直接关系。所以说'根据实际情况配置"
+    
+接下来就可以访问网站了。
+
+=======全文完=======
+
+
+
+
+
+
+

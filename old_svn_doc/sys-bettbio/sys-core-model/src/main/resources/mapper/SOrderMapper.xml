@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SOrderMapper">
+	<resultMap id="BaseResultMap" type="com.bettbio.core.model.SOrder">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="CODE" jdbcType="VARCHAR" property="code" />
+		<result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+		<result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
+		<result column="USER_ADDRESS" jdbcType="VARCHAR" property="userAddress" />
+		<result column="JOIN_ORDER" jdbcType="VARCHAR" property="joinOrder" />
+		<result column="RISE" jdbcType="VARCHAR" property="rise" />
+		<result column="INVOICE_TYPE" jdbcType="INTEGER" property="invoiceType" />
+		<result column="CORPORATE_NAME" jdbcType="VARCHAR" property="corporateName" />
+		<result column="REGISTER_ADDRESS" jdbcType="VARCHAR" property="registerAddress" />
+		<result column="OPEN_ACCOUNT_BANK" jdbcType="VARCHAR" property="openAccountBank" />
+		<result column="BANK_ACCOUNT" jdbcType="VARCHAR" property="bankAccount" />
+		<result column="REGISTERED_PHONE" jdbcType="VARCHAR" property="registeredPhone" />
+		<result column="IDENTIFICATION_CODE" jdbcType="VARCHAR"
+			property="identificationCode" />
+		<result column="TOTAL_AMOUNT" jdbcType="DOUBLE" property="totalAmount" />
+		<result column="ORDER_STATE" jdbcType="VARCHAR" property="orderState" />
+		<result column="COMPANY_REGISTERED_NAME" jdbcType="VARCHAR" property="companyRegisteredName" />
+		<result column="POSTCODE" jdbcType="VARCHAR" property="postcode" />
+	</resultMap>
+	<resultMap type="com.bettbio.core.model.vo.OrderVo" id="orderVoMap" extends="BaseResultMap"></resultMap>
+	
+	<sql id="columns">
+	ID,CODE,USER_CODE,CREATE_DATE,USER_NAME,USER_PHONE,USER_ADDRESS,JOIN_ORDER,RISE,
+	INVOICE_TYPE,CORPORATE_NAME,REGISTER_ADDRESS,OPEN_ACCOUNT_BANK,BANK_ACCOUNT,REGISTERED_PHONE,IDENTIFICATION_CODE,TOTAL_AMOUNT,ORDER_STATE,COMPANY_REGISTERED_NAME,POSTCODE
+	</sql>
+	
+	<select id="orderCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM S_ORDER where USER_CODE=#{userCode}
+	</select>
+
+	<select id="selectOrders" parameterType="java.util.Map" resultMap="orderVoMap">
+		SELECT <include refid="columns"/> FROM S_ORDER WHERE USER_CODE=#{userCode} ORDER BY CREATE_DATE DESC
+		limit #{startRow},#{endRow}		
+	</select>
+	
+	<select id="selectUserNameByCode" parameterType="String" resultType="String">
+		SELECT USER_NAME FROM S_ORDER WHERE CODE=#{code}
+	</select>
+	
+	<select id="selectOrderByCode" parameterType="String" resultMap="BaseResultMap">
+		SELECT <include refid="columns"/> FROM S_ORDER WHERE CODE=#{userCode}
+	</select>
+	
+</mapper>

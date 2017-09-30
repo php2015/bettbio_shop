@@ -1,0 +1,102 @@
+<%layout("/common/admin/layout.html",{
+script:["js/application.js"]
+}){ %>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="list.html">商品目录</a>
+					</li>
+					<li>
+						<a href="">创建试剂类商品</a>
+					</li>
+					<li>
+						<a href="">创建耗材、仪器类商品</a>
+					</li>
+					<li>
+						<a href="">创建服务类商品</a>
+					</li>
+					<li>
+						<a href="">试剂类商品模板下载</a>
+					</li>
+					<li>
+						<a href="">耗材、仪器类商品模板下载</a>
+					</li>
+					<li>
+						<a href="">服务类商品模板下载</a>
+					</li>
+					<li class="active">
+						<a href="import.html">商品数据导入</a>
+					</li>
+				</ul>
+			</div>
+			<div class=" warp-body">
+				<div class="row">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h4>商户信息批量导入说明</h4></div>
+						<div class="panel-body">
+							<p>请下载
+								<a href=""><code>试剂类商品批量导入模板</code></a>或者
+								<a href=""><code>试剂类商品批量导入模板</code></a>或者
+								<a href=""><code>试剂类商品批量导入模板</code></a>，按照模板格式整理商户信息。按照模板格式整理商品信息，建议一次最多只允许导入<code>1000</code>条记录</p>
+							<p>在上传的过程中，请勿进行其他操作，根据反馈的信息查看批量导入结果。</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<form class="form-horizontal" action="" method="post">
+				<div class="row">
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">批量上传商品的所属商铺</label>
+						</div>
+						<div class="col-sm-10">
+							<div class="input-group">
+								<input id="" name="" class="form-control" type="text" value="" readonly="readonly">
+								<span class="input-group-addon dropdown-toggle collapsed" id="sns" data-toggle="collapse" aria-haspopup="true" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> <span class="fa fa-th " aria-hidden="true"></span>
+								</span>
+							</div>
+							<div class="collapse" id="collapseExample" aria-expanded="false" style="height: 0px;">
+								<div class="well" id="storeNameList">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">选择批量导入数据类型</label>
+						</div>
+						<div class="col-sm-10">
+							<select class="form-control">
+								<option value="0">试剂类商品批量导入模板</option>
+								<option value="1">耗材、仪器类商品批量导入模板</option>
+								<option value="2">服务类商品批量导入模板</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-sm-2">
+							<label class="control-label">选择文件</label>
+						</div>
+						<div class="col-sm-10">
+							<input type="file" class="form-control" name="uploadfile" id="uploadfile" placeholder="上传文件">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-sm-12 text-right">
+							<button type="button" class="btn btn-success">提交</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		</div>
+<%}%>

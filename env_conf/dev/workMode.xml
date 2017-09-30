@@ -1,0 +1,179 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+   http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	
+	
+
+   	<bean id="workModeConfig" class="com.salesmanager.core.utils.WorkModeConfiguration">
+		<property name="workMode" value="成都开发"/>
+		<property name="emailToAddress" value="clariones@163.com"/>
+		<property name="emailCCAddress">
+			<list>
+				<value>clariones@sina.com</value>
+				<value>service@bettbio.com</value>
+			</list>
+		</property>
+		<property name="mobileNumber" value="13308188512"/>
+		<property name="domainName" value="171.212.136.203:9080"/>
+		<property name="emailCarbonCopyMap">
+			<map>
+				<entry key="email_template_customer.ftl">
+					<list>
+						<value>service@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_checkout.ftl">
+					<list>
+						<value>order@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_audit.ftl">
+					<list>
+						<value>server@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_order_status.ftl">
+					<list>
+						<value>order@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_contact.ftl">
+					<list>
+						<value>service@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_notification.ftl">
+					<list>
+						<value>service@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_active_customer.ftl">
+					<list>
+						<value>service@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_password_reset_customer.ftl">
+					<list>
+						<value>service@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_new_gift.ftl">
+					<list>
+						<value>service@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_newproduct.ftl">
+					<list>
+						<value>server@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_new_store.ftl">
+					<list>
+						<value>service@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_new_user.ftl">
+					<list>
+						<value>service@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_password_reset_user.ftl">
+					<list>
+						<value>service@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_orderStatus4Customer.ftl">
+					<list>
+						<value>order@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_placeOrder4Merchant.ftl">
+					<list>
+						<value>order@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_orderStatus4Merchant.ftl">
+					<list>
+						<value>order@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_confirmOrder4Customer.ftl">
+					<list>
+						<value>order@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				<entry key="email_template_adjustOrderPrice4Customer.ftl">
+					<list>
+						<value>order@bettbio.com</value>
+						<value>wbfang@bettbio.com</value>
+						<value>zgzhang@bettbio.com</value>
+						<value>puhuang@bettbio.com</value>
+					</list>
+				</entry>
+				
+			</map>
+		</property>
+	</bean>
+	
+	
+</beans>

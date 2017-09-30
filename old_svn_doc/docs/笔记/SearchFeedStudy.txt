@@ -1,0 +1,63 @@
+先看原代码里search feed的数据：
+1.ID
+2.Dscp.Name
+3.Dscp.EnName
+4.Dscp.Language   
+5.isFree   
+6.CAS
+7.Diamond
+8.Dscp.Simple
+9.Dscp.FriendlyURL
+10.Dscp.Name （as key）
+11.Code
+12.Dscp.EnName （as enkey）
+13. 数组certis[i].BaseDataType.Name
+14. 数组certis[i].BaseInfo
+15. 数组proof[i].baseDataType.Name     
+16. 数组proof[i].DateBuyed
+17. 数组third[i].baseDataType.Name     
+18. 数组third[i].Dscp
+19. 数组TestReport[i].Title     
+20. 数组TestReport[i].Dscp
+21. productImage.path
+22. 数组Manufacturer.auth[i].id
+23. 数组Manufacturer.auth[i].type
+24. Manufacturer.id  
+25. Store.Name
+26. price.min(all amount)
+27. price.period (0非现货，1现货)
+28. 数组 categories
+
+
+
+1. 首先调查了数据库里，Product和Product_Description到底是一对多，还是多对多，还是1对1关系
+	代码是这样的：
+		@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+		private Set<ProductDescription> descriptions = new HashSet<ProductDescription>();
+	在数据库里查找一个product有多个description的情况：
+		使用sql：select * from product_description dscp where dscp.PRODUCT_ID in (select PRODUCT_ID from product_description group by PRODUCT_ID having count(1)>=2);
+		结果为空。即实际上是１对１的关系
+		或许是因为没有英文版的缘故。
+	anyway, left join 出来的结果，1：n和1:1是一样的
+	
+2. 然后调查了大数据量下，left join和multiple query的效率问题， 大部分支持在大数据量下，使用multiple query，防止多表join
+	可能的方案是 product JOIN description，其它的使用多表查询
+	做个实验：使用本地数据库，只查询product和description，3种方式对比
+	1-JOIN一个Description表，时间是65~80秒
+	2-JOIN一个Description表，但是用Java手工分页，时间长的无法忍受。 超过20分钟。放弃。
+	3-不JOIN，先查ID，然后单条查Description，442.171Sec
+	选JOIN单表，
+	
+3. 再调查其它需要JOIN的几个表
+	Category只有274个，适合读取出来，缓存到内存里。
+	certificates 6000多，而且不是1对1，适合拿到ID以后，单独查询出来
+	BasedataType只有1700多，可以考虑缓存到内存
+	thirdproof 4000多，1对多，还是考虑用ID单独查询
+	实验报告（selfproof）4000左右，还是考虑拿到ID后查询
+	Manufacturer 不到1000，做缓存
+	Merchant_store 2300多，但是需要的数据不多，也可以缓存
+	
+4. 过滤不需要的数据
+	看了下张总的回复，只有21. productImage.path和24. Manufacturer.id 没看到使用的地方。
+	决定还是按照原来的字段来取吧
+	

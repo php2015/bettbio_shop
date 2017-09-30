@@ -1,0 +1,375 @@
+/*ELISA Kits sale css*/
+*{ margin: 0; padding: 0}
+.search-group ul {
+	padding-left: 40px;
+}
+.elisa-title {
+  text-align: center;
+  font: bold 20px/20px 'Microsoft Yahei';
+  margin: 0;
+  padding-bottom: 15px;
+  color: red;
+  border-bottom: 1px dotted #ABABAB;
+}
+.impot-letter {
+  background-color: #ff9c00;
+  color: #fff;
+  border-radius: 100%;
+  height: 26px;
+  line-height: 25px;
+  width: 26px;
+  display: inline-block;
+  margin-right: 3px;
+  text-shadow: 0px 1px 1px #c57900;
+}
+.elisale-box {
+  margin-top: 25px;
+}
+.title-list {
+}
+.tip-title {
+  border-radius: 50px;
+  font: bold 16px/24px 'Simsun';
+  padding : 0 30px 0 30px;
+  color: #712124;
+  text-shadow: 0px 1px 0px #FFE500;
+  background-color: #FFBE00;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+span.arrow-right {
+  width: 6px;
+  height: 6px;
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 2px;
+  background-color: #FFBE00;
+  font-size: 0px;
+  line-height: 0px;
+}
+.elisa-text, .elisa-textqq {
+  font: normal 14px/22px 'Microsoft Yahei';
+  margin: 0 30px;
+}
+.elisa-textqq {
+  line-height: 28px;
+}
+.elisa-textqq a:hover {
+  text-decoration: none;
+}
+.elisale-link {
+  font: normal 14px/22px 'Microsoft Yahei';
+  background-color: #FFE500;
+  color: red;
+}
+.elisale-link:hover {
+  font: inherit;
+  text-decoration: underline;
+  color: #144640;
+}
+.bold-text {
+  font-weight: bold;
+}
+.codebox {
+  padding: 20px 20px 30px 30px;
+  border-top: 1px dotted #989898;
+}
+.codebox p {
+  margin-top: 15px;
+}
+
+
+
+/*questionnaire 2016/07/25*/
+.qn-title {
+  text-align: center;
+  font: bold 20px/20px 'Microsoft Yahei';
+  padding: 35px 0;
+  margin: 0;
+  color: #dc0600;
+  border-bottom: 2px solid #ABABAB;
+}
+.qn-hr{
+  height:1px;
+  background-color:#ABABAB;
+  margin-top:25px;
+}
+.qn-box {
+  margin-top: 25px;
+  position:relative;
+}
+.qn-titlelist {
+  width: 124px;
+  height: 30px;
+  background: url(../images/small_title_bg.gif) no-repeat;
+}
+.qn-tiptitle {
+  color: #fff;
+  font: bold 16px/16px 'Microsoft Yahei';
+  padding: 6px 0 8px 15px;
+  display: inline-block;
+}
+.qn-text, .qn-textqq {
+  font: normal 14px/22px 'Microsoft Yahei';
+  margin: 0 15px;
+}
+.qn-textqq {
+  line-height: 28px;
+}
+.qn-textqq a:hover {
+  text-decoration: none;
+}
+.bold-text {
+  font-weight: bold;
+}
+.prompt-text {
+  font-family: 'Microsoft Yahei';
+  color: #B10407;
+  margin: 5px 0 10px 24px;
+  cursor: pointer;
+}
+
+.qn-link{
+  position:absolute;
+  top:70px;
+  font: bold 14px/47px 'Microsoft Yahei';
+  border-radius:5px;
+  background: url(../images/qn-btn.gif) no-repeat;
+  background-color:#fff;
+  color:#fff;
+  margin:5px 0 10px 450px;
+  width:160px;
+  height:50px;
+}
+.qn-link:hover{
+  font: bold 14px/47px 'Microsoft Yahei';
+  color:#fff;
+  background-color:#FFAE00;
+  text-decoration:none;
+}
+.qn-link span{
+  margin-left:50px;
+}
+
+.qn-foot{
+  height:7px;
+  background-color:#fca309;
+}
+
+.qn-codebox {
+  padding: 20px 20px 30px 10px;
+  border-top: 1px dotted #989898;
+}
+.qn-codebox p {
+  font: normal 14px/14px 'Microsoft Yahei';
+  margin-top: 15px;
+}
+
+
+/*ELISA Kits sales css*/
+.elisales-box{
+  font:normal 14px/22px 'Microsoft Yahei';
+  margin-top:20px;
+}
+.title-lists{
+  background:url(../images/tips_title_bg.png) no-repeat;
+  width:146px;
+  height:40px;
+  margin-bottom:10px;
+}
+.tips-title{  
+  font:bold 16px/36px 'Simsun';
+  color:#fff;
+  display: inline-block;
+  margin-left:44px;
+}
+.foot-line{
+  height:7px;
+  background-color:#2bafff;
+  margin:0;
+}
+
+
+/*20160830 1000 antibodies free*/
+.antifree-title{
+  width:690px;
+  margin:0 auto;
+  text-align:center;
+  border-bottom:1px dotted #912516;
+  position:relative;
+  padding-bottom:32px;
+}
+.antifree-title h1{
+  font:bold 18px/24px 'Microsoft Yahei';
+  color:#912516;
+  margin:5px 0;
+}
+.antifree-title h2{
+  font:bold 16px/28px 'Microsoft Yahei';
+  margin:5px 0;
+  color:#555;
+}
+.antifree-title p{
+  background:url(images/timebg.png) no-repeat;
+  width:459px;
+  height:35px;
+  font:bold 14px/30px 'Microsoft Yahei';
+  color:#fff;
+  position:absolute;
+  left:114px;
+  top:60px;
+}
+.antifree-content{
+  list-style:none;
+  margin-top:45px;
+}
+.antifree-content li{
+  margin-bottom:30px;
+}
+.tip-icon{
+  background:url(images/icon_sprite.png) no-repeat;
+  width:40px;
+  height:40px;
+  display:inline-block;
+  float:left;
+}
+.tip-icon01{
+  background-position:-2px 0;
+}
+.tip-icon02{
+  background-position:-64px 0;
+}
+.tip-icon03{
+  background-position:-126px 0;
+}
+.tip-icon04{
+  background-position:-188px 0;
+}
+.tip-icon05{
+  background-position:-250px 0;
+}
+.tip-h{
+  display:inline-block;
+  font:bold 16px/40px 'Microsoft Yahei';
+  color:#853328;
+  margin:0 0 0 5px;
+}
+.tip-text{
+  margin-left:45px;  
+}
+.tip-text dd{
+  font:normal 14px/22px 'Microsoft Yahei';
+}
+.tip-text dd a:hover{
+  text-decoration:none;
+}
+.nublist{
+  width:4%;
+  display:inline-block;
+  float:left;
+}
+.tip-list{
+  float:left;
+  width:96%;
+  margin:0;
+}
+.link-text{
+  color:red;
+  font:bold 14px/22px 'Microsoft Yahei';
+  background-color:#FFED00;
+}
+.link-text:hover{
+  font:bold 14px/22px 'Microsoft Yahei';
+}
+.antifree-foot{
+  height:7px;
+  background-color:#5863b3;
+  margin:0;
+}
+
+/*20161111 Publication or Data Reward*/
+.data-title{
+  width:690px;
+  margin:0 auto;
+  text-align:center;
+  border-bottom:1px dotted #dfcfba;
+  position:relative;
+}
+.data-title h1{
+  font:bold 20px/24px 'Microsoft Yahei';
+  color:#a92f12;
+  margin:25px 0 20px 0;
+}
+.data-title p{
+  text-align:left;
+  font:normal 14px/1.5 'Microsoft Yahei';
+  margin:0 0 4px 0;
+  padding-bottom:30px;
+  border-bottom:1px solid #dfcfba;
+}
+.data-content{
+  list-style:none;
+  margin-top:30px;
+}
+.data-content li{
+  margin-bottom:40px;
+}
+.data-h{
+  display:inline-block;
+  float:left;
+  background-color:#80be33;
+  border:1px solid #75b229;
+  border-right:none;
+  color:#fff;
+  font:bold 16px/28px 'Microsoft Yahei';
+  padding:0 45px 0 32px ;
+  margin:0;
+}
+.data-h-arrow{
+  background:url(images/data_h_arrow.gif) no-repeat;
+  display:inline-block;
+  width:10px;
+  height:30px;
+}
+.data-text{
+  margin-top:20px;
+}
+.data-text dd{
+  font:normal 14px/22px 'Microsoft Yahei';
+}
+.data-text dd a:hover{
+  text-decoration:none;
+}
+.data-foot{
+  height:7px;
+  background-color:#65ceb2;
+  margin:0;
+}
+.clearfix:before,.clearfix:after{
+    content:"";
+    display:table;
+}
+.clearfix:after{clear:both;}
+.clearfix{
+    *zoom:1;/*IE/7/6*/
+}
+
+
+/*antibody_protein_sale 2017/04/16*/
+.sale-title h1{ color:#ca1f28; text-align:center; margin:10px 0;}
+.sale-title h2{ text-align:center; margin:5px 0; border-top:1px dotted #999; border-bottom:1px dotted #999; padding:5px 0;}
+.sale-content{ margin-top:40px;}
+.sale-content li{ list-style:none; margin-bottom:40px;}
+.sale-h {
+    display:inline-block;
+    background-color: #60c2f7;
+    border: 1px solid #4bb0e6;
+    color: #fff;
+    font: bold 16px/24px 'Microsoft Yahei';
+    padding: 0 40px 0 20px;
+    margin: 0;
+}
+.sale-text{ margin-top:20px;}
+.sale-text dd {font: normal 14px/22px 'Microsoft Yahei';}
+.sale-foot{ height: 7px; background-color: #9eddff; margin: 0;}
+.redText{ color:red;}

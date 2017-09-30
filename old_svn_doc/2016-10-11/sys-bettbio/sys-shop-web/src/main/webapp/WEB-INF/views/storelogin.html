@@ -1,0 +1,218 @@
+<%layout("/common/layout.html",{css:["css/login.css"]}){ %>
+		<div id="warp" style="padding-top: 0px;" class="storeLogin">
+			<div class="s_hader">
+				<div class="container">
+					<div class="pull-left s_logo">
+						<img src="${ctxPath}/static/img/biglogo.png" height="56"><span class="s_title">商家登录</span>
+					</div>
+				</div>
+			</div>
+			<div class="s_login container">
+				<div class="row">
+					<div class="col-md-8 login_hd"></div>
+					<div class="col-md-1 login_divider"></div>
+					<div class="col-md-3">
+						<div id="logform" class="login">
+							<div id="login">
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="<%if(has(class)){}else{%>active<%}%>" id="customerActive">
+										<a href="#shortcutlogin" aria-controls="home" role="tab" data-toggle="tab">快捷用户</a>
+									</li>
+									<li role="presentation" class="<%if(has(class)){ %>${class}<%}%>" id="storeActive" style="width:150px;text-align:center;">
+										<a href="#stroelogin" aria-controls="profile" role="tab" data-toggle="tab">账户用户</a>
+									</li>
+								</ul>
+								<div id="customer_div">
+									<div class="tab-content">
+									<!-- 快捷登录 start-->
+										<div class="tab-pane <%if(has(class)){}else{%>active<%}%>" id="shortcutlogin">
+											<form id="shortcutlogin" method="post" action="${ctxPath}/adminShortcutlogin" accept-charset="UTF-8">
+												<span id="shortcutLoginError" style="color:red;">
+												<%if(has(mess)){%>
+												${mess}
+												<%}%>
+												</span>
+												<div class="control-group">
+													<div class="row">
+														<div class="col-sm-7">
+															<input id="phone" style="border-radius: 0px;" class="form-control" type="text" name="phone" placeholder="输入手机号">
+														</div>
+														<div class="col-sm-5">
+															<button type="button" style="border-radius: 0px; height: 40px;" id="sendCode" class="btn btn-info btn-block">获取验证码</button>
+														</div>
+													</div>
+												</div>
+												<div class="control-group">
+													<div class="controls">
+														<input id="code" style="border-radius: 0px;" class="form-control" type="text" name="code" placeholder="手机验证码">
+													</div>
+												</div>
+												<div class="control-group">
+													<button id="login-button" type="submit" class="btn btn-default btn-info btn-block btn-login" ripple="">登录</button>
+												</div>
+												<input id="signin_storeCode" name="storeCode" type="hidden" value="DEFAULT">
+												<div class="logon-password-box">
+													<div class="pull-left">
+														<a href="storeRegister.html" >新商家注册</a>
+													</div>
+												</div>
+											</form>
+										</div>
+										<!-- 快捷登录 end-->
+										
+										<!-- 商家登录 start-->
+										<div id="stroelogin" class="tab-pane <%if(has(class)){ %>${class}<%}%>">
+											<form method="post" id="adminLogonForm" class="form-horizontal" action="${ctxPath}/adminLogin">
+												<div><span id="storeError" style="color:red;">
+												<% if(has(adminErrorMess)){
+													%>
+													${adminErrorMess}
+													<%}%>
+												</span></div>
+												<div class="control-group">
+													<div class="control-group">
+														<div class="controls input-group">
+															<span class="input-group-addon"> <span class=" fa fa-user" aria-hidden="true" id="j_username_help"><font style="display:none" id="_adminNameErr" color="red" size="4"><strong>*</strong></font></span></span>
+															<input id="adminAccount" class="form-control" type="text" name="account" size="18" placeholder="用户名">
+														</div>
+													</div>
+													<div class="control-group">
+														<div class="controls input-group">
+															<span class="input-group-addon"> <span class=" fa fa-lock" aria-hidden="true" id="j_password_help"><font style="display:none" id="_adminPassErr" color="red" size="4"><strong>*</strong></font></span></span>
+															<input id="adminPassword" class="form-control" type="password" name="password" size="18" placeholder="密码">
+														</div>
+													</div>
+													<div class="control-group remeber-control">
+														<div class="controls">
+															<label>
+										   					 <div><input type="checkbox" id="remember1"></div>
+										   					 <div class="remeber-text">记住用户名</div></label>
+															 <div class="pull-right"><a href="${ctxPath}/retrievePassword" role="button" data-toggle="modal">忘记密码</a></div>						
+														</div>
+													</div>
+													<div class="control-group">
+														<button type="submit" class="btn btn-default btn-info btn-block" ripple="">登录</button>
+													</div>
+													<input id="formSubmitButton" name="storeCode" type="hidden" value="DEFAULT">
+													<div class="logon-password-box">
+														<div class="pull-left">
+															<a href="storeRegister.html" >新商家注册</a>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+										<!-- 商家登录 end-->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="sendCodeDiv" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop= 'static'>
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-body">  
+		        <p id="mess"></p>  
+		      </div>
+		      <div class="modal-footer">  
+		         <input type="hidden" id="url"/>  
+		        	<a href="javascript:void(0);" class="btn btn-success" data-dismiss="modal" id="btncSuccess">确定</a>  
+		      </div>  
+		    </div>
+		  </div>
+		</div>
+	<%}%>
+	<script type="text/javascript">
+	$(function(){
+		$("#shortcutlogin").submit(function(){
+			var flag = false;
+			if($("#phone").val() == ""){
+				$("#shortcutLoginError").empty();
+				$("#shortcutLoginError").html("手机号不能为空");
+				flag = false;
+			}else if($("#code").val() == ""){
+					$("#shortcutLoginError").empty();
+					$("#shortcutLoginError").html("验证码不能为空");
+					flag = false;
+			}else{
+				var re=/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i;
+				if(!re.test($("#phone").val())){
+					$("#shortcutLoginError").empty();
+					$("#shortcutLoginError").html("手机号格式错误");
+					flag = false;
+				} 
+			}
+				$.ajax({
+					type: 'get',
+					dataType: "json",
+					data : {"code" : phoneCode,"phone" : $("#phone").val()},
+					url: '${ctxPath}/sms/validate',
+					async:false,
+					success: function(ajaxResponse) {
+						if(ajaxResponse.success==true){
+							flag = true;
+						}else{
+							$("#shortcutLoginError").empty();
+							$("#shortcutLoginError").html(ajaxResponse.message);
+							flag = false;
+						}
+					},
+					error: function(jqXHR,textStatus,errorThrown) { 
+					}
+				});
+				return flag;
+		})
+		$("#adminLogonForm").submit(function(){
+			if($("#adminAccount").val() == ""){
+				$("#_adminNameErr").show();
+				return false;
+			}
+			if($("#adminPassword").val() == ""){
+				$("#_adminPassErr").show();
+				return false;
+			}
+			return true;
+		})
+		
+		/*
+		*发送验证码
+		*/
+		$("#sendCode").click(function(){
+			var phone = $("#phone").val();
+	   	 	var re=/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i;
+			if(!re.test($("#phone").val())){
+				$("#shortcutLoginError").empty().html("手机号格式错误");
+				return false;
+			} 
+			if($(this).hasClass('disabled')){
+				return;
+			}
+			var _this = $(this);
+	   		$.ajax({
+					type: 'get',
+					dataType: "json",
+					data:"phone="+phone,
+					url: '${ctxPath}/sms/register',
+					success: function(ajaxResponse) {
+						if(ajaxResponse.success==true){
+							$("#mess").html(ajaxResponse.message);
+							$('#sendCodeDiv').modal('show');
+							$.app.countDown(_this);
+						}else{
+							$("#mess").html(ajaxResponse.message);
+							$('#sendCodeDiv').modal('show');
+							_this.removeClass('disabled')
+						}
+					},
+					error: function(jqXHR,textStatus,errorThrown) { 
+				   		_this.removeClass('disabled')
+					}
+				}); 
+	   		_this.addClass('disabled')
+		});
+	})
+	
+	</script>

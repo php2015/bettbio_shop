@@ -1,0 +1,32 @@
+{"index": {
+            "analysis": {
+                "analyzer": {
+                    "ik" : {
+                       "tokenizer" : "ik",
+                       "filter":[
+				              "lowercase",
+				              "bio_ngram"
+				            ]
+                       },
+                      "english" : {
+                          "tokenizer" : "standard",
+                          "filter": [
+                          	"asciifolding",
+                          	"lowercase",
+                          	"ourEnglishFilter"
+                          ]
+                      }
+                    },
+		        "filter":{
+		          "bio_ngram":{
+		            "type":"nGram",
+		            "min_gram":1,
+		            "max_gram":20
+		          },
+		          "ourEnglishFilter":{
+		              "type": "kstem"
+		          }
+		        }
+            }
+        }
+    }

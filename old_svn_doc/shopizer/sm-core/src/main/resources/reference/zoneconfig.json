@@ -1,0 +1,174 @@
+{
+"zh":[
+	{
+		"zoneCode": "JING",
+		"zoneName": "北京",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "HU",
+		"zoneName": "上海",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "JIN",
+		"zoneName": "天津",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "YU",
+		"zoneName": "重庆",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "HEI",
+		"zoneName": "黑龙江",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "JILIN",
+		"zoneName": "吉林",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "LIAO",
+		"zoneName": "辽宁",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "MENG",
+		"zoneName": "内蒙古",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "JI",
+		"zoneName": "河北",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "XIN",
+		"zoneName": "新疆",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "GAN",
+		"zoneName": "甘肃",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "QING",
+		"zoneName": "青海",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "SHAN",
+		"zoneName": "陕西",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "NING",
+		"zoneName": "宁夏",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "HENAN",
+		"zoneName": "河南",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "LU",
+		"zoneName": "山东",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "SHANXI",
+		"zoneName": "山西",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "WAN",
+		"zoneName": "安徽",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "E",
+		"zoneName": "湖北",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "XIANG",
+		"zoneName": "湖南",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "SU",
+		"zoneName": "江苏",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "CHUAN",
+		"zoneName": "四川",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "QIAN",
+		"zoneName": "贵州",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "DIAN",
+		"zoneName": "云南",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "GUI",
+		"zoneName": "广西",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "CANG",
+		"zoneName": "西藏",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "ZHE",
+		"zoneName": "浙江",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "JIANGXI",
+		"zoneName": "江西",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "YUE",
+		"zoneName": "广东",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "MIN",
+		"zoneName": "福建",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "TAI",
+		"zoneName": "台湾",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "QIONG",
+		"zoneName": "海南",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "GANG",
+		"zoneName": "香港",
+		"countryCode": "CN"
+	},
+	{
+		"zoneCode": "AO",
+		"zoneName": "澳门",
+		"countryCode": "CN"
+	}
+]
+}

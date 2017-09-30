@@ -1,0 +1,396 @@
+<%layout("/common/admin/modelLayout.html",{
+css:["zTree/css/zTreeStyle/zTreeStyle.css","bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css","jQuery-File-Upload/css/jquery.fileupload.css"],
+script:["zTree/js/jquery.ztree.all-3.5.min.js",
+"bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+"bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
+"kindeditor-4.1.5/kindeditor-all.min.js",
+"jQuery-File-Upload/js/vendor/jquery.ui.widget.js",
+"jQuery-File-Upload/js/jquery.iframe-transport.js",
+"jQuery-File-Upload/js/jquery.fileupload.js","js/admin/product.js","js/admin/selectList.js"]}){ %>
+		<div class="warp-body warp-dialog">
+			<form class="form-horizontal" id="productFrom" action="" method="post">
+				<div class="row">
+					<div class="col-sm-4 check">
+						<label class="control-label">货号(必填且最多255位)</label>
+						<input required id="productNo" name="productNo" class="form-control valueInput" success="false" type="text" maxlength="255">
+						<span class="text-warning hide">货号不能为空</span>
+					</div>
+					<div class="col-sm-4 check" id="ztControl">
+						<label class="control-label">类别名称(必填)</label>
+						<input id="productClassName" name="productClass.name" class="form-control valueInput" success="false" type="text" readonly="readonly">
+						<span class="text-warning hide">类别不能为空</span>
+						<input id="productClassCode" name="productClass.code"  type="hidden">
+						<div class="ztree-hd">
+							<ul id="ZT" class="ztree"></ul>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label">商品批次号(最多255位)</label>
+						<input id="batchCode" name="batchCode" class="form-control" type="text" value="" maxlength="255">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-1">
+						<label class="control-label">是否上架</label>
+						<input id="isEnable" name="isEnable" type="checkbox" value="1" checked="checked">
+					</div>
+					<div class="col-sm-3">
+						<label class="control-label">上架日期</label>
+						<div class="input-group date" data-date-format="yyyy/mm/dd ">
+							<input id="enableDate" name="enableDate" class="form-control" placeholder="" size="16" type="text" value="">
+							<span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label">商品CAS(最多255位)</label>
+						<input id="CasCode" name="CasCode" class="form-control" type="text" value="" maxlength="255">
+					</div>
+					<div class="col-sm-4">
+						<label class="control-label">品牌</label>
+						<div class="input-group">
+							<input id="searchstorename" name="productBrand.name" class="form-control" placeholder="" type="text" value="" readonly="readonly">
+							<input id="storenamehidden" name="productBrand.id" type="hidden">
+							<span class="input-group-addon dropdown-toggle" data-toggle="collapse" aria-haspopup="true" href="#collapseExample" aria-expanded="true" aria-controls="collapseExample"> 
+	                         <span class="fa fa-th" aria-hidden="true"></span>
+							</span>
+						</div>
+					</div>
+					<div class="collapse" id="collapseExample" aria-expanded="true">
+						<div class="well" id="storeNameList"></div>
+					</div>
+				</div>
+				<div class="row">
+					 <div class="col-sm-4">
+						<label>合作模式</label>
+						<select class="form-control" id="productIsFree" name="productIsFree" value="true">
+							<option value="1" selected="selected">免费商品</option>
+							<option value="0">收费商品</option>
+						</select>
+					</div> 
+					<!-- <div class="col-sm-8">
+						<label>有效范围</label>
+						<div class="input-daterange input-group">
+							<input type="text" class="form-control datepicker" name="" value="" data-date-format="yyyy-mm-dd">
+							<span class="input-group-addon">to</span>
+							<input type="text" class="form-control datepicker" name="" value="" data-date-format="yyyy-mm-dd">
+						</div>
+					</div> -->
+				</div>
+				<div class="row">
+					<div class="col-sm-6 check">
+						<label class="control-label">商品名称(必填且最多512位)</label>
+						<input type="text" class="form-control valueInput" success="false" name="productNameCh" id="productNameCh"/>
+						<span class="text-warning hide">商品名称不能为空</span>
+					</div>
+					<div class="col-sm-6">
+						<label class="control-label">英文名(最多512位)</label>
+						<input type="text" class="form-control" name="productNameEn" value="" id="productNameEn" />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<label class="control-label">商品简单描述</label>
+						<textarea class="form-control" name="simpleDescription" value="" id="simpleDescription" rows="3"></textarea>
+					</div>
+					<div class="col-sm-6">
+						<label class="control-label">存储条件描述 </label>
+						<textarea class="form-control" name="storageCondition" value="" id="storageCondition" rows="3"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">商品描述</label>
+						<textarea id="KE" name="detailedDescription" class="form-control" rows="10"></textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">图片(上传图片最大为2M且都为png、jpg、jpeg、gif、bmp、pdf格式) </label>
+					</div>
+					 <div class="col-sm-12" id="imgDiv">
+					 <div class="col-sm-2">
+							<div class="upload-hd">
+								<a href="javascript:;" class="a-upload">
+								    <i class="fa fa-cloud-upload fa-5x"></i>
+								    <p>点击添加文件</p>
+								</a>
+								<input type="file" name="files[]" id="img1">
+								<a href="javascript:;" class="upload-delete">删除文件</a>
+								<div class="upload-preview">
+									<img src=""/>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="upload-hd">
+								<a href="javascript:;" class="a-upload">
+								    <i class="fa fa-cloud-upload fa-5x"></i>
+								    <p>点击添加文件</p>
+								</a>
+								<input type="file" name="files[]" id="img2">
+								<a href="javascript:;" class="upload-delete">删除文件</a>
+								<div class="upload-preview">
+									<img src=""/>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="upload-hd">
+								<a href="javascript:;" class="a-upload">
+								    <i class="fa fa-cloud-upload fa-5x"></i>
+								    <p>点击添加文件</p>
+								</a>
+								<input type="file" name="files[]" id="img3">
+								<a href="javascript:;" class="upload-delete">删除文件</a>
+								<div class="upload-preview">
+									<img src=""/>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="upload-hd">
+								<a href="javascript:;" class="a-upload">
+								    <i class="fa fa-cloud-upload fa-5x"></i>
+								    <p>点击添加文件</p>
+								</a>
+								<input type="file" name="files[]" id="img4">
+								<a href="javascript:;" class="upload-delete">删除文件</a>
+								<div class="upload-preview">
+									<img src=""/>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="upload-hd">
+								<a href="javascript:;" class="a-upload">
+								    <i class="fa fa-cloud-upload fa-5x"></i>
+								    <p>点击添加文件</p>
+								</a>
+								<input type="file" name="files[]" id="img5">
+								<a href="javascript:;" class="upload-delete">删除文件</a>
+								<div class="upload-preview">
+									<img src=""/>
+								</div>
+							</div>
+						</div>
+					</div> 
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<label class="control-label">附件 </label>
+					</div>
+					 <div class="col-sm-12" id="fileDiv">
+						<div class="col-sm-3">
+							<span class="btn btn-primary btn-block fileinput-button text-left">
+						        <i class="fa fa-plus"></i>
+						        <span class="fileinput-button-val">选择文件</span>
+						        <input id="file1" type="file" name="files[]" multiple="">
+						        <input type="hidden" name="" value="" class="fileinput-hidden-val">
+							</span>
+						</div>
+						<div class="col-sm-3">
+							<span class="btn btn-primary btn-block fileinput-button text-left">
+						        <i class="fa fa-plus"></i>
+						        <span class="fileinput-button-val">选择文件</span>
+						        <input id="file2" type="file" name="files[]" multiple="">
+						        <input type="hidden" name="" value="" class="fileinput-hidden-val">
+							</span>
+						</div>
+						<div class="col-sm-3">
+							<span class="btn btn-primary btn-block fileinput-button text-left">
+						        <i class="fa fa-plus"></i>
+						        <span class="fileinput-button-val">选择文件</span>
+						        <input id="file3" type="file" name="files[]" multiple="">
+						        <input type="hidden" name="" value="" class="fileinput-hidden-val">
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<br />
+						<p>
+							<a href="">小工具提示：您可以访问“常用工具”下载图片处理软件（图片水印和马赛克处理）</a>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12 text-right">
+						<button type="button" id="insertProduct" class="btn btn-success">提交</button>
+					</div>
+				</div>
+			</form>
+		</div>
+<%}%>
+		<script type="text/javascript">
+		var verdict={
+				errInput : function(_this){
+					_this.closest('.check').find('.text-warning').removeClass('hide');
+					_this.attr("success","false");
+				},
+				sucInput : function(_this){
+					_this.closest('.check').find('.text-warning').addClass('hide');
+					_this.attr("success","true");
+				}
+		}
+			$(function() {
+				$.app.initDatetimePicker();
+				$.app.initKindEditor();
+				//$("#storeNameList").load("../data/test.html")
+				
+				$.ajax({
+					type : 'POST',
+					dataType : "json",
+					data : "parentCode=" + 0,
+					url : '${ctxPath}/manager/classified/selectTree',
+					success : function(classifyZtreeBoList) {
+						zNodes = classifyZtreeBoList;
+						loadTree(classifyZtreeBoList);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						
+					}
+				}); 
+				
+				$('#img1,#img2,#img3,#img4,#img5').fileupload({
+			        url: ctxPath+'/ajaxUpload',
+			        dataType: 'json',
+			        acceptFileTypes: /(\.|\/)(bmp|gif|jpe?g|png)$/i,
+			        done: function (e, data) {
+			        	var _this = $(e.target);
+			            $.each(data.result.files, function (index, file) {
+			            	var _this = $(e.target);
+			            	_this.closest(".upload-hd").find("img").attr("src","${ctxPath}/"+file.url);
+			            	_this.attr("url", file.url);
+			             });
+			        }
+			    })
+				
+				/* $('#img1,#img2,#img3,#img4,#img5').bind('change',function(){
+					var _this = $(this);
+					if(!$.app.isImage(_this.val())){
+						_this.parent().removeClass('has-preview');
+						alert("请上传指定格式图片");
+						return false;
+					}
+					var _id = _this.attr('id');
+					 $.ajaxFileUpload
+	                 (
+	                     {
+	                         url: "${ctxPath}/ajaxUpload", //用于文件上传的服务器端请求地址
+	                         secureuri: false, //是否需要安全协议，一般设置为false
+	                        	fileElementId : _this.attr('id'),
+	                         dataType: 'json', //返回值类型 一般设置为json
+	                         success: function (data, status, e)  //服务器成功响应处理函数
+		                         {			                         
+                        	 		console.log(data);
+                        	 		$("#"+_id).closest(".upload-hd").find("img").attr("src","${ctxPath}/"+data.files[0].url);
+                        	 		$("#"+_id).attr("url", data.files[0].url);
+		                         },
+	                         error: function (data, status, e)//服务器响应失败处理函数
+	                         {
+	                        	 alert("图片上传失败");
+	                         }
+	                     }
+	                 ) 
+				}) */
+				$('#file1,#file2,#file3').fileupload({
+			        url: ctxPath+'/ajaxUpload',
+			        dataType: 'json',
+			        acceptFileTypes: /(\.|\/)(bmp|gif|jpe?g|png)$/i,
+			        done: function (e, data) {
+			        	var _this = $(e.target);
+			            $.each(data.result.files, function (index, file) {      
+			            	_this.siblings('.fileinput-button-val').html(file.name);
+			            	_this.siblings('.fileinput-hidden-val').val(file.url);
+			             });
+			        }
+			    })
+				/**
+				*商品保存
+				*/
+				$("#insertProduct").click(function(){
+					var isSubmit=true;
+			      	$(".valueInput").each(function(){
+			      		if($(this).attr("success")=="false"){
+			      			verdict.errInput($(this));
+			      			isSubmit = false;
+			      			}
+			      		})
+			      	if(isSubmit==true){
+			      		productSub();
+			      	}
+				})
+				
+				$("#productNo,#productNameCh,#productClassName").blur(function(){
+				var _this = $(this);
+				if(_this.val() == ""){
+					verdict.errInput(_this);
+				}else{
+					verdict.sucInput(_this);
+				}
+			})
+			$("#isEnable").click(function(){
+				if($("input[name='isEnable']").is(':checked')){
+					$("#isEnable").val("1");
+				}else{
+					$("#isEnable").val("0");
+				}
+			})
+			})
+		
+		function productSub(){
+			var param = {};
+			var imgUrls = "";
+			$("#imgDiv input").each(function(i,o){
+				 if($(this).attr("url") != undefined){
+					 imgUrls += $(this).attr("url")+",";
+				 }
+			  });
+			param.imgUrls = imgUrls.substr(0,imgUrls.length-1);
+			var files = "";
+			$("#fileDiv .fileinput-hidden-val").each(function(i,o){
+				 if($(this).val() != ""){
+					 files += $(this).val()+",";
+				 }
+			  });
+			param.files = files.substr(0,files.length-1);
+			 $("#productFrom input").each(function(i,o){
+				 if(o.name != 'files[]' && $(this).val() != ""){
+					 param[o.name] = $(this).val();
+				 }
+			  }); 
+			$("#productFrom textarea").each(function(i,o){
+				param[o.name] = $(this).val();
+			  });
+			
+			$.app.post("${ctxPath}/admin/product/insertReagentProduct",param,function(flag,data){
+				$.app.message(data.message);
+				if(flag){
+					 window.parent.location.href="${ctxPath}/admin/product/list"; 
+				}
+			})
+		}
+		
+		function zTreeOnExpand(event, treeId, treeNode){
+			if(!$(treeNode).data('type')=='1'){
+				$(treeNode).data('type','1');
+				$.ajax({
+					type : 'POST',
+					dataType : "json",
+					data : "parentCode=" + treeNode.id,
+					url : '${ctxPath}/manager/classified/selectTree',
+					success : function(classifyZtreeBoList) {
+						var newNode = classifyZtreeBoList;
+						newNode = zTree.addNodes(treeNode, newNode);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						
+					}
+				});
+			}
+		}
+		window.onload=function(){
+			getStores("${ctxPath}/admin/proof/brandList",null,null);
+		}
+		</script>

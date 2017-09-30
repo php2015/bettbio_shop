@@ -1,0 +1,93 @@
+<%layout("/common/layout.html"){ %>
+		<div id="warp" style="padding-top: 0px;">
+			<div class="s_hader">
+				<div class="container">
+					<div class="pull-left s_logo">
+						<img src="${ctxPath}/static/img/biglogo.png" height="56">
+					</div>
+				</div>
+			</div>
+			<div class="s_login container">
+				<div class="row">
+					<div class="col-md-8 login_hd"></div>
+					<div class="col-md-1 login_divider"></div>
+					<div class="col-md-3">
+						<div id="logform" class="login">
+							<div id="login">
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active" id="jobLogin" style="width:150px;text-align:center;">
+										<a href="#jobLogin" aria-controls="profile" role="tab" data-toggle="tab">员工登录</a>
+									</li>
+								</ul>
+								<div id="customer_div">
+									<div class="tab-content">
+										<div id="jobLogin" class="tab-pane active">
+											<form method="post" id="jobLoginForm" class="form-horizontal" action="${ctxPath}/jobLogin">
+												<div><span id="jobLoginError" style="color:red;">${error!}</span></div>
+												<div class="control-group">
+													<div class="control-group">
+														<div class="controls input-group">
+															<span class="input-group-addon"> <span class=" fa fa-user" aria-hidden="true"></span></span>
+															<input id="account" class="form-control" type="text" name="account" size="18" placeholder="用户名/工号">
+														</div>
+													</div>
+													<div class="control-group">
+														<div class="controls input-group">
+															<span class="input-group-addon"> <span class=" fa fa-lock" aria-hidden="true"></span></span>
+															<input id="password" class="form-control" type="password" name="password" size="18" placeholder="密码">
+														</div>
+													</div>
+													<div class="control-group remeber-control">
+														<div class="controls">
+															<label><div><input type="checkbox" id="jobRememberMe" name="jobRememberMe"></div><div class="remeber-text">记住用户名</div></label>
+															<div class="pull-right"></div>						
+														</div>
+													</div>
+													<div class="control-group">
+														<button type="submit" class="btn btn-default btn-info btn-block" ripple="">登录</button>
+													</div>
+													<input id="formSubmitButton" name="storeCode" type="hidden" value="DEFAULT">
+													<div class="logon-password-box">
+														<div class="pull-left">
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="sendCode" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop= 'static'>
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-body">  
+		        <p id="mess"></p>  
+		      </div>
+		      <div class="modal-footer">  
+		         <input type="hidden" id="url"/>  
+		        	<a href="javascript:void(0);" class="btn btn-success" data-dismiss="modal" id="btncSuccess">确定</a>  
+		      </div>  
+		    </div>
+		  </div>
+		</div>
+	<%}%>
+	<script type="text/javascript">
+	$(function(){
+		$("#jobLoginForm").submit(function(){
+			if($.trim($("#account").val())==""){
+				$("#jobLoginError").html("请输入帐号或者工号!"); 
+				return false;
+			}
+			if($.trim($("#password").val())==""){
+				$("#jobLoginError").html("请输入密码!"); 
+				return false;
+			}
+			return true;
+		})
+	})
+	</script>

@@ -1,0 +1,748 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+   http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+	
+	<bean id="banner" class="com.salesmanager.core.business.brand.service.BrandBanner" abstract="true"/>
+	
+	<util:list id="brandBannerList" list-class="java.util.ArrayList" >
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/1.png"/>
+			<property name="brandName" value="AAT Bioquest"/>
+			<property name="searchKey" value="AAT"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/2.png"/>
+			<property name="brandName" value="Abcam"/>
+			<property name="searchKey" value="Abcam"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/3.png"/>
+			<property name="brandName" value="ABM"/>
+			<property name="searchKey" value="ABM"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/4.png"/>
+			<property name="brandName" value="Abnova"/>
+			<property name="searchKey" value="Abnova"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/5.png"/>
+			<property name="brandName" value="ACROBiosystems"/>
+			<property name="searchKey" value="ACROBiosystems"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/6.png"/>
+			<property name="brandName" value="Active Motif"/>
+			<property name="searchKey" value="Active Motif"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/7.png"/>
+			<property name="brandName" value="Adipogen"/>
+			<property name="searchKey" value="Adipogen"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/8.png"/>
+			<property name="brandName" value="ApexBio"/>
+			<property name="searchKey" value="ApexBio"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/9.png"/>
+			<property name="brandName" value="Apotech"/>
+			<property name="searchKey" value="Apotech"/>
+		</bean>
+		
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/10.png"/>
+			<property name="brandName" value="Atlas Antibodies"/>
+			<property name="searchKey" value="Atlas Antibodies"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/11.png"/>
+			<property name="brandName" value="Abgene"/>
+			<property name="searchKey" value="Abgene"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/12.png"/>
+			<property name="brandName" value="Axygen"/>
+			<property name="searchKey" value="Axygen"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/139.png"/>
+			<property name="brandName" value="Abebio"/>
+			<property name="searchKey" value="Abebio"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/13png.png"/>
+			<property name="brandName" value="BD Falcon"/>
+			<property name="searchKey" value="BD Falcon"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/14.png"/>
+			<property name="brandName" value="BD Pharmingen"/>
+			<property name="searchKey" value="BD Pharmingen"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/15.png"/>
+			<property name="brandName" value="Better Innovation"/>
+			<property name="searchKey" value="Better Innovation"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/16.png"/>
+			<property name="brandName" value="beyotime"/>
+			<property name="searchKey" value="beyotime"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/17.png"/>
+			<property name="brandName" value="Bioporto"/>
+			<property name="searchKey" value="Bioporto"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/18.png"/>
+			<property name="brandName" value="Biovendor"/>
+			<property name="searchKey" value="Biovendor"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/19.png"/>
+			<property name="brandName" value="BioVision"/>
+			<property name="searchKey" value="BioVision"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/20.png"/>
+			<property name="brandName" value="BioXcell"/>
+			<property name="searchKey" value="BioXcell"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/21.png"/>
+			<property name="brandName" value="boster"/>
+			<property name="searchKey" value="boster"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/22.png"/>
+			<property name="brandName" value="Cayman"/>
+			<property name="searchKey" value="Cayman"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/23.png"/>
+			<property name="brandName" value="Cell Biolabs"/>
+			<property name="searchKey" value="Cell Biolabs"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/24.png"/>
+			<property name="brandName" value="Cellartis"/>
+			<property name="searchKey" value="Cellartis"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/137--.png"/>
+			<property name="brandName" value="cellgro"/>
+			<property name="searchKey" value="cellgro"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/25.png"/>
+			<property name="brandName" value="Chondrex"/>
+			<property name="searchKey" value="Chondrex"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/26.png"/>
+			<property name="brandName" value="Clontech"/>
+			<property name="searchKey" value="Clontech"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/27.png"/>
+			<property name="brandName" value="cloud-clone"/>
+			<property name="searchKey" value="cloud-clone"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/28.png"/>
+			<property name="brandName" value="Corning"/>
+			<property name="searchKey" value="Corning"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/29.png"/>
+			<property name="brandName" value="CST"/>
+			<property name="searchKey" value="CST"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/30.png"/>
+			<property name="brandName" value="CWBIO"/>
+			<property name="searchKey" value="CWBIO"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/31.png"/>
+			<property name="brandName" value="Detroit R&amp;D"/>
+			<property name="searchKey" value="Detroit R&amp;D"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/32.png"/>
+			<property name="brandName" value="DRAGONLAB"/>
+			<property name="searchKey" value="DRAGONLAB"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/33.png"/>
+			<property name="brandName" value="Dldevelop"/>
+			<property name="searchKey" value="Dldevelop"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/34.png"/>
+			<property name="brandName" value="eBioscience"/>
+			<property name="searchKey" value="eBioscience"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/35.png"/>
+			<property name="brandName" value="ELMEX"/>
+			<property name="searchKey" value="ELMEX"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/36.png"/>
+			<property name="brandName" value="Enzo"/>
+			<property name="searchKey" value="Enzo"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/37.png"/>
+			<property name="brandName" value="Eppendorf"/>
+			<property name="searchKey" value="Eppendorf"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/38.png"/>
+			<property name="brandName" value="Everest Biotech"/>
+			<property name="searchKey" value="Everest Biotech"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/39.png"/>
+			<property name="brandName" value="Exalpha"/>
+			<property name="searchKey" value="Exalpha"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/40.png"/>
+			<property name="brandName" value="Exiqon"/>
+			<property name="searchKey" value="Exiqon"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/41.png"/>
+			<property name="brandName" value="FERMENTAS"/>
+			<property name="searchKey" value="FERMENTAS"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/42.png"/>
+			<property name="brandName" value="Finnzymes"/>
+			<property name="searchKey" value="Finnzymes"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/43.png"/>
+			<property name="brandName" value="Fitzgerald"/>
+			<property name="searchKey" value="Fitzgerald"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/44.png"/>
+			<property name="brandName" value="Flow Tech Inc"/>
+			<property name="searchKey" value="Flow Tech Inc"/>
+		</bean>
+		
+		
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/47.png"/>
+			<property name="brandName" value="generay"/>
+			<property name="searchKey" value="generay"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/48.png"/>
+			<property name="brandName" value="GeneTex"/>
+			<property name="searchKey" value="GeneTex"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/49.png"/>
+			<property name="brandName" value="Genscript"/>
+			<property name="searchKey" value="Genscript"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/50.png"/>
+			<property name="brandName" value="Greiner"/>
+			<property name="searchKey" value="Greiner"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/51.png"/>
+			<property name="brandName" value="Huabio"/>
+			<property name="searchKey" value="Huabio"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/52.png"/>
+			<property name="brandName" value="HyClone"/>
+			<property name="searchKey" value="HyClone"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/53.png"/>
+			<property name="brandName" value="IACtest"/>
+			<property name="searchKey" value="IACtest"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/54.png"/>
+			<property name="brandName" value="IBL"/>
+			<property name="searchKey" value="IBL"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/55.png"/>
+			<property name="brandName" value="iCell"/>
+			<property name="searchKey" value="iCell"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/56.png"/>
+			<property name="brandName" value="InvivoGen"/>
+			<property name="searchKey" value="InvivoGen"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/57.png"/>
+			<property name="brandName" value="Innova Biosciences"/>
+			<property name="searchKey" value="Innova Biosciences"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/58.png"/>
+			<property name="brandName" value="IQ Products"/>
+			<property name="searchKey" value="IQ Products"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/59.png"/>
+			<property name="brandName" value="Jackson"/>
+			<property name="searchKey" value="Jackson"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/60.png"/>
+			<property name="brandName" value="KAPA"/>
+			<property name="searchKey" value="KAPA"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/61.png"/>
+			<property name="brandName" value="Kikkoman"/>
+			<property name="searchKey" value="Kikkoman"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/62.png"/>
+			<property name="brandName" value="KEMESSER"/>
+			<property name="searchKey" value="KEMESSER"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/63.png"/>
+			<property name="brandName" value="Kylin-Bell"/>
+			<property name="searchKey" value="Kylin-Bell"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/64.png"/>
+			<property name="brandName" value="LHB"/>
+			<property name="searchKey" value="LHB"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/65.png"/>
+			<property name="brandName" value="labtide"/>
+			<property name="searchKey" value="labtide"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/66.png"/>
+			<property name="brandName" value="Life Diagnostics"/>
+			<property name="searchKey" value="Life Diagnostics"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/67.png"/>
+			<property name="brandName" value="LiTTLE-PA"/>
+			<property name="searchKey" value="LiTTLE-PA"/>
+		</bean>
+		
+		
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/68.png"/>
+			<property name="brandName" value="Lunginnov"/>
+			<property name="searchKey" value="Lunginnov"/>
+		</bean>
+		
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/69.png"/>
+			<property name="brandName" value="Mabtech"/>
+			<property name="searchKey" value="Mabtech"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/70.png"/>
+			<property name="brandName" value="Merck Millipore"/>
+			<property name="searchKey" value="Merck Millipore"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/71.png"/>
+			<property name="brandName" value="Meridian"/>
+			<property name="searchKey" value="Meridian"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/72.png"/>
+			<property name="brandName" value="Mirus"/>
+			<property name="searchKey" value="Mirus"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/73.png"/>
+			<property name="brandName" value="MP Bio"/>
+			<property name="searchKey" value="MP Bio"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/74-.png"/>
+			<property name="brandName" value="NEST"/>
+			<property name="searchKey" value="NEST"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/75.png"/>
+			<property name="brandName" value="Nunc"/>
+			<property name="searchKey" value="Nunc"/>
+		</bean>
+
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/77-.png"/>
+			<property name="brandName" value="Scientz"/>
+			<property name="searchKey" value="Scientz"/>
+		</bean>
+		
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/79-.png"/>
+			<property name="brandName" value="NEB"/>
+			<property name="searchKey" value="NEB"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/80-.png"/>
+			<property name="brandName" value="Novoprotein"/>
+			<property name="searchKey" value="Novoprotein"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/81-.png"/>
+			<property name="brandName" value="omega"/>
+			<property name="searchKey" value="omega"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/82.png"/>
+			<property name="brandName" value="Ontores"/>
+			<property name="searchKey" value="Ontores"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/83.png"/>
+			<property name="brandName" value="OriGene"/>
+			<property name="searchKey" value="OriGene"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/84-.png"/>
+			<property name="brandName" value="Peprotech"/>
+			<property name="searchKey" value="Peprotech"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/85-.png"/>
+			<property name="brandName" value="Pierce"/>
+			<property name="searchKey" value="Pierce"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/86-.png"/>
+			<property name="brandName" value="ProImmune"/>
+			<property name="searchKey" value="ProImmune"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/87-.png"/>
+			<property name="brandName" value="Promega"/>
+			<property name="searchKey" value="Promega"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/88.png"/>
+			<property name="brandName" value="Pall"/>
+			<property name="searchKey" value="Pall"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/89-.png"/>
+			<property name="brandName" value="QSP"/>
+			<property name="searchKey" value="QSP"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/90-.png"/>
+			<property name="brandName" value="Qiagen"/>
+			<property name="searchKey" value="Qiagen"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/91.png"/>
+			<property name="brandName" value="Raybiotech"/>
+			<property name="searchKey" value="Raybiotech"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/92.png"/>
+			<property name="brandName" value="R&amp;D Systems"/>
+			<property name="searchKey" value="R&amp;D Systems"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/93.png"/>
+			<property name="brandName" value="Santa Cruz"/>
+			<property name="searchKey" value="Santa Cruz"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/94.png"/>
+			<property name="brandName" value="ScienCell"/>
+			<property name="searchKey" value="ScienCell"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/95.png"/>
+			<property name="brandName" value="Selleck"/>
+			<property name="searchKey" value="Selleck"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/96-.png"/>
+			<property name="brandName" value="Sigma"/>
+			<property name="searchKey" value="Sigma"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/97.png"/>
+			<property name="brandName" value="Simgen"/>
+			<property name="searchKey" value="Simgen"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/98.png"/>
+			<property name="brandName" value="Sino Biological"/>
+			<property name="searchKey" value="Sino Biological"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/99.png"/>
+			<property name="brandName" value="solarbio"/>
+			<property name="searchKey" value="solarbio"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/100-.png"/>
+			<property name="brandName" value="stressmarq"/>
+			<property name="searchKey" value="stressmarq"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/101-.png"/>
+			<property name="brandName" value="SurModics"/>
+			<property name="searchKey" value="SurModics"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/102-.png"/>
+			<property name="brandName" value="Synaptic Systems"/>
+			<property name="searchKey" value="Synaptic Systems"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/78-.png"/>
+			<property name="brandName" value="STEMCELL"/>
+			<property name="searchKey" value="STEMCELL"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/103.png"/>
+			<property name="brandName" value="TaKaRa"/>
+			<property name="searchKey" value="TaKaRa"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/104.png"/>
+			<property name="brandName" value="TCI"/>
+			<property name="searchKey" value="TCI"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/105.png"/>
+			<property name="brandName" value="Thermo-life"/>
+			<property name="searchKey" value="Thermo-life"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/106.png"/>
+			<property name="brandName" value="Tiandz"/>
+			<property name="searchKey" value="Tiandz"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/107.png"/>
+			<property name="brandName" value="TIANGEN"/>
+			<property name="searchKey" value="TIANGEN"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/108.png"/>
+			<property name="brandName" value="TICBIO"/>
+			<property name="searchKey" value="TICBIO"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/109.png"/>
+			<property name="brandName" value="Tocris"/>
+			<property name="searchKey" value="Tocris"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/110.png"/>
+			<property name="brandName" value="Vectorlabs"/>
+			<property name="searchKey" value="Vectorlabs"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/111.png"/>
+			<property name="brandName" value="Wako"/>
+			<property name="searchKey" value="Wako"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/112.png"/>
+			<property name="brandName" value="YRgene"/>
+			<property name="searchKey" value="YRgene"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/113.png"/>
+			<property name="brandName" value="zen-bioscience"/>
+			<property name="searchKey" value="zen-bioscience"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/114.png"/>
+			<property name="brandName" value="ZYMO"/>
+			<property name="searchKey" value="ZYMO"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/115.png"/>
+			<property name="brandName" value="阿拉丁"/>
+			<property name="searchKey" value="阿拉丁"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/116-.png"/>
+			<property name="brandName" value="海狸纳米"/>
+			<property name="searchKey" value="海狸纳米"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/117.png"/>
+			<property name="brandName" value="惠彤"/>
+			<property name="searchKey" value="惠彤"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/118-.png"/>
+			<property name="brandName" value="麦克林"/>
+			<property name="searchKey" value="麦克林"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/119.png"/>
+			<property name="brandName" value="美仑"/>
+			<property name="searchKey" value="美仑"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/120.png"/>
+			<property name="brandName" value="南京建成"/>
+			<property name="searchKey" value="南京建成"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/121.png"/>
+			<property name="brandName" value="南京肽业"/>
+			<property name="searchKey" value="南京肽业"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/122.png"/>
+			<property name="brandName" value="翊圣"/>
+			<property name="searchKey" value="翊圣"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/123.png"/>
+			<property name="brandName" value="普利莱"/>
+			<property name="searchKey" value="普利莱"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/124.png"/>
+			<property name="brandName" value="强耀生物"/>
+			<property name="searchKey" value="强耀生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/125.png"/>
+			<property name="brandName" value="七海生物"/>
+			<property name="searchKey" value="七海生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/126.png"/>
+			<property name="brandName" value="四季青"/>
+			<property name="searchKey" value="四季青"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/127.png"/>
+			<property name="brandName" value="同立海源"/>
+			<property name="searchKey" value="同立海源"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/128.png"/>
+			<property name="brandName" value="威奥生物"/>
+			<property name="searchKey" value="威奥生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/129.png"/>
+			<property name="brandName" value="新赛美"/>
+			<property name="searchKey" value="新赛美"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/130.png"/>
+			<property name="brandName" value="亚肽生物"/>
+			<property name="searchKey" value="亚肽生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/131.png"/>
+			<property name="brandName" value="英格恩生物"/>
+			<property name="searchKey" value="英格恩生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/132.png"/>
+			<property name="brandName" value="源叶生物"/>
+			<property name="searchKey" value="源叶生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/133.png"/>
+			<property name="brandName" value="金弗康"/>
+			<property name="searchKey" value="金弗康"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/134.png"/>
+			<property name="brandName" value="邦耀生物"/>
+			<property name="searchKey" value="邦耀生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/135.png"/>
+			<property name="brandName" value="奥迪特"/>
+			<property name="searchKey" value="奥迪特"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/136.png"/>
+			<property name="brandName" value="成都里来生物"/>
+			<property name="searchKey" value="成都里来生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/76.png"/>
+			<property name="brandName" value="施睿康"/>
+			<property name="searchKey" value="施睿康"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/45.png"/>
+			<property name="brandName" value="釜诚生物"/>
+			<property name="searchKey" value="釜诚生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/46.png"/>
+			<property name="brandName" value="辉骏生物"/>
+			<property name="searchKey" value="辉骏生物"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/140.png"/>
+			<property name="brandName" value="必拓"/>
+			<property name="searchKey" value="必拓"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/图层-152.png"/>
+			<property name="brandName" value="海森通"/>
+			<property name="searchKey" value="海森通"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/狄尔格医药.jpg"/>
+			<property name="brandName" value="狄尔格医药"/>
+			<property name="searchKey" value="Dilger"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/Unibiotest.jpg"/>
+			<property name="brandName" value="优博生物"/>
+			<property name="searchKey" value="Unibiotest"/>
+		</bean>
+		<bean parent="banner">
+			<property name="imgUrl" value="/resources/img/brands/biologix.jpg"/>
+			<property name="brandName" value="巴罗克生物"/>
+			<property name="searchKey" value="Biologix"/>
+		</bean>
+	</util:list>
+
+   	<bean id="brandService" class="com.salesmanager.web.utils.StaticBrandService">
+		<property name="fullBrandBannerList" ref="brandBannerList"/>
+		<property name="popularBrandBannerList" ref="brandBannerList"/>
+	</bean>
+	
+	
+</beans>

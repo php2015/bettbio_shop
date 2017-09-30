@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SUserMapper">
+	<resultMap id="BaseResultMap" type="com.bettbio.core.model.SUser">
+		<!-- WARNING - @mbggenerated -->
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
+		<result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+		<result column="PHONE" jdbcType="VARCHAR" property="phone" />
+		<result column="EMAIL" jdbcType="VARCHAR" property="email" />
+		<result column="NAME" jdbcType="VARCHAR" property="name" />
+		<result column="MECHANISM_SUB_CODE" jdbcType="VARCHAR"
+			property="mechanismSubCode" />
+		<result column="QQ" jdbcType="VARCHAR" property="qq" />
+		<result column="INTEGRAL" jdbcType="INTEGER" property="integral" />
+		<result column="GRADE" jdbcType="INTEGER" property="grade" />
+		<result column="CODE" jdbcType="VARCHAR" property="code" />
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+		<result column="IS_ACTIVATION" jdbcType="INTEGER" property="isActivation" />
+		<result column="SEX" jdbcType="INTEGER" property="sex" />
+		<result column="IS_DISABLE" jdbcType="INTEGER" property="isDisable" />
+		<result column="SOURCE" jdbcType="INTEGER" property="source" />
+		<result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="COMPANY" jdbcType="VARCHAR" property="company" />
+		<result column="PHONE_CODE" jdbcType="VARCHAR" property="phoneCode"/>
+		<result column="BALANCE" jdbcType="VARCHAR" property="balance"/> 
+	</resultMap>
+	<select id="login" parameterType="com.bettbio.core.model.SUser"
+		resultMap="BaseResultMap">
+		select * from S_USER where (PHONE = #{account} or EMAIL=
+		#{account}) and PASSWORD = #{password} 
+	</select>
+
+	<select id="selectByPhone" parameterType="com.bettbio.core.model.SUser"
+		resultMap="BaseResultMap">
+		select * from S_USER where PHONE = #{phone} 
+	</select>
+
+	<select id="selectByCode" parameterType="String" resultMap="BaseResultMap">
+		select * from S_USER where CODE = #{userCode} 
+	</select>
+	
+	<select id="verifyPhone" parameterType="String" resultType="String">
+
+		SELECT
+		COUNT(1)
+		FROM ( SELECT u.PHONE FROM
+		S_USER u
+		UNION
+		SELECT
+		su.PHONE
+		FROM
+		S_STORE_USER su
+		) r
+		WHERE
+		r.PHONE = #{phone}
+	</select>
+
+	<select id="verifyEmail" parameterType="String" resultType="String">
+		SELECT
+		COUNT(1)
+		FROM
+		(
+		SELECT u.EMAIL FROM S_USER u
+		UNION
+		SELECT su.EMAIL FROM S_STORE_USER su
+		) r WHERE r.EMAIL = #{email}
+	</select>
+	
+	<update id="updateUserPoints" parameterType="com.bettbio.core.model.SUser">
+		update S_USER set INTEGRAL=#{integral} where CODE=#{code}
+	</update>
+	
+	<select id="selectCountByPage" parameterType="java.util.Map" resultType="java.lang.Integer">
+		<include refid="selectCount"></include>
+		WHERE 1=1 
+		<if test="activate !=null and activate !=-1">
+			AND IS_ACTIVATION = #{activate}
+		</if>
+		<if test="name !=null and name !=''">
+			AND NAME LIKE CONCAT(#{name},'%')
+		</if>
+		<if test="email !=null and email !=''">
+			AND EMAIL LIKE CONCAT(#{email},'%')
+		</if>
+		<if test="mechanismSubCode !=null and mechanismSubCode !=''">
+			AND MECHANISM_SUB_CODE LIKE CONCAT(#{mechanismSubCode},'%')
+		</if>
+		<if test="phone !=null and phone !=''">
+			AND PHONE LIKE CONCAT(#{phone},'%')
+		</if>
+		<if test="company !=null and company !=''">
+			AND COMPANY LIKE CONCAT(#{company},'%')
+		</if>
+		<if test="grade !=null and grade !=''">
+			AND GRADE = #{grade}
+		</if>
+	</select>
+	
+	<select id="selectByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+		<include refid="selectAllField"></include>
+		WHERE 1=1 
+		<if test="activate !=null and activate !=-1">
+			AND IS_ACTIVATION = #{activate}
+		</if>
+		<if test="name !=null and name !=''">
+			AND NAME LIKE CONCAT(#{name},'%')
+		</if>
+		<if test="email !=null and email !=''">
+			AND EMAIL LIKE CONCAT(#{email},'%')
+		</if>
+		<if test="mechanismSubCode !=null and mechanismSubCode !=''">
+			AND MECHANISM_SUB_CODE LIKE CONCAT(#{mechanismSubCode},'%')
+		</if>
+		<if test="phone !=null and phone !=''">
+			AND PHONE LIKE CONCAT(#{phone},'%')
+		</if>
+		<if test="company !=null and company !=''">
+			AND COMPANY LIKE CONCAT(#{company},'%')
+		</if>
+		<if test="grade !=null and grade !=''">
+			AND GRADE = #{grade}
+		</if>
+  		LIMIT #{startRow},#{row}
+	</select>
+	
+	<sql id="selectAllField">
+  		SELECT ID,ACCOUNT,PASSWORD,PHONE,EMAIL,NAME,MECHANISM_SUB_CODE,QQ,INTEGRAL,GRADE,CODE,CREATE_DATE,IS_DELETED,IS_ACTIVATION,SEX,IS_DISABLE,SOURCE,UPDATE_DATE,COMPANY,BALANCE FROM S_USER
+    </sql>
+ 
+    <sql id="selectCount">
+  		SELECT COUNT(1) FROM S_USER
+   </sql> 
+   
+   <update id="updatePwd" parameterType="java.util.Map">
+   		UPDATE S_USER 
+   		SET
+   			PASSWORD = #{password}
+   		WHERE ID = ${id}
+   </update>
+   
+   <select id="selectUserEmail" parameterType="java.util.Map" resultType="java.lang.String">
+   		SELECT EMAIL FROM S_USER WHERE ID IN (
+   		 <foreach collection="ids" index="index" item="item" separator=",">
+           #{item}
+     	 </foreach>
+   		)
+   </select>
+   
+   <update id="updateGrade" parameterType="com.bettbio.core.model.SUser">
+   		UPDATE S_USER 
+   		SET
+   			GRADE = #{grade}
+   		WHERE ID = ${id}
+   </update>
+   
+   <update id="updateActivate" parameterType="com.bettbio.core.model.SUser">
+   		UPDATE S_USER 
+   		SET
+   			IS_ACTIVATION = #{status}
+   		WHERE ID = ${id}
+   </update>
+   
+   	<select id="fastLogin" parameterType="com.bettbio.core.model.SUser" resultMap="BaseResultMap">
+		select * from S_USER where PHONE = #{phone} AND PHONE_CODE = MD5(#{phoneCode}) 
+	</select>
+	
+	<update id="updatePhoneCode" parameterType="com.bettbio.core.model.SUser">
+		UPDATE S_USER
+			SET PHONE_CODE = MD5(#{phoneCode})
+		WHERE PHONE = #{phone}
+	</update>
+</mapper>

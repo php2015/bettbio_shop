@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SUserAddressMapper">
+	<resultMap id="BaseResultMap" type="com.bettbio.core.model.SUserAddress">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+		<result column="PROVINCE" jdbcType="VARCHAR" property="province" />
+		<result column="CITY" jdbcType="VARCHAR" property="city" />
+		<result column="AREA" jdbcType="VARCHAR" property="area" />
+		<result column="STREET" jdbcType="VARCHAR" property="street" />
+		<result column="POSTCODE" jdbcType="INTEGER" property="postcode" />
+		<result column="IS_DEFAULT" jdbcType="INTEGER" property="isDefault" />
+		<result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+		<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="CODE" jdbcType="VARCHAR" property="code" />
+		<result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+		<result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
+		<result column="COMPANY_NAME" jdbcType="VARCHAR" property="companyName" />
+		<result column="IS_DISTRIBUTION_ADDRESS" jdbcType="VARCHAR"
+			property="isDistributionAddress" />
+	</resultMap>
+
+	<update id="settingDefaultAddress">
+		UPDATE S_USER_ADDRESS set IS_DEFAULT=0 where
+		USER_CODE=#{userCode} and CODE=#{addressCode}
+	</update>
+
+	<update id="settingNoDefaultAddress" parameterType="String">
+		UPDATE
+		S_USER_ADDRESS SET IS_DEFAULT=1 where
+		USER_CODE=#{userCode}
+	</update>
+
+	<update id="settingDefaultDistributionAddress">
+		UPDATE S_USER_ADDRESS set IS_DISTRIBUTION_ADDRESS=0 where
+		USER_CODE=#{userCode} and CODE=#{addressCode}
+	</update>
+
+	<update id="settingNoDefaultDistributionAddress" parameterType="String">
+		UPDATE
+		S_USER_ADDRESS SET IS_DISTRIBUTION_ADDRESS=1 where
+		USER_CODE=#{userCode}
+	</update>
+
+	<delete id="deleteAddress" parameterType="String">
+		DELETE FROM
+		S_USER_ADDRESS where CODE=#{addressCode}
+	</delete>
+
+	<select id="selectDefaultAddress" parameterType="String"
+		resultMap="BaseResultMap">
+		SELECT
+		ID,USER_CODE,PROVINCE,CITY,AREA,STREET,STREET,POSTCODE,IS_DEFAULT,REMARKS,CREATE_DATE,CODE,USER_NAME,USER_PHONE,COMPANY_NAME,IS_DISTRIBUTION_ADDRESS
+		FROM S_USER_ADDRESS where USER_CODE=#{userCode} and IS_DEFAULT=0
+	</select>
+
+	<select id="selectAddressByCode" parameterType="String"
+		resultMap="BaseResultMap">
+		SELECT
+		ID,USER_CODE,PROVINCE,CITY,AREA,STREET,STREET,POSTCODE,IS_DEFAULT,REMARKS,CREATE_DATE,CODE,USER_PHONE,COMPANY_NAME,USER_NAME,IS_DISTRIBUTION_ADDRESS
+		FROM S_USER_ADDRESS where USER_CODE=#{userCode}
+	</select>
+
+	<select id="selectCountByCode" parameterType="String"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM S_USER_ADDRESS where
+		USER_CODE=#{userCode}
+	</select>
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.CountryMapper">
+  <resultMap id="countryResultMap" type="com.bettbio.core.model.Country">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="country_name" jdbcType="VARCHAR" property="countryName" />
+    <result column="country_code" jdbcType="VARCHAR" property="countryCode" />
+  </resultMap>
+  
+  <select id="selectByPage" parameterType="java.util.Map" resultMap="countryResultMap">
+  	select Id,country_name,country_code from country 
+  	<where>
+  		<if test="countryName != null">
+  			country_name like CONCAT('%',#{countryName}) 
+  		</if>
+  	</where>
+  	limit #{startRow},#{row}
+  </select>
+  
+  <select id="getCountryAllCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select count(1) from country
+  	<where>
+  		<if test="countryName != null">
+  			country_name like CONCAT('%',#{countryName}) 
+  		</if>
+  	</where>
+  </select>
+</mapper>

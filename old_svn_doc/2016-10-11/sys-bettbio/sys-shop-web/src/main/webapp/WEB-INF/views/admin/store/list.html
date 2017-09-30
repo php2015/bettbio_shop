@@ -1,0 +1,143 @@
+<%layout("/common/admin/layout.html",{ 
+dynscript:"$(function() {" +
+	"$(\"#selectIdAll,#selectAudiAll\").change(function() {" + 
+		"if(this.checked) {" + 
+			" $(this).check();" + 
+		" } else {" + 
+			"$(this).uncheck();" + 
+		" }" + 
+		"})" + 
+	"})"
+}){ %>
+<div class="container-fluid warp">
+	<div class="row warp-tabs">
+		<ul class="nav nav-tabs">
+			<li><a href="${ctxPath}/admin/store/store">商家详情</a></li>
+			<li><a href="${ctxPath}/admin/store/create">创建用户</a></li>
+			<li class="active"><a href="${ctxPath}/admin/store/userList">商家用户清单</a></li>
+			<!-- <li><a href="${ctxPath}/admin/store/logo">商家LOGO</a></li> -->
+		</ul>
+	</div>
+	<div class=" warp-body">
+		<div class="row">
+			<div class="col-sm-12 s_search">
+				<ul class="nav nav-pills pull-right form-inline">
+					<li><a href="javascript:void(0);"onclick="deleteAll()">删除所有</a></li>
+					<li><a href="javascript:void(0);"onclick="deletes()">删除所选</a></li>
+					<li>
+						<form id="listForm" action="${ctxPath}/admin/store/userList" method="get">
+							<fieldset>
+								<div class="input-group" style="padding-top: 3px; width: 250px">
+									<input id="findName" name="findName" class="form-control "
+										type="text" value="${findName!}" placeholder="用户名称/用户代码/手机号"> <a
+										href="javascript:void(0);" class="input-group-addon"><span
+										class="fa fa-search" aria-hidden="true"></span></a>
+								</div>
+							</fieldset>
+						</form>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="selectIdAll"name="selectIdAll" value="idChk"></th>
+							<th>用户姓名</th>
+							<th>用户手机号</th>
+							<th>用户QQ</th>
+							<th>重置密码</th>
+							<th>删除</th>
+						</tr>
+					</thead>
+					<%for(sStoreUser in pageInfo.list){%>
+					<tr>
+						<td><input type="checkbox" name="idChk" value="${sStoreUser.id}"></td>
+						<td><a href="${ctxPath}/admin/store/info?id=${sStoreUser.id}">${sStoreUser.name}</a>
+						</td>
+						<td>${sStoreUser.phone}</td>
+						<td>${sStoreUser.qq}</td>
+						<td><a href="javascript:void(0);" onclick="resetPass(${sStoreUser.id})">重置密码</a></td>
+						<td><a href="javascript:void(0);" onclick="delstore(${sStoreUser.id})">删除</a></td>
+					</tr>
+					<%}%>
+				</table>
+			</div>
+		</div>
+		<%include("/common/admin/pagination.html"){} %>
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+$(function(){
+	$(".input-group-addon").click(function(){
+		$("#listForm").submit();
+	})
+})
+	function delstore(id){
+		$("#confirmHref").bind("click",function(){
+			delById(id);
+		 });
+		$('#delcfmModel').modal('show');
+	}
+	
+	function delById(id){
+		$.app.get("${ctxPath}/admin/store/delete","id="+id,function(flag,data){
+			$.app.message(data.message);
+			if(flag == true){
+				setTimeout(function(){
+					$("#listForm").submit();
+				}, 1000)
+			}
+		})
+	}
+	
+	function deletes(){
+		$("#confirmHref").bind("click",function(){
+			deletestores();
+		 });
+		$('#delcfmModel').modal('show');
+	}
+	function deletestores(){
+		var ids = [];
+		 $('input[name="idChk"]:checked').each(function(){
+			 ids.push( $(this).val());
+		 })
+		 
+		 $.app.get("${ctxPath}/admin/store/deletes","ids="+ids,function(flag,data){
+			 $.app.message(data.message);
+			 if(flag == true){
+				setTimeout(function(){
+					$("#listForm").submit();
+				}, 1000)
+			}
+		})
+	}
+	function deleteAll(){
+		$("#confirmHref").bind("click",function(){
+			deleteAllStore();
+		 });
+		$('#delcfmModel').modal('show');
+	}
+	function deleteAllStore(){
+		$.app.get("${ctxPath}/admin/store/deleteAll",null,function(flag,data){
+			$.app.message(data.message);
+			if(flag == true){
+				setTimeout(function(){
+					$("#listForm").submit();
+				}, 1000)
+			}
+		})
+	}
+	
+	function resetPass(id){
+		$.app.get("${ctxPath}/admin/store/resetPass","id="+id,function(flag,data){
+			$.app.message(data.message);
+			if(flag == true){
+				
+			}
+		})
+	}
+</script>

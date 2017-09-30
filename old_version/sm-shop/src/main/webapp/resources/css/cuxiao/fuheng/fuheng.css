@@ -1,0 +1,15 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.b-box * {
+	font-family:"Microsoft YaHei";
+	margin:0;
+	padding:0;
+}
+.b-box ul, ol {
+	list-style: none
+}
+
+
+.b-box{ background-color: #f5f5f5;}
+body{ background-color: #f5f5f5;}

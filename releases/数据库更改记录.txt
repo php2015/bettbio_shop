@@ -1,0 +1,96 @@
+﻿V3.1.0
+给卖家增加手机字段
+ALTER TABLE USER 
+ADD COLUMN ADMIN_MOBILE VARCHAR(50) NULL AFTER `MERCHANT_ID`;
+
+执行程序，填充数据。这个数据需要计算，将商铺的电话分配给正确的卖家，同时保证多人关联的时候，手机号不重复，所以不用SQL直接处理，太复杂。
+
+然后添加索引
+ALTER TABLE USER 
+CHANGE COLUMN ADMIN_MOBILE ADMIN_MOBILE VARCHAR(50) NOT NULL ,
+ADD UNIQUE INDEX ADMIN_MOBILE_UNIQUE (ADMIN_MOBILE ASC);
+
+
+==============================================================================
+V3.3.0
+1. 首先是Customer 表增加两个字段。
+   这两个字段有非空约束，用Hibernate自动升级就可以完成。
+
+2. 创建3个用户类型,需要先改表结构，加两个字段。 不晓得为什么HIbernate 没有自动完成。
+	ALTER TABLE USER_SEGMENT 
+ADD COLUMN `FOR_SELLER` TINYINT(1) NOT NULL AFTER `NAME`,
+
+	ADD COLUMN `FOR_BUYER` TINYINT(1) NOT NULL AFTER `FOR_SELLER`;
+   后来自动完成了
+
+3. 设置所有用户的注册时间为 2015-12-31 23:59:59 
+	这个是因为原来的日期时间字段没有。为了避免误会，填充的值.
+	update CUSTOMER set DATE_CREATED='2015-12-31 23:59:59', PRODUCT_AUDIT=-1 where DATE_CREATED is null;
+
+4. 设置之前所有的订单类型为 先发货
+	update ORDERS set PROCESS_TYPE='ship_first' where PROCESS_TYPE is null;
+
+================================================================================
+V3.4.11
+这两个SQL是提高产品搜索速度的
+ALTER TABLE PRODUCT  ADD INDEX PRODUCT_QUANTITY_SCORE_INDEX (QUALITY_SCORE DESC);
+
+/** 以下两条不再使用，因为生产环境数据量太大，执行下列操作或导致超时中断，遗留一些破碎的临时表在数据库里无法删除 
+ALTER TABLE PRODUCT 
+ADD COLUMN SEARCH_CONTENT VARCHAR(1000) NULL DEFAULT NULL;
+
+update PRODUCT p inner join (select p2.PRODUCT_ID as PRODUCT_ID,  p2.SKU as SKU, p2.CAS as CAS, p2.CODE as CODE, pdscp.NAME as NAME, pdscp.EN_NAME as EN_NAME, m.STORE_NAME as STORE_NAME from PRODUCT p2  left join PRODUCT_DESCRIPTION pdscp on p2.PRODUCT_ID=pdscp.PRODUCT_ID left join MERCHANT_STORE m on m.MERCHANT_ID=p2.MERCHANT_ID where p2.SEARCH_CONTENT is null limit 10000) as d on d.PRODUCT_ID=p.PRODUCT_ID set p.SEARCH_CONTENT=concat(IFNULL(d.SKU,''), IFNULL(d.CAS,''), IFNULL(d.CODE,''), IFNULL(d.NAME,''), IFNULL(d.EN_NAME,''), IFNULL(d.STORE_NAME,'')) where d.PRODUCT_ID=p.PRODUCT_ID ;
+这条要执行挺长时间的
+**/
+
+创建搜索用的表
+CREATE TABLE `PRODUCT_SEARCH_INFO` (
+  `PRODUCT_ID` bigint(20) unsigned NOT NULL,
+  `MERCHANT_ID` bigint(20) DEFAULT NULL,
+  `LAST_UPT_TIME` datetime DEFAULT NULL,
+  `SEARCH_CONTENT` varchar(1000) DEFAULT NULL,
+  `CATEGORY_ID` bigint(20) DEFAULT NULL,
+  `QUALITY_SCORE` int(11) DEFAULT 0,
+  `PRODUCT_DIAMOND` int(1) DEFAULT 0,
+  `AVAILABLE` int(1) DEFAULT 0,
+  `PRODUCT_AUDIT` int(11) DEFAULT NULL,
+  PRIMARY KEY (`PRODUCT_ID`),
+  KEY `PRODUCT_SEARCH_QUATS_IDX` (`PRODUCT_AUDIT`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+初始化简单数据
+insert into PRODUCT_SEARCH_INFO (PRODUCT_ID, MERCHANT_ID,CATEGORY_ID,QUALITY_SCORE,PRODUCT_DIAMOND,PRODUCT_AUDIT,LAST_UPT_TIME)
+    select p.PRODUCT_ID, p.MERCHANT_ID, pcat.CATEGORY_ID, p.QUALITY_SCORE, p.PRODUCT_DIAMOND, p.PRODUCT_AUDIT, NULL 
+    from PRODUCT p left join MERCHANT_STORE m on p.MERCHANT_ID=m.MERCHANT_ID
+        left join PRODUCT_CATEGORY pcat on p.PRODUCT_ID=pcat.PRODUCT_ID left join CATEGORY cat on cat.CATEGORY_ID=pcat.CATEGORY_ID;
+
+更新SERACH_CONTENT
+update PRODUCT_SEARCH_INFO p inner join (select p2.PRODUCT_ID as PRODUCT_ID,  p2.SKU as SKU, p2.CAS as CAS, p2.CODE as CODE, pdscp.NAME as NAME, pdscp.EN_NAME as EN_NAME, m.STORE_NAME as STORE_NAME from PRODUCT_SEARCH_INFO p1 left join PRODUCT p2 on p1.PRODUCT_ID=p2.PRODUCT_ID left join PRODUCT_DESCRIPTION pdscp on p2.PRODUCT_ID=pdscp.PRODUCT_ID left join MERCHANT_STORE m on m.MERCHANT_ID=p2.MERCHANT_ID where p1.SEARCH_CONTENT is null limit 300000) as d on d.PRODUCT_ID=p.PRODUCT_ID set p.SEARCH_CONTENT=concat(IFNULL(d.SKU,''), IFNULL(d.CAS,''), IFNULL(d.CODE,''), IFNULL(d.NAME,''), IFNULL(d.EN_NAME,''), IFNULL(d.STORE_NAME,''));
+
+在生产环境有个脚本，是重新生成整个产品搜索数据的，在/data/clariones/update_search/updateProductSearchInfo.sql
+这个脚本目前计划任务是每天凌晨4：00执行一次:
+-------------------
+[bettbio@10-9-57-223 update_search]$ crontab -l
+0 4 * * * /data/clariones/connectDB.sh < /data/clariones/update_search/updateProductSearchInfo.sql >> /data/clariones/update_search/log.txt
+-------------------
+
+====================================
+2017-4-26
+两张表同步数据用定时任务无法满足客户的要求，所以换成view了
+
+create view PRODUCT_SEARCH_INFO as select p.PRODUCT_ID, p.MERCHANT_ID, p.AVAILABLE,pcat.CATEGORY_ID, p.QUALITY_SCORE, p.PRODUCT_DIAMOND, p.PRODUCT_AUDIT,
+    concat(IFNULL(p.SKU,''), IFNULL(p.CAS,''), IFNULL(p.CODE,''), IFNULL(pdscp.NAME,''), IFNULL(pdscp.EN_NAME,'')) as SEARCH_CONTENT
+from PRODUCT p left join MERCHANT_STORE m on p.MERCHANT_ID=m.MERCHANT_ID
+    left join PRODUCT_DESCRIPTION pdscp on p.PRODUCT_ID=pdscp.PRODUCT_ID
+    left join PRODUCT_CATEGORY pcat on p.PRODUCT_ID=pcat.PRODUCT_ID left join CATEGORY cat on cat.CATEGORY_ID=pcat.CATEGORY_ID;
+这样查询会慢一点，但是实时性比较好。
+
+========================
+2017-7-25
+将公司名称插入search——content中,view的建立语句改为：
+
+create view PRODUCT_SEARCH_INFO as select p.PRODUCT_ID, p.MERCHANT_ID, p.AVAILABLE,pcat.CATEGORY_ID, p.QUALITY_SCORE, p.PRODUCT_DIAMOND, p.PRODUCT_AUDIT,
+    concat(IFNULL(p.SKU,''), IFNULL(p.CAS,''), IFNULL(p.CODE,''), IFNULL(pdscp.NAME,''), IFNULL(pdscp.EN_NAME,''), IFNULL(m.STORE_NAME,'')) as SEARCH_CONTENT
+from PRODUCT p left join MERCHANT_STORE m on p.MERCHANT_ID=m.MERCHANT_ID
+    left join PRODUCT_DESCRIPTION pdscp on p.PRODUCT_ID=pdscp.PRODUCT_ID
+    left join PRODUCT_CATEGORY pcat on p.PRODUCT_ID=pcat.PRODUCT_ID left join CATEGORY cat on cat.CATEGORY_ID=pcat.CATEGORY_ID;

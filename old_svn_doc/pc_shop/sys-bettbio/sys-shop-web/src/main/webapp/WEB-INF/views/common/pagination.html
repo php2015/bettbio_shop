@@ -1,0 +1,24 @@
+<% // pagination %>
+<nav>
+	<ul class="pagination">
+		<%if(pageInfo.total>0){%>
+			<li><a>共 ${pageInfo.total} 条 每页 ${pageInfo.pageSize} 条 当前页 ${pageInfo.pageNum}</a></li>
+		<%}%>
+		
+		<%if(pageInfo.hasPreviousPage){%> 
+			<li><a href="?page=${pageInfo.prePage}&rows=${pageInfo.pageSize}">前一页</a></li>
+		<%}%>
+		
+		<%for(var cur in pageInfo.navigatepageNums){%>
+			<%if(cur == pageInfo.pageNum){%>
+				<li class="active"><a href="javascript:;">${cur}<span class="sr-only">$(cur)</span></a></li>
+			<%}else{%>
+				<li><a href="?page=${cur}&rows=${pageInfo.pageSize}">${cur}</a></li>
+			<%}%>
+		<%}%>
+		
+		<%if(pageInfo.hasNextPage){%> 
+			<li><a href="?page=${pageInfo.nextPage}&rows=${pageInfo.pageSize}">下一页</a></li>
+		<%}%>
+	</ul>
+</nav>

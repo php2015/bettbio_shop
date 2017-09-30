@@ -1,0 +1,132 @@
+
+
+.title-margin{
+	margin-top: 7%;
+}
+.pagefont {
+    color: #c6c6c6;
+}
+.imgfont {
+    margin-top: 7%;
+    text-align: center;
+    color: #c6c6c6;
+}
+.inputfont {
+    margin-top: 4%;
+    text-align: center;
+    color: #c6c6c6;
+}
+
+
+
+
+
+@-webkit-keyframes pulse { 0%{
+	opacity: 1
+}
+
+100%{
+opacity
+:
+0;transform
+:scale
+(2
+,
+2)
+}
+}
+@-moz-keyframes pulse { 0%{
+	opacity: 1
+}
+
+100%{
+opacity
+:
+0;transform
+:scale
+(2
+,
+2)
+}
+}
+@-o-keyframes pulse { 0%{
+	opacity: 1
+}
+
+100%{
+opacity
+:
+0;transform
+:scale
+(2
+,
+2)
+}
+}
+@keyframes pulse { 0%{
+	opacity: 1
+}
+
+100%{
+opacity
+:
+0;transform
+:scale
+(1
+.5
+,
+1
+.5
+)
+}
+}
+
+
+
+
+
+
+
+	.pagefont h1 label{
+	    color: #2fbfca;
+	    display: inline;
+	    font-size: 27px;
+	}	
+	.pagefont h1 span{
+	    color: #facc5f;
+	    font-size: 27px;
+	}
+	.pagefont h1 {
+	    font-family: 'Alex Brush', cursive;
+	    
+	}
+	
+	
+
+
+
+.modal{ 
+ width: 100%; 
+ position: fixed; 
+ text-align: center; 
+ margin: 0px auto; 
+ top: 0px; left: 0px; 
+ bottom: 0px; 
+ right: 0px; 
+ z-index: 1050; 
+ } 
+ .modal_wrapper{ 
+ display: table; 
+ overflow: auto; 
+ overflow-y: scroll; 
+ height: 100%; 
+ -webkit-overflow-scrolling: touch; 
+ outline: 0; 
+ text-align: center; 
+ margin: 0px auto; } 
+ .modal-dialog{ 
+ margin-top: 0px; 
+ display: table-cell; 
+ vertical-align: middle; 
+ margin: 0px 20px; }
+

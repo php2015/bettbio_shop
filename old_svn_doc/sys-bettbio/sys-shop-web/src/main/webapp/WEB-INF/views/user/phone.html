@@ -1,0 +1,258 @@
+<%layout("/common/layout.html",{css:["css/style.css","Font-Awesome/css/font-awesome.min.css"]}){
+%>
+		<div class="warp">
+			<div class="h_body">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-2">
+							<ul class="c_menu">
+								<li ><a href="${ctxPath}/personalCenter">我的账户</a></li>
+						<li><a href="${ctxPath}/findOrders">我的订单</a></li>
+						<li><a href="${ctxPath}/findUserPorints">查看积分</a></li>
+						<li ><a href="${ctxPath}/billing">开票和收货信息</a></li>
+						<li class="active"><a href="${ctxPath}/safe/safe">帐号安全</a></li>
+							</ul>
+						</div>
+						<div class="col-sm-10">
+							<h3>修改邮箱</h3>
+							<form id="" class="form-horizontal c_user_from s_register_from" action="" method="post">
+								<div class="form-group">
+									<div class="col-sm-2  text-left">
+										<label class="control-label">当前号码:</label>
+									</div>
+									<div class="col-sm-6">
+										<input id="oldPhone" name="oldPhone" class="required userName form-control" type="text" value="${userInfo.phone}" readonly="">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2  text-left">
+										<label class="control-label">手机验证码：</label>
+									</div>
+									<div class="col-sm-3 padding-right-clear">
+										<input id="oldPhoneCode" name="phoneCode" class="form-control checkInput" type="text" value="" maxlength="255" success="false">
+										<span class="help-inline error">手机验证不正确</span>
+									</div>
+									<div class="col-sm-3 padding-left-clear">
+										<button type="button" id="sendOldCode" class="btn btn-info btn-block">获取验证码</button>
+									</div>
+									<div class="col-sm-3 success">
+										<span class="success-icon"></span>
+									</div>										
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2  text-left">
+										<label class="control-label">新手机号码:</label>
+									</div>
+									<div class="col-sm-6">
+										<input id="newPhone" name="newPhone" class="required userName form-control checkInput" type="text" value="">
+										<span class="help-inline error">手机号不能为空</span>
+									</div>
+									<div class="col-sm-3 success">
+										<span class="success-icon"></span>
+									</div>										
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2  text-left">
+										<label class="control-label">手机验证码：</label>
+									</div>
+									<div class="col-sm-3 padding-right-clear">
+										<input id="newPhoneCode" name="newPhoneCode" class="form-control checkInput" type="text" value="" maxlength="255" success="false">
+										<span class="help-inline error">手机验证不正确</span>
+									</div>
+									<div class="col-sm-3 padding-left-clear">
+										<button type="button" id="sendNewCode" class="btn btn-info btn-block">获取验证码</button>
+									</div>
+									<div class="col-sm-3 success">
+										<span class="success-icon"></span>
+									</div>									
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2 col-sm-offset-2">
+										<input id="subBtn" type="submit" value="提交" name="register" class="btn btn-info btn-block">
+									</div>
+									<div class="col-sm-2 col-sm-offset-1">
+										<input type="reset" value="返回" class="btn btn-default btn-block">
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<%}%>
+<script type="text/javascript">
+	//发送旧手机验证码
+	$("#sendOldCode").mousedown(function(){
+		$.ajax({
+			type : 'get',
+			dataType : "json",
+			data : "phone=" + $("#oldPhone").val(),
+			url : '${ctxPath}/sendOldPhoneCode',
+			success : function(ajaxResponse) {
+				if (ajaxResponse.success == true) {
+					$("#mess").html(ajaxResponse.message);
+					$('#sendCodeModel').modal('show');
+					$("#sendOldCode").addClass("disabled");
+					var index = 30;
+					setInterval(function() {
+						index--;
+						$("#sendOldCode").text(index + "后重新获取");
+						if (index < 0) {
+							$("#sendOldCode").removeClass("disabled")
+									.text("获取验证码");
+							clearInterval();
+						}
+					}, 1000);
+				} else {
+					$("#mess").html(ajaxResponse.message);
+					$('#sendCodeModel').modal('show');
+				}
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+			}
+		});
+	});
+	
+	//发送旧手机验证码
+	$("#sendNewCode").mousedown(function(){
+		if($("#newPhone").attr("success")=="true"){
+			$.ajax({
+				type : 'get',
+				dataType : "json",
+				data : "phone=" + $("#newPhone").val(),
+				url : '${ctxPath}/sendOldPhoneCode',
+				success : function(ajaxResponse) {
+					if (ajaxResponse.success == true) {
+						$("#mess").html(ajaxResponse.message);
+						$('#sendCodeModel').modal('show');
+						$("#sendNewCode").addClass("disabled");
+						var index = 30;
+						setInterval(function() {
+							index--;
+							$("#sendNewCode").text(index + "后重新获取");
+							if (index < 0) {
+								$("#sendNewCode").removeClass("disabled")
+										.text("获取验证码");
+								clearInterval();
+							}
+						}, 1000);
+					} else {
+						$("#mess").html(ajaxResponse.message);
+						$('#sendCodeModel').modal('show');
+					}
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+				}
+			});
+		}else{
+			$("#newPhoneCode").siblings(".error").html("新手机号不正确").css("visibility","visible");
+		}		
+	});
+	
+	//校验手机验证码
+	$("#oldPhoneCode").blur(function(){
+		var _this=$(this);
+		var phone_code=$(this).val();
+		if(phone_code==""){
+			_this.siblings(".error").css("visibility","visible");
+			_this.attr("success","false");
+		}else{
+			$.post("${ctxPath}/valitationOldSMSCode",{code:phone_code},function(data){
+				if(data.success==true){
+					_this.siblings(".error").css("visibility","hidden");
+					_this.attr("success","true");
+					_this.parents(".form-group").find(".success").show();
+				}else{
+					_this.attr("success","false");
+					_this.siblings(".error").css("visibility","visible");
+				}		
+			},"json");
+		}
+	});
+	
+	//校验手机验证码
+	$("#newPhoneCode").blur(function(){
+		var _this=$(this);
+		var phone_code=$(this).val();
+		if(phone_code==""){
+			_this.siblings(".error").html("验证码不能为空").css("visibility","visible");
+			_this.attr("success","false");
+		}else{
+			$.post("${ctxPath}/valitationOldSMSCode",{code:phone_code},function(data){
+				if(data.success==true){
+					_this.siblings(".error").css("visibility","hidden");
+					_this.attr("success","true");
+					_this.parents(".form-group").find(".success").show();
+				}else{
+					_this.attr("success","false");
+					_this.siblings(".error").css("visibility","visible");
+				}		
+			},"json");
+		}
+	});	
+	
+	//新手机号校验
+	$("#newPhone").blur(function() {
+		var _this=$(this);
+		var re = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i;
+		var storemobile = $.trim($("#newPhone").val());
+		if (storemobile != '') {
+			if (re.test(storemobile)) {
+				$.ajax({
+					type : 'get',
+					dataType : "json",
+					data : "phone=" + storemobile,
+					url : '${ctxPath}/verifyPhone',
+					success : function(ajaxResponse) {
+						if (ajaxResponse.success == true) {
+							_this.siblings(".error").css("visibility","hidden");
+							_this.attr("success","true");
+							_this.parents(".form-group").find(".success").show();
+						} else {
+							_this.attr("success","false");
+							_this.siblings(".error").html(ajaxResponse.message).css("visibility","visible");
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+					}
+				});
+			} else {
+				_this.attr("success","false");
+				_this.siblings(".error").html("手机格式不正确").css("visibility","visible");
+			}
+		} else {
+			_this.attr("success","false");
+			_this.siblings(".error").html("手机号不能为空").css("visibility","visible");
+		}
+	});
+	
+	/**
+	 * 进入样式
+	 */
+	$("input").focus(function(){
+		$(this).siblings(".error").css("visibility","hidden");
+		$(this).parents(".form-group").find(".success").hide();
+	});
+	
+    /**
+ 	*提交修改手机密码	   
+    */
+	$("#subBtn").mousedown(function(){
+		var booleanValue=true;
+		$("input[class*='checkInput']:text").each(function(){
+			if($(this).attr("success")==false){
+				$(this).siblings(".error").css("visibility","visible");
+				booleanValue=false;
+			}
+		})
+		if(booleanValue==true){
+			$.post("${ctxPath}/changePhone",{newPhone:$("#newPhone").val()},function(data){
+				$.app.message("i",data.message);
+				setTimeout(function() {
+					window.location.href="${ctxPath}/login";
+				},1100)
+			},"json");
+		}
+	});
+</script>

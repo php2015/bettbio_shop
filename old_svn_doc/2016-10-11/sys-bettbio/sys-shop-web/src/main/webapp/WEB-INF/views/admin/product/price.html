@@ -1,0 +1,129 @@
+<%layout("/common/admin/modelLayout.html",{
+css:["dropify/css/dropify.min.css","zTree/css/zTreeStyle/zTreeStyle.css","bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"],
+script:["zTree/js/jquery.ztree.all-3.5.min.js","dropify/js/dropify.min.js",
+"bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+"bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
+"kindeditor-4.1.5/kindeditor-all.min.js",
+"jQuery-File-Upload/js/vendor/jquery.ui.widget.js",
+"jQuery-File-Upload/js/jquery.iframe-transport.js",
+"js/ajaxfileupload.js","js/admin/product.js"]}){ %>
+      	<div class="warp-body warp-dialog">
+      	<!-- 价格列表开始 -->
+      		<div id="priceListDiv">
+      			<div class="row" >
+					<div class="col-sm-12">
+					<ul class="nav nav-pills pull-left form-inline">
+							<li>
+								<a class="btn btn-primary btn-sm" href="${ctxPath}/admin/product/createPricePage?id=${reagentProduct.id}&code=${reagentProduct.productClass.code}" id="createVouchers">规格价格创建</a>
+							</li>
+						</ul>
+						<ul class="nav nav-pills pull-right form-inline">
+							<li>
+								<button class="btn btn-primary btn-sm" onclick="deletes()">删除所选</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+     	 		<div class="row" id="priceList">
+					<div class="col-sm-12">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="selectIdAll" name="selectIdAll" value="idChk"></th>
+									<th>规格</th>
+									<th>价格</th>
+									<th>供货周期</th>
+									<th>促销价格</th>
+									<th>促销价格生效日</th>
+									<th>促销价格截止日</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<%
+							for(productPrice in productPrices){
+							%>
+							<tr>
+								<td><input type="checkbox" name="idChk" value="${productPrice.id!}"></td>
+								<td>
+									${productPrice.specifications!}
+								</td>
+								<td>
+									${productPrice.price!}
+								</td>
+								<td>
+									${productPrice.supplyCycle!}
+								</td>
+								<td>
+									${productPrice.discountPrice!}
+								</td>
+								<td>
+									${productPrice.startDate,"yyyy/MM/dd"}
+								</td>
+								<td >
+									${productPrice.endDate,"yyyy/MM/dd"}
+								</td>
+								<td>
+									<button class="btn btn-primary btn-sm" onclick="deleteOne('${productPrice.id!}')">删除</button>
+								</td>
+							</tr>
+							<%}%>
+						</table>
+					</div>
+				</div>
+			</div>
+		<!-- 价格列表结束 -->
+		</div>
+<%}%>
+		<script type="text/javascript">
+		var verdict={
+				errInput : function(_this){
+					_this.closest('.row').find('.text-warning').removeClass('hide');
+					_this.attr("success","false");
+				},
+				sucInput : function(_this){
+					_this.closest('.row').find('.text-warning').addClass('hide');
+					_this.attr("success","true");
+				}
+		}
+			$(function() {
+				$.app.initDatetimePicker();
+				$.app.initKindEditor();
+				$.app.initDropify();
+				$('#buyingTime,#startDate,#endDate').datetimepicker({
+	                language: 'zh-CN',
+	                autoclose: true,
+	                todayHighlight: true
+				});
+				$("#selectIdAll,#selectAudiAll").change(function() {
+					if(this.checked) {
+						$(this).check();
+					} else {
+						$(this).uncheck();
+					}
+				});
+			})
+			
+			function deleteOne(ids){
+				deletePrice(ids);
+			}
+		
+			function deletes(){
+				var ids = "";
+				 $('input[name="idChk"]:checked').each(function(){
+					 ids += $(this).val()+",";
+				 })
+				 deletePrice(ids);
+			}
+			
+			function deletePrice(ids){
+				var productId=$("#id",parent.document).val();
+				$.app.get("${ctxPath}/admin/product/deletePrice",{"ids":ids,"productId":productId},function(flag,data){
+					$.app.message(data.message);
+					if(flag){
+						setTimeout(function(){
+							window.location.href="${ctxPath}/admin/product/price?id=${reagentProduct.id}"; 
+						}, 1000)
+					}
+				})
+			}
+		</script>

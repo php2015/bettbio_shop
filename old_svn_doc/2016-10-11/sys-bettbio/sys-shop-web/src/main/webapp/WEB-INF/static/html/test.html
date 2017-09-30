@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+	</head>
+
+	<body>
+		<button id="d1">登录</button>
+		<button id="d2">个人中心</button>
+		<button id="d3">订单</button>
+		<script type="text/javascript">
+			var jijiaqing = {
+				account: "1161095164@qq.com",
+				password: "qwer1234"
+			}
+			var guo = {
+				account: "13122854963",
+				password: "123456"
+			}
+			var url = "http://127.0.0.1:8088/shop/app";
+			//url = "http://106.75.28.20:8080/shop/app";
+
+			var shopcart = {
+				userAddressId: 1,
+				invoiceId: 1,
+				"carts": [{
+					"productCode": "0101010",
+					"number": 1,
+					"unitPrice": 100.0
+				}]
+			};
+			var uid;
+			$(function() {
+
+				$("#d1").click(function() {
+					$.post(url + "/userLogin", jijiaqing, function(data) {
+						uid = data.uid;
+						console.log(uid)
+					}, "json")
+				})
+				$("#d2").click(function() {
+					$.post(url + "/personalCenter;JSESSIONID=" + uid, {}, function(data) {})
+				})
+				$("#d3").click(function() {
+					$.post(url + "/createOrder;JSESSIONID=" + uid, {}, function(data) {})
+				})
+			})
+		</script>
+	</body>
+
+</html>

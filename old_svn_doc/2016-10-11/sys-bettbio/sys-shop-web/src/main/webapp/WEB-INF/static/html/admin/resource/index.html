@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../Font-Awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../../../css/admin.css">
+	</head>
+	<body>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="index.html">权限管理</a>
+					</li>
+					<li>
+						<a href="role.html">角色管理</a>
+					</li>
+					<li>
+						<a href="user.html">用户管理</a>
+					</li>
+				</ul>
+			</div>
+			<div class=" warp-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th width="30%">名称</th>
+									<th width="30%">URL路径</th>
+									<th width="15%">状态</th>
+									<th width="25%">操作</th>
+								</tr>
+							</thead>
+							<tr>
+								<td>用户管理</td>
+								<td>/admin/user</td>
+								<td>正常</td>
+								<td>
+									<a href="resource_op.html?op=add" data-toggle="dialog" data-title="添加子节点 —— 用户管理">添加子节点</a>
+									<a href="resource_op.html?op=update" data-toggle="dialog" data-title="修改权限">修改</a>
+									<a href="javascript:void(0);">删除</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="row" id="pagination">
+					<div class="col-sm-3">
+						<p class="hint">显示76 - 90 包含 1772 结果</p>
+					</div>
+					<div class="col-sm-9 text-right">
+						<ul class="pagination">
+							<li>
+								<a href="javascript:void(0);"><span class="fa fa-step-backward padding-height" aria-hidden="true"></span></a>
+							</li>
+							<li>
+								<a href="javascript:void(0);"><span class="fa fa-backward padding-height" aria-hidden="true"></span></a>
+							</li>
+							<li class="active">
+								<a href="javascript:void(0);" class="disabled">1</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);">2</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);">3</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);">4</a>
+							</li>
+
+							<li>
+								<a href="javascript:void(0);">5</a>
+							</li>
+
+							<li>
+								<a href="javascript:void(0);"><span class="fa fa-forward padding-height" aria-hidden="true"></span></a>
+							</li>
+							<li>
+								<a href="javascript:void(0);"><span class="fa fa-step-forward padding-height" aria-hidden="true"></span></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../../../js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../../../bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../../jQurey-plugin/jquery.blockUI.min.js"></script>
+		<script type="text/javascript" src="../../../js/application.js"></script>
+	</body>
+</html>

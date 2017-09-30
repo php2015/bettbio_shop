@@ -1,0 +1,27 @@
+function writePaging(paginationData,second){
+	$("#pagination").html("");
+	if(paginationData !=null){
+		var pages = '<ul class="pagination" style="padding-left:0px;">';
+		 if(paginationData.startPages !=1){
+			 pages += '<li ><a href="javascript:void(0);" onclick="doAction('+1+')"><span class="glyphicon glyphicon-step-backward" style="line-height:17px" aria-hidden="true"></span></a></li>';
+			 pages += '<li ><a href="javascript:void(0);" onclick="doAction('+(paginationData.startPages-1)+')"><span class="glyphicon glyphicon-backward" style="line-height:17px" aria-hidden="true"></span></a></li>';
+		 }
+		 for(var i =paginationData.startPages;i<=paginationData.showPages;i++){
+			 if(paginationData.currentPage == i){
+				 pages += '<li class="active"><a href="javascript:void(0);" class="disabled">'+i+'</a></li>';
+			 }else{
+				 pages += '<li ><a href="javascript:void(0);" onclick="doAction('+i+')">'+i+'</a></li>';
+			 }
+		 }
+		 if(paginationData.startPages+4 <=paginationData.totalPages){
+			 
+			 pages += '<li ><a href="javascript:void(0);" onclick="doAction('+(paginationData.startPages+5)+')"><span class="glyphicon glyphicon-forward" style="line-height:17px" aria-hidden="true"></span></a></li>';
+			 pages += '<li ><a href="javascript:void(0);" onclick="doAction('+paginationData.totalPages+')"><span class="glyphicon glyphicon-step-forward" style="line-height:17px" aria-hidden="true"></span></a></li>';
+		 }
+		 pages += '</ul>';
+	}
+	 if(second !=null){
+		 $("#pagination1").html(pages); 
+	 }
+	 $("#pagination").html(pages);
+}

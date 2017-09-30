@@ -1,0 +1,23 @@
+<%
+/*
+spring 国际化函数
+message(para0,para1,para2)
+	para0 message文件的key 必填
+	para1 message消息参数 选填
+	para2 分隔符默认',' 选填
+*/
+var classType = @Class.forName("org.springframework.web.servlet.support.RequestContext");
+var reqClass = @Class.forName("javax.servlet.http.HttpServletRequest");
+var con = @classType.getConstructor(reqClass);
+var requestContext = @con.newInstance(request);
+
+var argSep = isNotEmpty(para2)?para2:',';
+var text = "";
+if(isNotEmpty(para1)){
+	var args = strutil.split(para1,args);
+	text = @requestContext.getMessage(para0,args);
+}else{
+	text = @requestContext.getMessage(para0);
+}
+return text;
+%>

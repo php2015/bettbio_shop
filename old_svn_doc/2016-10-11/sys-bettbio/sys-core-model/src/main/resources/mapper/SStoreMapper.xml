@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.SStoreMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.SStore">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+    <result column="LOGO_URL" jdbcType="VARCHAR" property="logoUrl" />
+    <result column="IS_AUTH" jdbcType="INTEGER" property="isAuth" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="BACKGROUND_IMAGE_URL" jdbcType="VARCHAR" property="backgroundImageUrl" />
+    <result column="MECHANISM_CODE" jdbcType="VARCHAR" property="mechanismCode" />
+    <result column="FREQUENCY" jdbcType="INTEGER" property="frequency" />
+    <result column="IS_ACTIVATION" jdbcType="INTEGER" property="isActivation" />
+    <result column="IS_SEED_USER" jdbcType="INTEGER" property="isSeedUser" />
+    <result column="IS_DISABLE" jdbcType="INTEGER" property="isDisable" />
+    <result column="SOURCE" jdbcType="INTEGER" property="source" />
+    <result column="REGISTERED_CAPITAL" jdbcType="VARCHAR" property="registeredCapital" />
+    <result column="SET_UP_TIME" jdbcType="TIMESTAMP" property="setUpTime" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+  	<result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+  	<result column="CHINESE_ABOUT" jdbcType="VARCHAR" property="chineseAbout" />
+  	<result column="ENGLISH_ABOUT" jdbcType="VARCHAR" property="englishAbout" />
+  	<result column="STORE_URL" jdbcType="VARCHAR" property="storeUrl" />
+  	<result column="LICENSE_IMAGE_URL" jdbcType="VARCHAR" property="licenseImageUrl" />
+  </resultMap>
+  
+  <resultMap id="storeAndUserMap" type="com.bettbio.core.model.vo.StoreAndUserVo">
+    <id column="STORE_ID" jdbcType="INTEGER" property="storeId" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="LINKMAN" jdbcType="VARCHAR" property="linkman" />
+    <result column="LANDLINE" jdbcType="VARCHAR" property="landline" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="BACKGROUND_IMAGE_URL" jdbcType="VARCHAR" property="backgroundImageUrl" />
+    <result column="MECHANISM_CODE" jdbcType="VARCHAR" property="mechanismCode" />
+    <result column="FREQUENCY" jdbcType="INTEGER" property="frequency" />
+    <result column="IS_ACTIVATION" jdbcType="INTEGER" property="isActivation" />
+    <result column="IS_SEED_USER" jdbcType="INTEGER" property="isSeedUser" />
+    <result column="IS_DISABLE" jdbcType="INTEGER" property="isDisable" />
+    <result column="SOURCE" jdbcType="INTEGER" property="source" />
+    <result column="REGISTERED_CAPITAL" jdbcType="VARCHAR" property="registeredCapital" />
+    <result column="SET_UP_TIME" jdbcType="TIMESTAMP" property="setUpTime" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+  	<result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+  	<result column="CHINESE_ABOUT" jdbcType="VARCHAR" property="chineseAbout" />
+  	<result column="ENGLISH_ABOUT" jdbcType="VARCHAR" property="englishAbout" />
+  	<result column="STORE_URL" jdbcType="VARCHAR" property="storeUrl" />
+  	<result column="QQ" jdbcType="VARCHAR" property="qq" />
+  	<result column="LICENSE_IMAGE_URL" jdbcType="VARCHAR" property="licenseImageUrl" />
+  </resultMap>
+  
+  <resultMap id="ExhibitionStoreBoMap" type="com.bettbio.core.model.bo.ExhibitionStoreBo">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+    <result column="LOGO_URL" jdbcType="VARCHAR" property="logoUrl" />
+    <result column="IS_AUTH" jdbcType="INTEGER" property="isAuth" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="BACKGROUND_IMAGE_URL" jdbcType="VARCHAR" property="backgroundImageUrl" />
+    <result column="MECHANISM_CODE" jdbcType="VARCHAR" property="mechanismCode" />
+    <result column="FREQUENCY" jdbcType="INTEGER" property="frequency" />
+    <result column="IS_ACTIVATION" jdbcType="INTEGER" property="isActivation" />
+    <result column="IS_SEED_USER" jdbcType="INTEGER" property="isSeedUser" />
+    <result column="IS_DISABLE" jdbcType="INTEGER" property="isDisable" />
+    <result column="SOURCE" jdbcType="INTEGER" property="source" />
+    <result column="REGISTERED_CAPITAL" jdbcType="VARCHAR" property="registeredCapital" />
+    <result column="SET_UP_TIME" jdbcType="TIMESTAMP" property="setUpTime" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+  	<result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+  	<result column="CHINESE_ABOUT" jdbcType="VARCHAR" property="chineseAbout" />
+  	<result column="ENGLISH_ABOUT" jdbcType="VARCHAR" property="englishAbout" />
+  	<result column="STORE_URL" jdbcType="VARCHAR" property="storeUrl" />
+  	<result column="LICENSE_IMAGE_URL" jdbcType="VARCHAR" property="licenseImageUrl" />
+  	<result column="IS_AFFIRM" jdbcType="INTEGER" property="isAffirm" />
+  	<result column="FILE_URL" jdbcType="VARCHAR" property="fileUrl" />
+  	<result column="EXHIBITION_ID" jdbcType="INTEGER" property="exhibitionId" />
+  </resultMap>
+  <resultMap id="PinYinNameMap" type="com.bettbio.core.model.bo.PinYinName" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PINYING" property="pinyin" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="selectByPage" parameterType="com.bettbio.core.model.SStore" resultMap="BaseResultMap">
+  select ID,CODE,NAME,REMARKS,LOGO_URL,IS_AUTH,TYPE,CREATE_DATE,UPDATE_DATE,BACKGROUND_IMAGE_URL,MECHANISM_CODE,
+  FREQUENCY,IS_ACTIVATION,IS_SEED_USER,IS_DISABLE,SOURCE,REGISTERED_CAPITAL,SET_UP_TIME,EMAIL,IS_DELETED,ADDRESS,CHINESE_ABOUT,ENGLISH_ABOUT,STORE_URL from S_STORE 
+  where 1=1
+  <if test="name != null and name != '' ">
+  and NAME  like CONCAT('%',#{name},'%') or CODE like CONCAT('%',#{name},'%') or EMAIL like CONCAT('%',#{name},'%')
+  </if>
+  and IS_DELETED = 1 
+  limit #{startRow},#{row}
+  </select>
+  
+  <select id="getSStoreAllCount" parameterType="com.bettbio.core.model.SStore" resultType="java.lang.Integer">
+  select count(1) from S_STORE where 1=1
+  <if test="name != null and name != '' ">
+  and NAME  like CONCAT('%',#{name},'%') or CODE like CONCAT('%',#{name},'%') or EMAIL like CONCAT('%',#{name},'%')
+  </if>
+  and IS_DELETED = 1 
+  </select>
+  
+  <update id="deleteStoreList">
+  UPDATE S_STORE
+		SET
+			IS_DELETED = 0
+		WHERE ID in
+		<foreach close=")" collection="array" index="index" item="item" open="(" separator=",">  
+ 		#{item}  
+		</foreach>
+  </update>
+  
+   <update id="delete" parameterType="com.bettbio.core.model.SStore">
+  UPDATE S_STORE
+		SET
+			IS_DELETED = 0
+		WHERE ID = #{id}  
+  </update>
+  
+  <update id="deleteAll">
+  UPDATE S_STORE
+		SET
+			IS_DELETED = 0
+  </update>
+  
+  <sql id="selectAllField">
+  select ID,
+	CODE,
+	NAME,
+	REMARKS,
+	LOGO_URL,
+	IS_AUTH,
+	TYPE,
+	CREATE_DATE,
+	UPDATE_DATE,
+	BACKGROUND_IMAGE_URL,
+	MECHANISM_CODE,
+	FREQUENCY,
+	IS_ACTIVATION,
+	IS_SEED_USER,
+	IS_DISABLE,
+	SOURCE,
+	REGISTERED_CAPITAL,
+	SET_UP_TIME,
+	EMAIL,
+	IS_DELETED,
+	ADDRESS,
+	CHINESE_ABOUT,
+	ENGLISH_ABOUT,
+	STORE_URL,
+	LANDLINE,
+	LICENSE_IMAGE_URL from S_STORE
+  </sql>
+  
+  <select id="selectByCode" parameterType="com.bettbio.core.model.SStore" resultMap="BaseResultMap">
+  <include refid="selectAllField"></include>
+ <where>
+  <if test="code != null">
+   CODE = #{code}
+  </if>
+ </where> 
+ </select>
+ 
+ <select id="getStoreAndUser" parameterType="java.lang.Integer" resultMap="storeAndUserMap">
+ SELECT
+ 	e.ID STORE_ID,
+ 	r.ID USER_ID, 
+	e.NAME,
+	r.NAME LINKMAN,
+	e.LANDLINE,
+	r.PHONE,
+	e.EMAIL,
+	e.ADDRESS,
+	e.CHINESE_ABOUT,
+	e.ENGLISH_ABOUT,
+	r.QQ,
+	e.STORE_URL,
+	e.IS_SEED_USER,
+	e.LICENSE_IMAGE_URL
+FROM
+	S_STORE e,
+	S_STORE_USER r
+WHERE
+	e.CODE = r.STORE_CODE
+	and r.ID = #{userId}
+ </select>
+ 
+ <select id="getStoreAndDefaultUser" parameterType="com.bettbio.core.model.SStore" resultMap="storeAndUserMap">
+ SELECT
+ 	e.ID STORE_ID,
+ 	r.ID USER_ID, 
+	e.NAME,
+	r.NAME LINKMAN,
+	e.LANDLINE,
+	r.PHONE,
+	e.EMAIL,
+	e.ADDRESS,
+	e.CHINESE_ABOUT,
+	e.ENGLISH_ABOUT,
+	r.QQ,
+	e.STORE_URL,
+	e.IS_SEED_USER,
+	e.LICENSE_IMAGE_URL
+FROM
+	S_STORE e,
+	S_STORE_USER r
+WHERE
+	e.CODE = r.STORE_CODE
+	and r.PARENT_CODE = 'defult'
+	<if test="code != null">
+	and e.CODE = #{code}
+	</if>
+ </select>
+ 
+ <select id="selectStoreByExhibitionCode" resultMap="ExhibitionStoreBoMap">
+  select E.ID,
+	E.CODE,
+	E.NAME,E.REMARKS,E.LOGO_URL,E.IS_AUTH,E.TYPE,E.CREATE_DATE,E.UPDATE_DATE,E.BACKGROUND_IMAGE_URL,
+	E.MECHANISM_CODE,E.FREQUENCY,E.IS_ACTIVATION,E.IS_SEED_USER,E.IS_DISABLE,E.SOURCE,E.REGISTERED_CAPITAL,
+	E.SET_UP_TIME,E.EMAIL,E.IS_DELETED,E.ADDRESS,E.CHINESE_ABOUT,E.ENGLISH_ABOUT,E.STORE_URL,E.LANDLINE,
+	E.LICENSE_IMAGE_URL,D.IS_AFFIRM,D.FILE_URL,D.id EXHIBITION_ID from S_STORE E, EXHIBITION_RECORD D where E.CODE = D.STORE_CODE
+ 	and D.EXHIBITION_CODE = #{code} 
+ 	<if test="name != null">
+ 	and E.NAME  like CONCAT('%',#{name},'%')
+ 	</if>
+ 	ORDER BY D.CREATE_DATE DESC
+  </select>
+  
+  <select id="verifyStoreName" parameterType="String" resultType="Integer">
+  		SELECT COUNT(0) FROM S_STORE where name=#{name}
+  </select>
+  <select id="storeList" parameterType="java.lang.String" resultMap="PinYinNameMap">
+     	SELECT DISTINCT
+		ID,
+		NAME,
+		IFNULL(
+			ELT(
+				INTERVAL (
+					CONV(HEX(LEFT (CONVERT(NAME USING gbk), 1)),16,10),
+					0xB0A1,
+					0xB0C5,
+					0xB2C1,
+					0xB4EE,
+					0xB6EA,
+					0xB7A2,
+					0xB8C1,
+					0xB9FE,
+					0xBBF7,
+					0xBFA6,
+					0xC0AC,
+					0xC2E8,
+					0xC4C3,
+					0xC5B6,
+					0xC5BE,
+					0xC6DA,
+					0xC8BB,
+					0xC8F6,
+					0xCBFA,
+					0xCDDA,
+					0xCEF4,
+					0xD1B9,
+					0xD4D1
+				),
+				'A',
+				'B',
+				'C',
+				'D',
+				'E',
+				'F',
+				'G',
+				'H',
+				'J',
+				'K',
+				'L',
+				'M',
+				'N',
+				'O',
+				'P',
+				'Q',
+				'R',
+				'S',
+				'T',
+				'W',
+				'X',
+				'Y',
+				'Z'
+			),
+			LEFT (NAME, 1)
+		) AS PINYIN
+		FROM
+			S_STORE
+		ORDER BY
+			PINYIN,
+			NAME 
+     </select>
+</mapper>

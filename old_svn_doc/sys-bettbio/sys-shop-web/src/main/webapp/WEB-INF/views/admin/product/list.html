@@ -1,0 +1,318 @@
+<%layout("/common/admin/layout.html",{
+css:["bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css","zTree/css/zTreeStyle/zTreeStyle.css","css/admin.css"],
+script:["zTree/js/jquery.ztree.all-3.5.min.js","bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js","bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"]
+}){ %>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="list.html">商品目录</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/admin/product/create" data-toggle="dialog" data-title="创建试剂类商品">创建试剂类商品</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/admin/product/createConsumable" data-toggle="dialog" data-title="创建耗材、仪器类商品">创建耗材、仪器类商品</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/admin/product/createService" data-toggle="dialog" data-title="创建服务类商品">创建服务类商品</a>
+					</li>
+					<li>
+						<a href="">试剂类商品模板下载</a>
+					</li>
+					<li>
+						<a href="">耗材、仪器类商品模板下载</a>
+					</li>
+					<li>
+						<a href="">服务类商品模板下载</a>
+					</li>
+					<li>
+						<a href="import.html">商品数据导入</a>
+					</li>
+				</ul>
+			</div>
+			<div class="warp-body">
+				<div class="row">
+					<div class="col-sm-2 border-right">
+						<ul id="ZT" class="ztree"></ul>
+					</div>
+					<div class="col-sm-10">
+						<div class="row s_search">
+							<div class="col-sm-12">
+								<form id="listForm" action="${ctxPath}/admin/product/list" method="get">
+									<ul class="nav nav-pills pull-right form-inline">
+										<li>
+											<a href="javascript:void(0);">删除所有</a>
+										</li>
+										<li>
+											<a href="javascript:void(0);" onclick="deletes()">删除所选</a>
+										</li>
+										<li>
+											<div class="input-group date" data-date-format="yyyy-mm-dd">
+												<input class="form-control" placeholder="开始时间" size="16" id="startDate" name="startDate" type="text" value="${paramMap.startDate!}" readonly="">
+												<span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+											</div>
+										</li>
+										<li>&nbsp;to&nbsp;
+											<div class="input-group date" data-date-format="yyyy-mm-dd">
+												<input class="form-control" placeholder="结束时间" size="16" id="endDate" name="endDate" type="text" value="${paramMap.endDate!}" readonly="">
+												<span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+											</div>
+										</li>
+										<li>
+											<div class="input-group">
+												<input id="findName" name="findName" class="form-control" type="text" value="${paramMap.findName!}" placeholder="商品名称/英文名/编码/商家">
+												<input id="classCode" name="classCode" type="hidden"/>
+												<a href="javascript:void(0);" onclick="document.getElementById('listForm').submit();" class="input-group-addon"><span class="fa fa-search" aria-hidden="true"></span></a>
+											</div>
+										</li>
+									</ul>
+								</form>
+							</div>
+							<div class="col-sm-12">
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th width="2%"><input type="checkbox" id="selectIdAll" name="selectIdAll" value="idChk"> </th>
+											<th width="10%">名称</th>
+											<th width="10%">英文名</th>
+											<th width="10%">商品唯一编码（SKU）</th>
+											<th width="10%">商品编码</th>
+											<th width="7%">审核</th>
+											<th width="9%">质量</th>
+											<th width="9%">是否上架
+												<div class="pull-right"><input type="checkbox" id="selectAudiAll" value="audi"></div>
+											</th>
+											<th width="9%">上架日期</th>
+											<th width="10%">商家名称</th>
+											<th width="9%">创建时间</th>
+											<th width="6%">删除</th>
+										</tr>
+									</thead>
+									<%
+									for(product in pageInfo.list){
+									%>
+									<tr class="productList">
+										<td> 
+										<input type="hidden" id="id" name="id" value="${product.id}">
+										<input type="checkbox" name="idChk" value="${product.id}">
+										</td>
+										<td>
+										<%if(product.productClass!=null){%>
+											<%if(strutil.startWith(product.productClass.code,'01')){%>
+												<a href="${ctxPath}/admin/product/info?id=${product.id}" data-toggle="dialog" data-title="试剂类商品详情">${product.productNameCh}</a>
+											<%}else if(strutil.startWith(product.productClass.code,'02') || strutil.startWith(product.productClass.code,'03')){%>
+												<a href="${ctxPath}/admin/product/consumableInfo?id=${product.id}" data-toggle="dialog" data-title="耗材类商品详情">${product.productNameCh}</a>
+											<%}else if(strutil.startWith(product.productClass.code,'04')){%>
+											<a href="${ctxPath}/admin/product/serviceInfo?id=${product.id}" data-toggle="dialog" data-title="服务类商品详情">${product.productNameCh}</a>	
+											<%}%>
+										<%}else{%>
+											${product.productNameCh}
+										<%}%>
+										</td>
+										<td>${product.productNameEn}</td>
+										<td>${product.code}</td>
+										<td></td>
+										<td>${product.isExamine}</td>
+										<td>
+										 <%if(product.qualityScore!=null){if(product.qualityScore/20>0){%>
+											<p>
+												<%for(var i = 1; i <= product.qualityScore/20; i++){%>
+													<span class='fa fa-star star-red'></span>
+												<%}%>
+												<%if(product.qualityScore%20 > 0 && product.qualityScore/20 > 0){%>
+													<i class="fa fa-star-half-full star-red"></i>
+												<%}%>
+											</p>
+											<p><span class="b-soure">${product.qualityScore/20}</span>分</p>
+										<%}}%> 
+										</td>
+										<td><span>
+										<%if(product.isEnable == 1){%>
+										true
+										<%}else{%>
+										false
+										<%}%>
+										</span>
+										<%if(product.isEnable == 1){%>
+										<div class="pull-right"><input type="checkbox" class="isEnable" name="audi" checked value="${product.isEnable}"></div>
+										<%}else{%>
+										<div class="pull-right"><input type="checkbox" class="isEnable" name="audi" value="${product.isEnable}"></div>
+										<%}%>
+											
+										</td>
+										<td>${product.enableDate,"yyyy-MM-dd"}</td>
+										<td>${product.storeCode}</td>
+										<td>${product.createDate,"yyyy-MM-dd"}</td>
+										<td>
+											<a href="javascript:void(0);" onclick="deleteProduct('${product.id}')">删除</a>
+										</td>
+									</tr>
+									<%}%>
+								</table>
+							</div>
+							<%include("/common/admin/pagination.html"){} %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+<%}%>
+		<script type="text/javascript">
+			$(function() {
+				$.app.initDatetimePicker();
+
+				$("#selectIdAll,#selectAudiAll").change(function() {
+					if(this.checked) {
+						$(this).check();
+					} else {
+						$(this).uncheck();
+					}
+				})
+				
+				$(".isEnable").change(function(){
+					var _this = $(this);
+					id=_this.closest(".productList").find("#id").val();
+					var isEnable = 0;
+					if(this.checked){
+						isEnable = 1;
+					}
+					$.app.post("${ctxPath}/admin/product/isEnable",{"isEnable":isEnable,"id":id},function(flag,data){
+						$.app.message(data.message);
+						if(flag){
+							 $("#listFrom").submit();
+						}
+					})
+				})
+			})
+			$(function() {
+				 $.ajax({
+					type : 'POST',
+					dataType : "json",
+					data : "parentCode=" + 0,
+					url : '${ctxPath}/manager/classified/selectTree',
+					success : function(classifyZtreeBoList) {
+						zNodes = classifyZtreeBoList;
+						loadTree(classifyZtreeBoList);
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						
+					}
+				}); 
+			})
+			var setting;
+			var zTree;
+			var treeIds={};
+			function loadTree(zNodes){
+				 setting = {
+							edit: {
+								enable: true,
+								showRemoveBtn: false,
+								showRenameBtn: false,
+								drag: {
+									isMove: true,
+									prev: true,
+									inner: true,
+									next: true
+								}
+							},
+							callback: {
+								onExpand:zTreeOnExpand,
+								onClick:checkClass
+							},
+						};
+				zTree = $.fn.zTree.init($("#ZT"), setting, zNodes);
+			}
+			
+			function zTreeOnExpand(event, treeId, treeNode){
+				if(!$(treeNode).data('type')=='1'){
+					$(treeNode).data('type','1');
+					$.ajax({
+						type : 'POST',
+						dataType : "json",
+						data : "parentCode=" + treeNode.id,
+						url : '${ctxPath}/manager/classified/selectTree',
+						success : function(classifyZtreeBoList) {
+							var newNode = classifyZtreeBoList;
+							newNode = zTree.addNodes(treeNode, newNode);
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							
+						}
+					});
+				}
+			}
+			
+			function checkClass(event, treeId, treeNode){
+				$("#classCode").val(treeNode.id);
+				$("#listForm").submit();
+			}
+			
+			/*
+			*单个删除
+			*/
+			function deleteProduct(id){
+				$("#confirmHref").bind("click",function(){
+					deleteOne(id);
+				 });
+				$('#delcfmModel').modal('show');
+			}
+			function deleteOne(id){
+				$.ajax({
+					type: 'POST',
+					dataType: "json",
+					data: "id="+id,
+					url: '${ctxPath}/admin/product/delete',
+					success: function(resp) {
+						if(resp!="0"){
+							$('#delcSuccess').modal('show');
+							$("#btncSuccess").bind("click",function(){
+								document.getElementById('listForm').submit();
+							 });
+							
+						} else {
+							alert("删除失败");	
+						}
+					},
+					error: function(jqXHR,textStatus,errorThrown) { 
+
+					}
+				});
+			}
+			
+			
+			/*
+			*批量删除
+			*/
+			function deletes(){
+				$("#confirmHref").bind("click",function(){
+					deleteProducts();
+				 });
+				$('#delcfmModel').modal('show');
+			}
+			function deleteProducts(){
+				var ids = [];
+				 $('input[name="idChk"]:checked').each(function(){
+					 ids.push( $(this).val());
+				 })
+				 $.ajax({
+						type: 'POST',
+						dataType: "json",
+						data: "ids="+ids,
+						url: '${ctxPath}/admin/product/deletes',
+						success: function(resp) {
+							if(resp!="0"){
+								$('#delcSuccess').modal('show');
+								$("#btncSuccess").bind("click",function(){
+									document.getElementById('listForm').submit();
+								 });
+							} else {
+								alert("删除失败");	
+							}
+						},
+						error: function(jqXHR,textStatus,errorThrown) { 
+
+						}
+					});
+			}
+		</script>

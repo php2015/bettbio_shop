@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>联系我们</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../Font-Awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+	</head>
+
+	<body>
+		<div class="warp">
+			<div class="container">
+				<div class="head-navbar-left head-navbar-right h_body">
+					<div class=" row">
+						<div class="col-sm-8">
+							<form id="ezybioForm" name="ezybioForm" class="form-horizontal" action="#" method="POST">
+								<div id="store.success" class="alert-success" style="display:none;">消息已发出</div>
+								<div id="store.error" class="alert-danger" style="display:none;">消息已发出</div>
+								<fieldset>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="inputName">名称:</label>
+										<div class="col-sm-4">
+											<input id="name" name="name" class="required form-control " title="请输入您的姓名" type="text" value="" style="background-color: rgb(255, 255, 204);">
+											<span> </span>
+										</div>
+										<label class="col-sm-2 control-label" for="inputEmail">电子邮件:</label>
+										<div class="col-sm-4">
+											<input id="email" name="email" class="required form-control email" title="电子邮件不能为空" type="text" value="">
+											<span></span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="inputSubject">主题:</label>
+										<div class="col-sm-10">
+											<input id="subject" name="subject" class="form-control " type="text" value="">
+											<span> </span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label" for="textarea">评论:</label>
+										<div class="col-sm-10">
+											<textarea id="comment" name="comment" class=" required form-control " title="评论不能为空" rows="10"></textarea>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">验证码:</label>
+										<div class="col-sm-4">
+											<input id="captchaResponseField" name="captchaResponseField" class="required form-control " title="验证码" type="text" value="">
+											<span></span>
+										</div>
+										<label class="col-sm-2 control-label"><a href="#" onclick="changeValidateImg()">看不清楚换一张</a>:</label>
+										<div class="col-sm-4">
+											<a href="javascript:;" onclick="changeValidateImg()"><img id="imgObj" src="../img/code.jpg"></a>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-10 col-sm-offset-2">
+											<input id="Ezybiosubmit" type="button" value="发送" name="register" class="btn btn-large btn-disabled" disabled="">
+										</div>
+									</div>
+								</fieldset>
+							</form>
+
+						</div>
+						<div class="col-sm-4">
+							<h2 itemprop="name">联系我们</h2><br>
+							<div itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+								<span>如需了解BETTBIO更多专业和高端信息服务，您还可以通过以下方式BettBio联系，我们期待与您商谈并满足您的个性化需求。</span><br><br>
+								<span>QQ:800065440</span><br><br>
+								<span>E-mail:service@bettbio.com</span><br><br>
+								<span>Tel:021-61552790</span><br><br>
+								<span>我们需要倾听您的声音，您可将您的意见和建议、平台错误内容、信息服务咨询等通过留言板功能与我们联系，我们将尽快给您回复。</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,164 @@
+<%layout("/common/manager/layout.html"){ %>
+<div class="container-fluid warp">
+	<div class="row warp-tabs">
+		<ul class="nav nav-tabs">
+			<li><a href="${ctxPath}/manager/sysuser/list">员工列表</a></li>
+			<li class="active"><a href="${ctxPath}/manager/sysuser/create">创建员工</a></li>
+		</ul>
+	</div>
+	<div class="warp-body">
+		<form id="sysUserForm" class="form-horizontal" method="post">
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label" for="account">员工账号</label>
+					</div>
+					<div class="col-sm-8">
+						<input id="account" name="account" class="form-control" type="text" value="" required="required">
+					</div>
+					<div class="col-sm-2">
+						<p></p>
+						<p>支持员工帐号登录</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label" for="jobNumber">员工工号</label>
+					</div>
+					<div class="col-sm-8">
+						<input id="jobNumber" name="jobNumber" class="form-control" type="text" value="" required="required">
+					</div>
+					<div class="col-sm-2">
+						<p></p>
+						<p>支持员工工号登录</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label" for="password">密码</label>
+					</div>
+					<div class="col-sm-8">
+						<input id="password" name="password" class="form-control" type="password" value="" >
+					</div>
+					<div class="col-sm-2">
+						<p></p>
+						<p>不填，默认123456</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">性别</label>
+					</div>
+					<div class="col-sm-2">
+						<select name="sex" class="form-control">
+							<option value="1">男</option>
+							<option value="0">女</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label" for="phone">手机号码</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="phone" name="phone" class="form-control" type="text" value="">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label" for="email">邮箱</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="email" name="email" class="form-control" type="text" value="">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label" for="qq">QQ</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="qq" name="qq" class="form-control" type="text" value="">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-12 text-right">
+						<button type="submit" class="btn btn-success btn-lg">提交</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+$(function(){
+	var _f = false;
+	var _j = false;
+	var optPath = ctxPath + "/manager/sysuser";
+	$("#account").blur(function(){
+		var _this = $(this);
+		var _p = _this.closest(".form-group");
+		if(!$.app.isEmpty(_this.val())){
+			_this.val('');
+			return;
+		}
+		$.app.get(optPath+"/checkAccount",_this.serialize(),function(flag,data){
+			if(!flag){
+				$.app.message(data.message);
+				_p.addClass('has-error');
+			}else{
+				_p.removeClass('has-error');
+				_f = true;
+			}
+		})
+	})
+	$("#jobNumber").blur(function(){
+		var _this = $(this);
+		var _p = _this.closest(".form-group");
+		if(!$.app.isEmpty(_this.val())){
+			_this.val('');
+			return;
+		}
+		$.app.get(optPath+"/checkJobNumber",_this.serialize(),function(flag,data){
+			if(!flag){
+				$.app.message(data.message);
+				_p.addClass('has-error');
+			}else{
+				_p.removeClass('has-error');
+				_j = true;
+			}
+		})
+	})
+	
+	$("#sysUserForm").submit(function(){
+		var _form = $(this);
+		if(_f&&_j){
+			$.app.post(optPath+"/save",_form.serialize(),function(flag,data){
+				if(flag){
+					$.app.message(data.message);
+					$.app.resetForm(_form);
+				}else{
+					$.app.message(data.message,"w");
+				}
+			})
+		}else{
+			$.app.message("请先完善表单信息!","w")
+		}
+		return false;
+	})
+})
+</script>

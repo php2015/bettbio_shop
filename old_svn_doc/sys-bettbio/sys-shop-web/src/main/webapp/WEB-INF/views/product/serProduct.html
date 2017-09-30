@@ -1,0 +1,131 @@
+<%layout("/common/layout.html",{
+script:["js/search.js","js/navmenu.js"]}){ %>
+<div class="warp" id="warp">
+	<%layout("/common/navheader.html"){} %>
+	<div class="container">	
+		<div id="breadcrumb">
+			<ol class="nav-hd">
+				<li>
+					<a href="${ctxPath}/">首页</a>
+				</li>
+				<%for(var item in breadCrumb.breadCrumbs){ %>
+					<li class="sep"><i class="fa fa-angle-right"></i></li>
+					<li>
+						<a href="${item.url}">${item.label}</a>
+					</li>
+				<%}%>
+			</ol>
+		</div>	
+		<div class="b-main">
+			<div class="b-warp">
+				<div class="b-prod-m">
+					<div class="b-prod-ims">
+						<div class="b-prod-bim">
+							<img alt="${product.productNameCh!}" src="${ctxPath}/static/${product.imgUrls[0]}" id="imagUrl">
+						</div>
+						<div class="b-prod-imls">
+							<a href="javascript:;" class="b-prod-im-prev"><i class="fa fa-angle-left"></i></a>
+							<ul>
+							<%for(imgUrl in product.imgUrls){%>
+								<li><img src="${ctxPath}/static/${imgUrl!}"></li>
+							<%}%>	
+							</ul>
+							<a href="javascript:;" class="b-prod-im-next"><i class="fa fa-angle-right"></i></a>
+						</div>
+					</div>
+					<div class="b-prod-info">
+						<h2>${product.productNameCh!}<span class="b-prod-info-sour">
+						<%if(product.qualityScore/20>0){%>
+							<%for(var i = 1; i <= product.qualityScore/20; i++){%>
+											<span class='fa fa-star icon-red'></span>
+							<%}%>
+							<%if(product.qualityScore%20 > 0 && product.qualityScore/20 > 0){%>
+													<i class="fa fa-star-half-full icon-red"></i>
+							<%}%>
+											<span class="b-soure">${product.qualityScore/20}</span>分
+						<%}%> 
+						 </span>
+						</h2>
+						<h5>${product.productNameEn!}</h5>
+						<p>${product.simpleDescription!}</p>
+						<div class="b-prod-info-list">
+							<ul>
+								<li><span class="b-prod-ilab">货号:${product.productNo!}</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="b-aside">
+				<div class="b-mstore">
+					<div class="b-ms-logo">
+						<img style="max-height:68px;max-width:246px;" src="${ctxPath}/static/${sStore.logoUrl!}">
+					</div>
+					<h4 class="b-ms-title">${sStore.name!}</h4>
+					<div class="b-ms-del">
+						<p><span class="b-ms-lab">联系人：${sStoreUser.name!} </span></p>
+						<p><span class="b-ms-lab">电话：${sStore.landline!}</span></p>
+						<p><span class="b-ms-lab">网址：${sStore.storeUrl!}</span></p>
+						<p><span class="b-ms-lab">邮箱：${sStore.email!}</span></p>
+						<p><span class="b-ms-lab">地址：${sStore.address!}</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="b-mian b-prod-oth">
+			<div class="b-warp">
+				<div class="b-prod-oth-warp">
+					<ul class="nav nav-tabs b-prod-oth-nav" role="tablist" id="detailMenu">
+						<li class="active">
+							<a href="javascript:;">商品详情</a>
+						</li>
+					</ul>
+					<div class="b-prod-oth-cont">
+						<section>
+							<div class="b-prod-oth-title">
+								商品详情
+							</div>
+							<div>${product.detailedDescription}</div>
+						</section>
+					</div>
+				</div>
+			</div>
+			<div class="b-aside">
+				<div class="b-histy">
+					<h2 class="b-aside-title">最近浏览</h2>
+					<div class="b-his-item">
+						<div class="b-his-img">
+							<a href=""><img src=""></a>
+						</div>
+						<div class="b-his-des">
+							<a href="">Vorinost</a>
+							<p class="b-his-pirc">￥10000.10</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+	$(function() {
+		var _nav = $('.b-prod-oth-nav');
+		var dtop = _nav.offset().top;
+		_nav.find('li').click(function() {
+			$(this).addClass('active').siblings().removeClass('active')
+			var _stop = $('.b-prod-oth-cont section').eq($(this).index()).offset().top;
+			$('body,html').animate({scrollTop:_stop-40},0);
+		})
+
+		$(window).scroll(function() {
+			var scroll_top = $(document).scrollTop(); //滚动条到顶部的垂直高度
+			if(scroll_top >= dtop) {
+				_nav.addClass('fixed')
+			}else{
+				_nav.removeClass('fixed');
+			}
+		});
+		$("#footer nav").removeClass('navbar-fixed-bottom');
+	})
+</script>

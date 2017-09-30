@@ -1,0 +1,155 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:component-scan base-package="com.bettbio.core.common.web,com.bettbio.shop.web" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <mvc:annotation-driven 
+            conversion-service="conversionService"
+            content-negotiation-manager="contentNegotiationManager"
+            enable-matrix-variables="true">
+        <!--enableMatrixVariables="true">-->
+        <!-- 异步支持 默认30秒超时 -->
+        <mvc:async-support default-timeout="30000" task-executor="executor"/>
+    	<mvc:message-converters register-defaults="true">
+            <!-- StringHttpMessageConverter编码为UTF-8，防止乱码 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <bean class="org.springframework.http.MediaType">
+                            <constructor-arg index="0" value="text"/>
+                            <constructor-arg index="1" value="plain"/>
+                            <constructor-arg index="2" value="UTF-8"/>
+                        </bean>
+                        <bean class="org.springframework.http.MediaType">
+                            <constructor-arg index="0" value="*"/>
+                            <constructor-arg index="1" value="*"/>
+                            <constructor-arg index="2" value="UTF-8"/>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+
+            <!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+            <!-- <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean> -->
+            <bean class="com.bettbio.core.common.web.spring.converter.GsonHttpMessageConverter">
+            	<property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>	
+            </bean>
+        </mvc:message-converters>
+        
+    </mvc:annotation-driven>
+    
+    <mvc:view-controller path="/" view-name="redirect:/"/>
+    
+    <mvc:default-servlet-handler/>
+
+    <!-- 静态资源映射 -->
+    <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
+    <mvc:resources mapping="/upload/**" location="/upload/"/>
+
+	<!-- 拦截器设置 -->
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.handler.ConversionServiceExposingInterceptor">
+            <constructor-arg ref="conversionService"/>
+        </bean>
+        <bean class="com.bettbio.core.common.web.interceptor.SetCommonDataInterceptor">
+            <property name="excludeUrlPatterns" value="" />
+        </bean>
+        <bean class="com.bettbio.shop.web.interceptor.AppHandlerInterceptor">
+            <property name="includeUrlPatterns" value="/app/**" />
+            <property name="excludeUrlPatterns">
+            	<array>
+            		<value>/app/search*</value>
+            		<value>/app/category**</value>
+            		<value>/app/product*</value>
+            		<value>/app/price*</value>
+            		<value>/app/exhibition**</value>
+            		<value>/app/*Login*</value>
+            		<value>/app/*Register*</value>
+            		<value>/app/*send**</value>
+            		<value></value>
+            	</array>
+            </property>
+        </bean>
+        <bean class="com.bettbio.shop.web.interceptor.AdminHandlerInterceptor">
+            <property name="includeUrlPatterns" value="/admin/**" />
+        </bean>
+        <bean class="com.bettbio.shop.web.interceptor.ManagerHandlerInterceptor">
+            <property name="includeUrlPatterns" value="/manager/**" />
+        </bean>
+    </mvc:interceptors>
+    
+	<!-- 内容协商管理器 -->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
+        <property name="favorPathExtension" value="true"/>
+        <!-- 用于开启 /userinfo/123?format=json 的支持 -->
+        <property name="favorParameter" value="true"/>
+        <property name="parameterName" value="format"/>
+        <!-- 是否忽略Accept Header -->
+        <property name="ignoreAcceptHeader" value="false"/>
+		<!--扩展名到MIME的映射；favorPathExtension, favorParameter是true时起作用  -->
+        <property name="mediaTypes"> 
+            <value>
+                json=application/json
+                xml=application/xml
+                html=text/html
+            </value>
+        </property>
+        <!-- 默认的content type -->
+        <property name="defaultContentType" value="text/html"/>
+    </bean>
+    
+    <!-- beetl 模板 -->
+	<bean id="beetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration" init-method="init" />
+	
+	<bean id="viewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver">
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="order" value="0"></property>
+		<property name="suffix" value=".html"></property>
+		<property name="config" ref="beetlConfig"></property>
+	</bean>
+	
+	<!-- jsp view -->
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
+
+    <!-- 文件上传相关 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--one of the properties available;the maximum upload size in bytes 100M-->
+        <property name="maxUploadSize" value="104857600"/>
+    </bean>
+
+    <!-- 控制器异常处理 -->
+    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
+    </bean>
+    
+    <!-- 自定义handlerExceptionResolver -->
+	<bean id="handlerExceptionResolver" class="com.bettbio.shop.web.resolver.AAAExceptionHandler" />
+	
+	<!-- <import resource="spring-mvc-shiro.xml"/> -->
+</beans>

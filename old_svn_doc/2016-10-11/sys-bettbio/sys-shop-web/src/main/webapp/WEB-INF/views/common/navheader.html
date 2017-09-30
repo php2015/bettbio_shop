@@ -1,0 +1,33 @@
+<div id="s_form" class="s_nav_hd">
+	<div class="container">
+		<div class="s_nav_logo">
+			<div class="pull-left s_logo">
+				<a href="${ctxPath}/"><img src="${ctxPath}/static/img/biglogo.png" height="56"></a>
+			</div>
+			<div class="pull-right s_menu_hd">
+				全部分类<i class="fa fa-angle-down"></i>
+				<div class="s_nav_menu" id="navMenu"></div>
+			</div>
+		</div>
+		<form id="searchForm" method="get" action="${ctxPath}/search">
+			<div class="input-group search-group">
+				<ul>
+					<li class="active" data-prop="请输入产品中（英）文名称">
+						<a href="javascript:;">产品</a>
+					</li>
+					<li data-prop="请输入商家名称">
+						<a href="javascript:;">商家</a>
+					</li>
+					<li data-prop="请输入产品货号">
+						<a href="javascript:;">货号</a>
+					</li>
+				</ul>
+				<input id="QT" type="hidden" name="qt" value="${paramMap.qt!0}">
+			</div>
+			<div class="input-group " style="width:750px;position: relative;">
+				<input id="searchInput" name="q" type="text" class="form-control" placeholder="请输入产品中（英）文名称" autocomplete="off" spellcheck="false" dir="auto" value="${paramMap.q!}">
+				<span class="input-group-btn"><button class="btn btn-default btn-search" type="submit">搜索</button></span>
+			</div>
+		</form>
+	</div>
+</div>

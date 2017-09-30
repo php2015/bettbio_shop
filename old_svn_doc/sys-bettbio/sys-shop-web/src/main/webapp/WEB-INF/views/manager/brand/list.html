@@ -1,0 +1,176 @@
+<%layout("/common/manager/layout.html",{}){ %>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li>
+						<a href="${ctxPath}/manager/classified/create">创建类别</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/manager/classified/list">类别清单</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/manager/classified/tree">类别结构</a>
+					</li>
+					<li class="active">
+						<a href="${ctxPath}/manager/brand/list">品牌清单</a>
+					</li>
+					<li>
+						<a href="${ctxPath}/manager/brand/create">创建品牌</a>
+					</li>
+				</ul>
+			</div>
+			<div class="warp-body">
+				<div class="row ">
+					<div class="col-sm-12">
+						<ul class="nav nav-pills pull-right form-inline">
+							<li>
+								<a href="javascript:void(0);" onclick="deleteAll()">删除所有</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" onclick="deletes()">删除所选</a>
+							</li>
+							<li>
+								<form id="list" action="${ctxPath}/manager/brand/list" method="get">
+									<fieldset>
+										<div class="input-group" style="padding-top:3px;width:250px">
+											<input id="name" name="name" class="form-control " type="text" value="${name}" placeholder="品牌名称">
+											<a href="javascript:void(0);" onclick="document.getElementById('list').submit();" class="input-group-addon"><span class="fa fa-search" aria-hidden="true"></span></a>
+										</div>
+									</fieldset>
+								</form>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="selectIdAll" name="selectIdAll" value="idChk"> </th>
+									<th>品牌名称</th>
+									<th>品牌网站地址</th>
+									<th>删除</th>
+								</tr>
+							</thead>
+							
+							<%
+							for(brand in pageInfo.list){
+							%>
+							
+							
+							<tr>
+								<td> <input type="checkbox" name="idChk" value="${brand.id}"></td>
+								<td>
+									<a href="${ctxPath}/manager/brand/info?id=${brand.id}">${brand.name}</a>
+								</td>
+								<td>${brand.brandUrl}</td>
+								<td>
+									<a href="javascript:void(0);" onclick="delbrand('${brand.id}')">删除</a>
+								</td>
+							</tr>
+							<%}%>
+						</table>
+					</div>
+					<%include("/common/manager/pagination.html"){} %>
+				</div>
+			</div>
+		</div>
+<%}%>
+	<script type="text/javascript">
+	$(function() {
+		$("#selectIdAll,#selectAudiAll").change(function() {
+			if(this.checked) {
+				$(this).check();
+			} else {
+				$(this).uncheck();
+			}
+		})
+	})
+	function delbrand(id){
+		$("#confirmHref").bind("click",function(){
+			delById(id);
+		 });
+		$('#delcfmModel').modal('show');
+	}
+	function delById(id){
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			data: "id="+id,
+			url: '${ctxPath}/manager/brand/deleteBrand',
+			success: function(resp) {
+				if(resp!="0"){
+					$('#delcSuccess').modal('show');
+					$("#btncSuccess").bind("click",function(){
+						document.getElementById('list').submit();
+					 });
+				} else {
+					alert("删除失败");	
+				}
+			},
+			error: function(jqXHR,textStatus,errorThrown) { 
+
+			}
+		});
+	}
+	
+	function deletes(){
+		$("#confirmHref").bind("click",function(){
+			deleteBrands();
+		 });
+		$('#delcfmModel').modal('show');
+	}
+	function deleteBrands(){
+		var ids = [];
+		 $('input[name="idChk"]:checked').each(function(){
+			 ids.push( $(this).val());
+		 })
+		 $.ajax({
+				type: 'POST',
+				dataType: "json",
+				data: "ids="+ids,
+				url: '${ctxPath}/manager/brand/deleteBrands',
+				success: function(resp) {
+					if(resp!="0"){
+						$('#delcSuccess').modal('show');
+						$("#btncSuccess").bind("click",function(){
+							document.getElementById('list').submit();
+						 });
+					} else {
+						alert("删除失败");	
+					}
+				},
+				error: function(jqXHR,textStatus,errorThrown) { 
+
+				}
+			});
+	}
+	function deleteAll(){
+		$("#confirmHref").bind("click",function(){
+			deleteAllBrand();
+		 });
+		$('#delcfmModel').modal('show');
+	}
+	function deleteAllBrand(){
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url: '${ctxPath}/manager/brand/delBrandAll',
+			success: function(resp) {
+				if(resp!="0"){
+					$('#delcSuccess').modal('show');
+					$("#btncSuccess").bind("click",function(){
+						document.getElementById('list').submit();
+					 });
+				} else {
+					alert("删除失败");	
+				}
+			},
+			error: function(jqXHR,textStatus,errorThrown) { 
+
+			}
+		});
+	}
+	
+	</script>

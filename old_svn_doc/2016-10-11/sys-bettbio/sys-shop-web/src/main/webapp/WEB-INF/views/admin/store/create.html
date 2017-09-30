@@ -1,0 +1,134 @@
+<%layout("/common/admin/layout.html",{
+css:["dropify/css/dropify.min.css"],
+script:["dropify/js/dropify.min.js","js/admin/store.js"]}){ %>
+<div class="container-fluid warp">
+	<div class="row warp-tabs">
+		<ul class="nav nav-tabs">
+		    <li><a href="${ctxPath}/admin/store/store">商家详情</a></li>
+			<li class="active"><a href="${ctxPath}/admin/store/create">创建用户</a></li>
+			<li><a href="${ctxPath}/admin/store/userList">商家用户清单</a></li>
+			<!-- <li><a href="${ctxPath}/admin/store/logo">商家LOGO</a></li> -->
+		</ul>
+	</div>
+	<% if(has(sucMess)){%>
+			<div class="warp-body">
+				<div class="alert alert-success">${sucMess}</div>
+				<div class="row">
+					<ul id="ZT" class="ztree"></ul>
+				</div>
+			</div>
+	<%}%>
+	<% if(has(errMess)){%>
+			<div class="warp-body">
+				<div class="alert alert-danger">${errMess}</div>
+				<div class="row">
+					<ul id="ZT" class="ztree"></ul>
+				</div>
+			</div>
+	<%}%>
+	<div class=" warp-body">
+		<form id="createForm" class="form-horizontal" enctype="multipart/form-data" action="${ctxPath}/admin/store/saveUser" method="post">
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">用户名</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="account" name="account" class="form-control" success="false" type="text" value="${sStoreUser.account!}">
+						<span class="text-warning hide">用户名不能为空</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">姓名</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="name" name="name" class="form-control" success="true" type="text" value="${sStoreUser.name!}">
+						<span class="text-warning hide">姓名不能为空</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-2">
+						<label class="control-label">密码</label>
+					</div>
+					<div class="col-sm-10">
+						<input id="password" name="password" success="true" class="form-control valueInput" type="text" value="${sStoreUser.password!}">
+						<span class="text-warning hide">密码不能为空</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group form-group-lg">
+					<div class="col-sm-12 text-right">
+						<button type="submit" class="btn btn-success btn-lg">提交</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+	var verdict={
+			errInput : function(_this){
+				_this.closest('.form-group').addClass('has-warning');
+				_this.closest('.form-group').find('.text-warning').removeClass('hide');
+				_this.attr("success","false");
+			},
+			sucInput : function(_this){
+				_this.closest('.form-group').removeClass('has-warning');
+				_this.closest('.form-group').find('.text-warning').addClass('hide');
+				_this.attr("success","true");
+			}
+	}
+$(function(){
+	$.app.initDropify();
+	
+	var drEvent = $('.dropify').dropify();
+	drEvent.on('dropify.afterClear', function(event, element){
+		deleteLogo();
+	})
+	
+	if('${sStoreUser.name!}' != ''){
+		$("#name").attr("success","true");
+	}
+	
+	//手机号验证
+	$("#phone").blur(function() {
+		var phone_name = $.trim($("#phone").val());
+		var re = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i;
+		if (phone_name != "") {
+			if (re.test(phone_name)) {
+				$.ajax({
+					type : 'get',
+					dataType : "json",
+					data : "phone=" + phone_name,
+					url : '${ctxPath}/verifyPhone',
+					success : function(ajaxResponse) {
+						if (ajaxResponse.success == true) {
+							
+							verdict.sucInput($("#phone"));
+						} else {
+							$("#phone").closest('.form-group').find('.text-warning').text("手机号已注册");
+							verdict.errInput($("#phone"));
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+					}
+				});
+			} else {
+				$("#phone").closest('.form-group').find('.text-warning').text("手机号格式有误");
+				verdict.errInput($("#phone"));
+			}
+		} else {
+			verdict.sucInput($("#phone"));
+		}
+	});
+})
+
+</script>

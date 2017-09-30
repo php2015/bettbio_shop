@@ -1,0 +1,167 @@
+<%layout("/common/layout.html",{css:["css/style.css","Font-Awesome/css/font-awesome.min.css"]}){
+%>
+<div class="warp">
+	<div class="h_body">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-2">
+					<ul class="c_menu">
+						<li class="active"><a href="${ctxPath}/personalCenter">我的账户</a></li>
+						<li><a href="${ctxPath}/findOrders">我的订单</a></li>
+						<li><a href="${ctxPath}/findUserPorints">查看积分</a></li>
+						<li><a href="${ctxPath}/billing">开票和收货信息</a></li>
+						<li><a href="${ctxPath}/safe/safe">帐号安全</a></li>
+					</ul>
+				</div>
+				<div class="col-sm-10">
+					<div class="c_user_hd">
+						<div class="col-sm-4 c_info">
+							<div class="row">
+								<div class="col-sm-6">
+									<img src="${ctxPath}/static/img/admin/custmerinfo.png" />
+									<h5>百图会员</h5>
+								</div>
+								<div class="col-sm-6">
+									<p class="c_account">${userInfo.name}</p>
+									<p class="c_account_hint"></p>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3 hd-col-sm-3">
+							<div class="c_holder text-center">
+								<p>等级</p>
+								<p>
+									<% for( var i=0;i< userInfo.grade ;i++){ 
+									 print("<span class='fa fa-star icon-red'></span>");
+									  } %>
+
+								</p>
+								<p>
+									<a href=""> <span class="fa "></span></a>
+								</p>
+							</div>
+						</div>
+						<div class="col-sm-3 hd-col-sm-3">
+							<div class="c_holder text-center">
+								<p>金额总计</p>
+								<p class="text-gray">￥100元</p>
+								<p>
+									<a href="">查看详情<span class="fa fa-angle-double-right"></span></a>
+								</p>
+							</div>
+						</div>
+						<div class="col-sm-3 hd-col-sm-3">
+							<div class="c_holder text-center boder-none">
+								<p>积分</p>
+								<p class="text-gray">${userInfo.integral}</p>
+								<p>
+									<a href="">去兑换 <span class="fa fa-angle-double-right"></span></a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-8">
+					<form id="userInfoForm" class="form-horizontal c_user_from" method="post">
+						<input name="id" value="${userInfo.id}" type="hidden"/>
+						<div class="form-group">
+							<div class="col-sm-2 col-sm-offset-1 text-left">
+								<label class="control-label">姓名:</label>
+							</div>
+							<div class="col-sm-9">
+								<input id="nick" name="name"
+									class="required userName form-control" type="text"
+									value=${userInfo.name}> 
+								<span class="help-inline error" style="display: none">请输入你的真实姓名</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 col-sm-offset-1 text-left">
+								<label class="control-label">性别：</label>
+							</div>
+							<div class="col-sm-9">
+								<div class="btn-group">
+									<% var sex=userInfo.sex; %>
+									<label  class="sex btn btn-default ${sex==1?'active':''}" for="sex_1">男<input type="radio" ${sex==1? "checked":''}  value="1" class="hidden" id="sex_1" name="sex" ></label> 
+									<label  class="sex btn btn-default ${sex==0?'active':''}" for="sex_0">女<input type="radio" ${sex==0? "checked":''} value="0" class="hidden" id="sex_0" name="sex"></label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 col-sm-offset-1 text-left">
+								<label class="control-label">手机号：</label>
+							</div>
+							<div class="col-sm-9">
+								<input name="phone" class="form-control" readonly id="phone"
+									value=${userInfo.phone} type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 col-sm-offset-1 text-left">
+								<label class="control-label">电子邮件：</label>
+							</div>
+							<div class="col-sm-9">
+								<input name="email" class="form-control" readonly=""
+									id="email" value=${userInfo.email} type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 col-sm-offset-1 text-left">
+								<label class="control-label">学校/公司：</label>
+							</div>
+							<div class="col-sm-9">
+							               
+								<input id="company" name="company"
+									class="required company form-control" type="text"
+									value=${userInfo.company} class=“order-title-td”>
+									<span class="help-inline error" style="display: none">建议完善学校或公司名</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 col-sm-offset-1 text-left">
+								<label class="control-label">课题组：</label>
+							</div>
+							<div class="col-sm-9">
+								<input id="project" name="mechanismSubCode"
+									class="required project form-control" type="text"
+									value=${userInfo.mechanismSubCode} class=“order-title-td”>
+								<span class="help-inline error" style="display: none">输入课题组名有助于我们更好的服务</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 col-sm-offset-3">
+								<input id="submitForm" type="button" value="提交" name="register"
+									class="btn btn-info btn-block">
+							</div>
+							<div class="col-sm-2 col-sm-offset-1">
+								<input type="reset" value="返回" class="btn btn-default btn-block">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<%}%>
+<script type="text/javascript">
+//性别选择
+ $(".sex").click(function(){
+	 $(this).addClass("active").siblings(".sex").removeClass("active");
+ });
+ //表单提交
+ $("#submitForm").click(function(){
+	 var isTrue=true;
+	 $("input:text").each(function(){
+		 if($(this).val()==""){//校验都通过
+			 isTrue=false;
+		 	$(this).siblings(".error").show();
+		 }			 
+	 });
+	 if(isTrue){
+		 $.get("${ctxPath}/updateUser",decodeURIComponent($("#userInfoForm").serialize(),true),function(data){
+				 alert(data.message);
+		 },"json")
+	 }
+ });
+</script>

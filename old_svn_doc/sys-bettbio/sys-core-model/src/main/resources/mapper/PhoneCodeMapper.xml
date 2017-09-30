@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bettbio.core.mapper.PhoneCodeMapper">
+  <resultMap id="BaseResultMap" type="com.bettbio.core.model.PhoneCode">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="CREATE_TIME"  jdbcType="TIMESTAMP" property="createTime" />
+    <result column="INVALID_TIME"  jdbcType="TIMESTAMP" property="invalidTime" />
+    <result column="IS_INVALID"  jdbcType="INTEGER" property="isInvalid" />
+  </resultMap>
+  
+  <select id="invalidPhoneCode" parameterType="com.bettbio.core.model.PhoneCode" resultMap="BaseResultMap">
+  	SELECT ID,PHONE,CODE,CREATE_TIME,INVALID_TIME,INVALID_TIME > NOW() IS_INVALID FROM phone_code WHERE PHONE = #{phone} AND CODE = #{code} 
+  	ORDER BY CREATE_TIME DESC 
+  	LIMIT 1
+  </select>
+</mapper>

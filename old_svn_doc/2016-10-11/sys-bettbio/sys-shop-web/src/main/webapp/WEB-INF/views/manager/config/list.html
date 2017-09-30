@@ -1,0 +1,70 @@
+<%layout("/common/manager/layout.html",{}){ %>
+		<div class="container-fluid warp">
+			<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="${ctxPath}/manager/config/list">积分配置</a>
+					</li>
+				</ul>
+			</div>
+			<div class="warp-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr>
+									<th>等级</th>
+									<th>类型</th>
+									<th>积分</th>
+								</tr>
+							</thead>
+							
+							<%
+							for(userGrade in userGradeList){
+							%>
+							<tr class="userGradeTr">
+								<td>${userGrade.lv}</td>
+								<td><span><%if(userGrade.type==0){%>
+												用户
+											<%}%></span>
+								</td>
+								<td>
+								<div class="pull-left">
+								<input type="text" style="border: 1px solid #eae1e1;width:50px;height: 22px;" id="gradeValue" name="gradeValue" disabled value="${userGrade.value}">
+								</div>
+								<input type="hidden" id="id" name="id" value="${userGrade.id}">
+								<button class="btn btn-primary btn-xs editOrSave edit" style="border-radius: 0px" >编辑</button> 
+							</tr>
+							<%}%>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%}%>
+		<script type="text/javascript">
+			$(function(){
+				$(".editOrSave").click(function(){
+					var _this = $(this);
+					if(_this.hasClass("edit")){
+						var _value = _this.closest(".userGradeTr").find("#gradeValue").val();
+						_this.closest(".userGradeTr").find("#gradeValue").removeAttr("disabled");
+						_this.html("保存");
+						_this.removeClass("edit");
+						_this.addClass("save");
+					}else{
+						var _value = _this.closest(".userGradeTr").find("#gradeValue").val();
+						var _id = _this.closest(".userGradeTr").find("#id").val();
+						$.app.get("${ctxPath}/manager/config/update",{"id":_id,"value":_value},function(flag,data){
+							$.app.message(data.message);
+							if(flag == true){
+								_this.closest(".userGradeTr").find("#gradeValue").attr("disabled","disabled");
+								_this.html("编辑");
+								_this.removeClass("save");
+								_this.addClass("edit");
+							}
+						})
+					}
+				});
+			})
+		</script>

@@ -1,0 +1,101 @@
+<%layout("/common/admin/layout.html",{
+css:["dropify/css/dropify.min.css","jQuery-File-Upload/css/jquery.fileupload.css"],
+script:["js/application.js","jQuery-File-Upload/js/vendor/jquery.ui.widget.js",
+"jQuery-File-Upload/js/jquery.iframe-transport.js",
+"jQuery-File-Upload/js/jquery.fileupload.js"]
+}){ %>
+
+		<div class="container-fluid warp">
+		<div class="row warp-tabs">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="${ctxPath}/admin/exhibition/list">返回展会列表</a>
+					</li>
+				</ul>
+			</div>
+			<div>
+			  <div class="exhibition-img">
+			  <img alt="" class="img-rounded" src="${ctxPath}/${exhibition.posterImg}" >
+			  </div>
+			   <div class="jumbotron">
+			  <h1>${exhibition.title!}</h1>
+			  <p>${exhibition.content!}</p>
+			  <p>展会开始时间：${beginDate!}</p>
+			  <p>展会结束时间：${endDate!}</p>
+			  <% 
+			  if(exhibition.status==1){
+			  if(has(exhibitionRecord)){
+			  
+			  if(exhibitionRecord.isAffirm == 0){%>
+			  	<p><a class="btn btn-primary btn-lg btn-join" disabled role="button">已报名</a></p>
+			  <%}else{%> 
+			  	<p><a class="btn btn-primary btn-lg btn-join" disabled role="button">已参展</a></p>
+			  <%}
+			  
+			  }else{%>
+			  <p><a class="btn btn-primary btn-lg btn-join" onclick="join('${exhibition.code}')" role="button">立即参展</a></p>
+			<%}}else{%>
+			<p><a class="btn btn-primary btn-lg btn-join" disabled role="button">展会已关闭</a></p>
+			<%}%>
+			<div class="row">
+				<div class="col-sm-3">
+					<p><span class="btn btn-primary btn-block fileinput-button text-left">
+					        <i class="fa fa-plus"></i>
+					        <span class="fileinput-button-val">选择文件</span>
+					        <input id="file" type="file" name="files[]" multiple="">
+					        <input type="hidden" name="" value="" class="fileinput-hidden-val">
+						</span>
+					</p>
+				</div>
+			</div>
+			<p><a class="btn btn-primary btn-lg" role="button" id="excelDownload" href="${ctxPath}/download?filename=excel/百图生物商家参展申请表.xlsx">申请表下载</a></p>
+			</div>
+			</div>
+		</div>
+<%}%>
+<style type="text/css">
+	  		.exhibition-img img{
+	  			width: 100%
+	  		}
+	  		.container{
+	  			padding-top: 70px;
+	  		}
+	  		.jumbotron{
+	  			margin-top:30px;
+	  		}
+	  		.row-table{
+	  			margin-left: 40px;
+	  		}
+	  	</style>
+	  	<script type="text/javascript">
+	  	$(function(){
+	  		$('#file').fileupload({
+		        url: ctxPath+'/ajaxUpload',
+		        dataType: 'json',
+		        acceptFileTypes: /(\.|\/)(bmp|gif|jpe?g|png)$/i,
+		        done: function (e, data) {
+		        	var _this = $(e.target);
+		            $.each(data.result.files, function (index, file) {      
+		            	_this.siblings('.fileinput-button-val').html(file.name);
+		            	_this.siblings('.fileinput-hidden-val').val(file.url);
+		             });
+		        }
+		    })
+	  	})
+	  	function join(code){
+	  		var fileUrl = $(".fileinput-hidden-val").val();
+	  		if(fileUrl == ""){
+	  			alert("请上传申请表");
+	  			return false;
+	  		}
+	  		$.app.get("${ctxPath}/admin/exhibition/join",{"code":code,"fileUrl":fileUrl},function(flag,data){
+	  			$.app.message(data.message);
+				if(flag == true){
+					$(".btn-join").attr("disabled","disabled");
+					$(".btn-join").removeAttr("onclick");
+					$(".btn-join").empty();
+					$(".btn-join").html("已报名");
+				}
+			})
+	  	}
+	  	</script>

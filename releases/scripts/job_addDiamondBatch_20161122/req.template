@@ -1,0 +1,3 @@
+{ "update":{ "_id":"P_ID", "_type":"product_zh", "_index":"product_zh_default", "_retry_on_conflict":3}}
+{ "doc":{"diamond":1,"isDiamond":true}}
+

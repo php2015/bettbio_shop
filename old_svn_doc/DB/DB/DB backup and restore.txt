@@ -1,0 +1,13 @@
+﻿备份数据库命令举例如下：
+ mysqldump -ubshopizer -pmySQL@2015Bio -h 123.59.49.58 --hex-blob SALESMANAGER > db.backup
+ 命令          用户        密码              地址        导出2进制   schema       结果文件
+
+恢复数据库命令举例如下：
+mysql -ubshopizer -pmySQL@2015Bio -h 127.0.0.1 --default-character-set=utf8 SALESMANAGER < db_backup.sql
+ 命令    用户         密码             注意1                      schema         备份文件
+注意1：--default-character-set=utf8 根据实际的数据库编码而定。
+       百图的数据库是中文，使用UTF8的，所以命令行如上例所写。
+       这个是为了避免在导入过程中出现 unknown command '\n' 而加的
+
+创建数据库：
+CREATE DATABASE SALESMANAGER DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;

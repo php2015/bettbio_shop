@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户登录</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../Font-Awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+	</head>
+
+	<body>
+		<div id="warp">
+			<div class="s_hader">
+				<div class="container">
+					<div class="pull-left s_logo">
+						<img src="../img/biglogo.png" height="56">
+					</div>
+				</div>
+			</div>
+			<div class="s_login container">
+				<div class="row">
+					<div class="col-md-8 login_hd"></div>
+					<div class="col-md-1 login_divider"></div>
+					<div class="col-md-3">
+						<div id="logform" class=" login">
+							<div id="login">
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active" id="customerActive">
+										<a href="#customerlogin" aria-controls="home" role="tab" data-toggle="tab">买家用户</a>
+									</li>
+									<li role="presentation" class="" id="storeActive" style="width:150px;text-align:center;">
+										<a href="#stroelogin" aria-controls="profile" role="tab" data-toggle="tab">商家用户</a>
+									</li>
+								</ul>
+								<div id="customer_div">
+									<div class="tab-content">
+										<div class="tab-pane active" id="customerlogin">
+											<form id="login" method="post" accept-charset="UTF-8">
+												<span id="loginError" style="color:red;display:none;"></span>
+												<div class="control-group">
+													<div class="controls input-group">
+														<span class="input-group-addon"> <span class="fa fa-user" aria-hidden="true"></span></span>
+														<input id="signin_userName" class="form-control" type="text" name="userName" size="18" placeholder="手机号码/电子邮箱">
+													</div>
+												</div>
+												<div class="control-group">
+													<div class="controls input-group">
+														<span class="input-group-addon"> <span class="fa fa-lock" aria-hidden="true"></span></span>
+														<input id="signin_password" class="form-control" type="password" name="password" placeholder="密码"  size="18">
+													</div>
+												</div>
+												<div class="control-group remeber-control">
+													<div class="controls">
+														<label>
+									   					 <div><input type="checkbox" id="remember"></div>
+									   					 <div class="remeber-text">记住用户名</div></label>
+														 <div class="pull-right"><a href="" role="button" data-toggle="modal">忘记密码</a></div>						
+													</div>
+												</div>
+												<div class="control-group">
+													<button id="login-button" type="button" class="btn btn-default btn-info btn-block btn-login" ripple="">登录</button>
+												</div>
+												<input id="signin_storeCode" name="storeCode" type="hidden" value="DEFAULT">
+												<div class="logon-password-box">
+													<div class="pull-left">
+														<a href="register.html" >新用户注册</a>
+													</div>
+												</div>
+											</form>
+										</div>
+										<!-- 商家登录 -->
+										<div id="stroelogin" class="tab-pane">
+											<form method="post" id="logonForm" class="form-horizontal" action="">
+												<div><span id="storeError" style="color:red;"></span></div>
+												<div class="control-group">
+													<div class="control-group">
+														<div class="controls input-group">
+															<span class="input-group-addon"> <span class=" fa fa-user" aria-hidden="true" id="j_username_help"></span></span>
+															<input id="j_username" class="form-control" type="text" name="j_username" size="18" placeholder="用户名">
+														</div>
+													</div>
+													<div class="control-group">
+														<div class="controls input-group">
+															<span class="input-group-addon"> <span class=" fa fa-lock" aria-hidden="true" id="j_password_help"></span></span>
+															<input id="j_password" class="form-control" type="password" name="j_password" size="18" placeholder="密码">
+														</div>
+													</div>
+													<div class="control-group remeber-control">
+														<div class="controls">
+															<label>
+										   					 <div><input type="checkbox" id="remember1"></div>
+										   					 <div class="remeber-text">记住用户名</div></label>
+															 <div class="pull-right"><a href="" role="button" data-toggle="modal">忘记密码</a></div>						
+														</div>
+													</div>
+													<div class="control-group">
+														<button id="formSubmitButton" type="button" class="btn btn-default btn-info btn-block" ripple="">登录</button>
+													</div>
+													<input id="formSubmitButton" name="storeCode" type="hidden" value="DEFAULT">
+													<div class="logon-password-box">
+														<div class="pull-left">
+															<a href="storeRegister.html" >新用户注册</a>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+	</body>
+
+</html>

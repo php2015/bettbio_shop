@@ -1,0 +1,50 @@
+﻿1. 本地编译验证通过，准备好升级和部署所需要的脚本文件等。
+
+先部署到测试环境，步骤如下：
+
+2. 先更新代码
+   cd /data/baitu
+   git pull 
+	这里需要输入你的git账号
+
+3. 然后编译打包
+   cd old_version
+   mvn clean compile package -DskipTests
+ 
+	这样两个war包就打好了。 例如
+	./m-sm-shop/target/m-3.0.0-SNAPSHOT.war
+	./sm-shop/target/sm-shop-3.0.0-SNAPSHOT.war
+
+4. 接着根据需要，对老版本进行备份。
+	主要是备份数据库。 备份命令有脚本。 测试环境是放在/data/clariones/backup/scripts/dobackup.sh
+	带参数指定备份目标，例如
+	dobackup.sh -db -infinispan
+	就是备份数据库和infinispan中的图像。
+
+5. 停止原tomcat服务
+	tomcat在/data/apache-tomcat-8.0.36
+	tomcat的停止就不多说了。
+
+6. 将原来的webapps下的 m 和 sm-shop删除，war文件替换为新编译出来的war
+	注意编译出来的war文件带版本号，拷贝到tomcat下时需要注意更改文件名字
+
+7. 将更新的环境配置文件，放到正确的目录去。
+	例如，测试环境的配置文件，git上是放在 /data/baitu/env_conf/test
+	发布测试环境时，则需要将这里的文件拷贝到 /data/apache-tomcat-8.0.36/env_conf/test
+	这个路径是在tomcat的启动脚本中指定的，catalina.sh 中有一行：
+	JAVA_OPTS="-Xms3072m -Xmx3072m -Xmn512m -XX:SurvivorRatio=4 -XX:PermSize=512m -XX:MaxPermSize=512m -XX:ParallelGCThreads=2 -Denv_conf_path=/data/apache-tomcat-8.0.36/env_conf/test"
+	注意这个：-Denv_conf_path=/data/apache-tomcat-8.0.36/env_conf/test
+
+7. 根据需要执行数据库升级脚本
+	注意：包括/data/clariones/update_search/updateProductSearchInfo.sql。这个脚本用来生成产品搜索信息的，可能需要，可能不需要。
+
+
+8. 启动tomcat
+
+
+测试完成后，部署到生产环境
+
+9. 使用scp命令将测试过的war文件拷贝到生产环境
+	测试环境的账号bettbio的密码是 w94zdwzgsm (我就是知道我在干什么)
+
+10. 在生产环境中重复以上4～8步。 注意，一定要仔细考虑备份的问题。普通发布不做备份也可以，如果是比较大的版本升级，建议都做一次备份。

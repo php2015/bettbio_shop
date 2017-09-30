@@ -1,0 +1,161 @@
+/*
+* admin.css
+* @Author: Any.G 
+*/
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: Microsoft YaHei, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.container {
+	width: 1200px;
+	padding: 0;
+	margin: 0 auto;
+	position: relative;
+}
+
+.warp {
+	padding: 60px 30px;
+}
+
+.placeholders {}
+
+.hoder-hd {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	display: block;
+}
+
+.hoder-hd .hoder-text {
+	text-shadow: black 5px 3px 3px;
+}
+
+.order-detail-title .order-title-hd {
+	background-color: #F1F5FB;
+}
+
+.order-detail-title .order-title {
+	padding-left: 10px;
+	font-weight: bold;
+}
+
+.warp-tabs .nav-tabs>li.active>a {
+	border: none;
+	border-bottom: 3px solid #4285f4;
+}
+
+.warp-body {
+	padding-top: 20px;
+}
+
+.warp-body .form-control {
+	border-radius: 0;
+}
+
+.warp-body .nav {
+	margin-bottom: 20px;
+}
+
+.warp-body .ztree * {
+	font-size: 14px;
+}
+
+.warp-body .ztree li {
+	padding-top: 15px;
+}
+
+.warp-body .ztree li a.curSelectedNode {
+	border: none;
+	background-color: transparent;
+	font-weight: 700;
+}
+
+#pagination {}
+
+#pagination .hint {
+	margin: 20px 0;
+	color: #FF6C00;
+}
+
+footer {
+	border-top: 1px solid #3498DB;
+	padding-top: 20px;
+}
+
+.font-size-13 {
+	font-size: 13px;
+}
+
+.font-row-hieht {
+	line-height: 14pt;
+}
+
+.border-right {
+	border-right: 1px solid #ddd;
+}
+
+li.vertical-divider {
+	height: 38px;
+	width: 1px;
+	background-color: #333;
+	margin: 0 5px;
+}
+
+.fa-star.star-red,
+.fa-star-half-full.star-red {
+	color: red;
+}
+
+.padding-top-25 {
+	padding-top: 25px;
+}
+
+.message {
+	border-radius: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+}
+
+input[type="text"][required] {
+	background-color: #FFC;
+}
+
+.modal-dialog.modal-lg {
+	width: 95%;
+}
+
+.warp-dialog .row {
+	margin: 0;
+	margin-bottom: 15px;
+}
+
+.ztree-hd {
+	position: absolute;
+	z-index: 9999;
+	width: 100%;
+	padding: 0 15px;
+	left: 0;
+	display: none;
+}
+
+.ztree-hd .ztree {
+	border: 1px solid #ccc;
+	background-color: #eee;
+	color: #555;
+}
+.ztree-hd .ztree li{
+	display: block;
+}

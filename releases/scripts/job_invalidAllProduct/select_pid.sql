@@ -1,0 +1,2 @@
+select PRODUCT_ID from PRODUCT where MERCHANT_ID != 7150;
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>买家用户注册</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../Font-Awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/style.css">
+	</head>
+
+	<body>
+		<div id="warp">
+			<div class="s_hader">
+				<div class="container">
+					<div class="pull-left s_logo">
+						<img src="../img/biglogo.png" height="56"><span class="s_title">欢迎买家用户注册</span>
+					</div>
+					<div class="pull-right">
+						<a href="storeRegister.html" class="s_lead">切换至商家用户注册 <span class="fa fa-angle-double-right"></span></a>
+					</div>
+				</div>
+			</div>
+			<div class="s_register container">
+				<div class="row">
+					<div class="col-md-6 s_register_from">
+						<form id="registrationForm" class="form-horizontal" action="" method="post">
+								<div class="from_title ">机构信息</div>
+								<div class="form-group">
+									<label for="project" class="col-sm-3 control-label text-left" required>课题组：</label>
+									<div class="col-sm-6">
+										<input id="project" name="project" class="form-control" type="text" value="" maxlength="255" success="false">
+										<span class="error">输入课题组名有助于我们更好的服务</span>
+									</div>
+									<div class="col-sm-3"><span class="success-icon"></span></div>
+								</div>
+								<div class="form-group">
+									<label for="company" class="col-sm-3 control-label text-left" required>学校/公司：</label>
+									<div class="col-sm-6">
+										<input id="company" name="company" class="form-control" type="text" value="" maxlength="255" success="false">
+										<span class="error">建议完善学校或公司名</span>
+									</div>
+									<div class="col-sm-3"><span class="success-icon"></span></div>
+								</div>
+								<div class="from_title ">个人信息</div>
+								<div class="form-group">
+									<label for="phone" class="col-sm-3 control-label text-left" required>手机号：</label>
+									<div class="col-sm-6">
+										<input id="phone" name="phone" class="form-control" type="text" value="" maxlength="255" success="false">
+										<span class="error">手机号不正确</span>
+									</div>
+									<div class="col-sm-3"><span class="success-icon"></span></div>
+								</div>
+								<div class="form-group">
+									<label for="name" class="col-sm-3 control-label text-left" required>姓名：</label>
+									<div class="col-sm-6">
+										<input id="name" name="name" class="form-control" type="text" value="" maxlength="255" success="false">
+										<span class="error">姓名不能为空</span>
+									</div>
+									<div class="col-sm-3"><span class="success-icon"></span></div>
+								</div>
+								<div class="form-group">
+									<label for="email" class="col-sm-3 control-label text-left" required>邮箱：</label>
+									<div class="col-sm-6">
+										<input id="email" name="email" class="form-control" type="text" value="" maxlength="255" success="false">
+										<span class="error">邮箱格式不正确</span>
+									</div>
+									<div class="col-sm-3"><span class="success-icon"></span></div>
+								</div>
+								<div class="form-group">
+									<label for="passwd" class="col-sm-3 control-label text-left" required>密码：</label>
+									<div class="col-sm-6">
+										<input id="passwd" name="passwd" class="form-control" type="text" value="" maxlength="255" success="false">
+										<span class="error">密码格式不正确</span>
+									</div>
+									<div class="col-sm-3"><span class="success-icon"></span></div>
+								</div>
+								<div class="form-group">
+									<label for="repasswd" class="col-sm-3 control-label text-left" required>确认密码：</label>
+									<div class="col-sm-6">
+										<input id="repasswd" name="repasswd" class="form-control" type="text" value="" maxlength="255" success="false">
+										<span class="error">密码不一致</span>
+									</div>
+									<div class="col-sm-3"><span class="success-icon"></span></div>
+								</div>
+								<div class="form-group">
+									<label for="checkCode" class="col-sm-3 control-label text-left" required>验证码：</label>
+									<div class="col-sm-4 padding-right-clear">
+										<input id="checkCode" name="checkCode" class="form-control" type="text" value="" maxlength="255" success="false">
+										<span class="error">验证码不正确</span>
+									</div>
+									<div class="col-sm-2 padding-left-clear">
+										<img class="code-img" src="../img/code.jpg" height="40" width="90" />
+									</div>
+									<div class="col-sm-3"><span class="success-icon"></span></div>
+								</div>
+								<div class="form-group">
+									<label for="phoneCode" class="col-sm-3 control-label text-left" required>手机验证码：</label>
+									<div class="col-sm-3 padding-right-clear">
+										<input id="phoneCode" name="phoneCode" class="form-control" type="text" value="" maxlength="255" success="false">
+										<span class="error">手机验证不正确</span>
+									</div>
+									<div class="col-sm-3 padding-left-clear">
+										<button type="button" class="btn btn-info btn-block">获取验证码</button>
+									</div>
+									<div class="col-sm-3"><span class="success-icon"></span></div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-3"></div>
+									<div class="col-sm-9">
+										<input type="checkbox" id="userProtocolCheckbox" checked="checked">
+										<div class="read-prot">阅读和同意<a href="">《百图注册协议》</a></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2"></div>
+									<div class="col-sm-8">
+										<button type="submit" class="btn btn-info btn-block" disabled="disabled">立即注册</button>
+									</div>
+								</div>
+						</form>
+					</div>
+					<div class="col-md-6 s_register_hint">
+						<div class="hint_link"><a href="login.html">已有帐号，请登录</a></div>
+						<div class="hint_hd"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+	</body>
+
+</html>

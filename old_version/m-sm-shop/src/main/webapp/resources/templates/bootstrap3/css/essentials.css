@@ -1,0 +1,196 @@
+.text-shadow-admin{
+	text-shadow: black 5px 3px 3px;
+}
+.height-100{
+	height:100%;
+}
+.font-size-13{
+	font-size:13px;
+}
+.font-row-hieht{
+	line-height:14pt
+}
+.padding-bottom-admin{
+	padding-bottom: 20px;
+}
+.admin-blank {
+  background-color: #000000;
+}
+.dropsource { position: static; cursor:pointer; } 
+.droptarget { position: static; cursor:pointer; } 
+
+.dropmove { position: absolute; background: #ececec; cursor:pointer;} 
+
+.dropfoucscolcor { border: 1px dashed #0080ff; } 
+.dropfoucssourcecolcor { border: 1px dashed #ff0000; } 
+.padding-left{
+	padding-left:0px;
+}
+.padding-right{
+	padding-right:0px;
+}
+.padding-right-20{
+	padding-right:20px;
+}
+.padding-top-20{
+	padding-top: 20px;
+}
+.padding-height{
+	height: 17px;
+}
+#contentLeft {
+  z-index: 10;
+  width: 170px;
+  height: 100%;
+  float:left;
+  margin-left: -12px;
+}
+
+#contentRight {
+  padding-left: 1.3rem ;
+  margin-left: 170px;
+  background-color: #ffffff;
+}
+
+#leftNavigation {
+  margin: 2rem 0;
+}
+#leftNavigation, #leftNavigation li ul {
+  list-style: none;
+  padding: 0;
+}
+#leftNavigation li a {
+  font-size: 0.875rem;
+  display: block;
+  padding: 0.8rem 1rem 0.8rem 3rem;
+  color: #400040;
+  border-bottom: solid 1px #395673;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+  -webkit-transition: color 0.2s ease;
+  transition: color 0.2s ease;
+}
+#leftNavigation li a, #leftNavigation li a .leftNavIcon {
+  line-height: 120%;
+}
+#leftNavigation li a .leftNavIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3rem;
+  padding: 0.8rem 0.8rem;
+  text-align: center;
+}
+#leftNavigation li a:hover {
+  color: #FF6C00;
+}
+#leftNavigation li ul {
+  display: none;
+  margin: 0;
+  background-color: #17232f;
+}
+#leftNavigation li ul li a {
+  border-bottom: solid 1px #233547;
+}
+#leftNavigation li ul li:last-child a {
+  border-bottom: none;
+}
+#leftNavigation li ul li.active a {
+  color: white;
+}
+#leftNavigation li.active > a {
+  color: white;
+}
+#leftNavigation li.active ul {
+  display: block;
+}
+#leftNavigation > li.active {
+  background-color: #2980b9;
+}
+.address-title{
+	background: #2980b9;;color:#ffffff;
+	font-weight:bold;
+	
+}
+.button-color{
+	background-color: #2980b9;border-color: #ffffff;
+	color:#ffffff;
+}
+.button-border{
+	border-color: #ffffff;
+	color:#ffffff;
+}
+.product-header{
+	background-color: #fff;
+	margin: 5px 10px;
+	/**border:1px solid #ccc;**/
+}
+.product-img {
+	border:1px solid #ccc;
+	padding:3px;
+	margin:1px;
+}
+.product-header .product-title{
+	padding:3px;
+	margin-left:7px;
+}
+.product-table{
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.product-main{
+	padding:3px;
+	margin-left:7px;
+}
+.productdesc {
+	padding-top: 10px;
+}
+.productdesc-even-background {
+	/**background:#E6F1FA;**/
+}
+
+.productdesc-title{
+	margin: 10px 0px; 
+	width: 270px; 
+	height: 30px; 
+	font-size: 18px; 
+	text-align: center; 
+	line-height: 30px; 
+	font-weight: bold;
+	background: #5cb85c;
+	color: #fff;
+}
+.navbar-wrapper a {
+	color:#000000;
+}
+
+.navbar.navbar-inverse.navbar-static-top {
+  background: #3498DB;
+}
+.navbar.navbar-inverse.navbar-static-top a{
+  color:#fff;
+}
+.navbar.navbar-inverse.navbar-static-top a:hover{
+  background:#2672C8;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus{
+  background:#2672C8;
+  color:#000;
+  font-weight:700;
+  border-top: 2px solid #2672C8;
+}
+.navbar-inverse .navbar-nav>.active>a:hover {
+  background:#2672C8;
+  color:#000;
+  font-weight:700;
+}
+/* Navbar positioning foo */
+.navbar-wrapper {
+  margin-top:3px;
+  position: relative;
+  z-index: 15;
+  background: #3498DB;
+  font-weight: bold;
+}

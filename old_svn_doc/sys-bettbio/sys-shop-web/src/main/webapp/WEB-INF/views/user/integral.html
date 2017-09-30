@@ -1,0 +1,93 @@
+<%layout("/common/layout.html",{css:["css/style.css","Font-Awesome/css/font-awesome.min.css"]}){
+%>
+<div class="warp">
+	<div class="h_body">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-2">
+					<ul class="c_menu">
+						<li ><a href="${ctxPath}/personalCenter">我的账户</a></li>
+						<li><a href="${ctxPath}/findOrders">我的订单</a></li>
+						<li class="active"><a href="${ctxPath}/findUserPorints">查看积分</a></li>
+						<li ><a href="${ctxPath}/billing">开票和收货信息</a></li>
+						<li ><a href="${ctxPath}/safe/safe">帐号安全</a></li>
+					</ul>
+				</div>
+				
+				<div class="col-sm-10">
+					<div class="c_user_hd">
+						<div class="col-sm-4 c_info">
+							<div class="row">
+								<div class="col-sm-6">
+									<img src="${ctxPath}/static/img/admin/custmerinfo.png" />
+									<h5>百图会员</h5>
+								</div>
+								<div class="col-sm-6">
+									<p class="c_account">${userInfo.name}</p>
+									<p class="c_account_hint"></p>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3 hd-col-sm-3">
+							<div class="c_holder text-center">
+								<p>等级</p>
+								<p>
+									<% for( var i=0;i< userInfo.grade ;i++){ 
+									 print("<span class='fa fa-star icon-red'></span>");
+									  } %>
+
+								</p>
+								<p>
+									<a href=""> <span class="fa "></span></a>
+								</p>
+							</div>
+						</div>
+						<div class="col-sm-3 hd-col-sm-3">
+							<div class="c_holder text-center">
+								<p>金额总计</p>
+								<p class="text-gray">￥100元</p>
+								<p>
+									<a href="">查看详情<span class="fa fa-angle-double-right"></span></a>
+								</p>
+							</div>
+						</div>
+						<div class="col-sm-3 hd-col-sm-3">
+							<div class="c_holder text-center boder-none">
+								<p>积分</p>
+								<p class="text-gray">${userInfo.integral}</p>
+								<p>
+									<a href="">去兑换 <span class="fa fa-angle-double-right"></span></a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-10 c_user_body">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th>积分数量</th>
+								<th>积分类型</th>
+								<th>赠送时间</th>
+								<th>积分状态</th>
+							</tr>
+						</thead>
+						<tbody>
+						<%for(var userProint in pageInfo.list){%>
+							<tr>
+								<td>${userProint.points!}</td>
+								<td>${userProint.pointsTypeString!}</td>
+								<td>${userProint.createDate,"yyyy-MM-dd HH:mm:ss"}</td>
+								<td>${userProint.state!}</td>
+							</tr>
+						<%}%>	
+						</tbody>
+					</table>
+				</div>
+				<%include("/common/manager/pagination.html"){} %>
+			</div>
+		</div>
+	</div>
+</div>
+<%}%>

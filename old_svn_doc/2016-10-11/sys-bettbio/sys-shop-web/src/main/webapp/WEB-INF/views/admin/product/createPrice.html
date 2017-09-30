@@ -1,0 +1,168 @@
+<%layout("/common/admin/modelLayout.html",{
+css:["dropify/css/dropify.min.css","zTree/css/zTreeStyle/zTreeStyle.css","bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"],
+script:["zTree/js/jquery.ztree.all-3.5.min.js","dropify/js/dropify.min.js",
+"bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js",
+"bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js",
+"kindeditor-4.1.5/kindeditor-all.min.js",
+"jQuery-File-Upload/js/vendor/jquery.ui.widget.js",
+"jQuery-File-Upload/js/jquery.iframe-transport.js",
+"js/ajaxfileupload.js","js/admin/product.js"]}){ %>
+      	<div class="warp-body warp-dialog">
+		<!-- 价格创建开始 -->
+				<div  id="createPriceDiv">
+				<div class="row" >
+					<div class="col-sm-12">
+					<ul class="nav nav-pills pull-left form-inline">
+							<li>
+								<a href="${ctxPath}/admin/product/price?id=${id!}" class="btn btn-default btn-sm">返回列表</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<form class="form-horizontal" id="voucherForm">
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">规格</label>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" class="form-control valueInput" success="false" id="specifications" name="specifications"/>
+								<span class="text-warning hide">规格不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">单价</label>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" class="form-control valueInput" success="false" id="price" name="price"/>
+								<span class="text-warning hide">单价不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">供应周期</label>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" class="form-control valueInput" success="false" id="supplyCycle" name="supplyCycle"/>
+								<span class="text-warning hide">供应周期不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">促销价格</label>
+							</div>
+							<div class="col-sm-8">
+								<input type="text" class="form-control valueInput" success="false" id="discountPrice" name="discountPrice"/>
+								<span class="text-warning hide">折扣价格不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">促销价格生效日</label>
+							</div>
+							<div class="col-sm-8">
+								<input id="startDate" name="startDate" class="form-control valueInput" readonly="readonly" success="false" type="text" data-date-format="yyyy/mm/dd">
+								<span class="text-warning hide">促销价格生效日不能为空</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group form-group-lg">
+							<div class="col-sm-2 col-sm-offset-1">
+								<label class="control-label">促销价格截止日</label>
+							</div>
+							<div class="col-sm-8">
+								<input id="endDate" name="endDate" class="form-control valueInput" readonly="readonly" success="false" type="text" data-date-format="yyyy/mm/dd">
+								<span class="text-warning hide">促销价格截止日不能为空</span>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="row">
+					<div class="form-group form-group-lg">
+						<div class="col-sm-12 text-right">
+							<button class="btn btn-success" id="savePrice">保存</button>
+						</div>
+					</div>
+				</div>
+				</div>
+		<!-- 价格创建结束 -->
+		</div>
+<%}%>
+		<script type="text/javascript">
+		var verdict={
+				errInput : function(_this){
+					_this.closest('.row').find('.text-warning').removeClass('hide');
+					_this.attr("success","false");
+				},
+				sucInput : function(_this){
+					_this.closest('.row').find('.text-warning').addClass('hide');
+					_this.attr("success","true");
+				}
+		}
+			$(function() {
+				$.app.initDatetimePicker();
+				$.app.initKindEditor();
+				$.app.initDropify();
+				$('#buyingTime,#startDate,#endDate').datetimepicker({
+	                language: 'zh-CN',
+	                autoclose: true,
+	                todayHighlight: true
+				});
+				$("#selectIdAll,#selectAudiAll").change(function() {
+					if(this.checked) {
+						$(this).check();
+					} else {
+						$(this).uncheck();
+					}
+				});
+			/*
+			*保存商品价格集
+			*/
+			$("#savePrice").click(function(){
+				var specifications = $("#specifications").val();
+  				var price = $("#price").val();
+  				var supplyCycle = $("#supplyCycle").val();
+  				var discountPrice = $("#discountPrice").val();
+  				var startDate = $("#startDate").val();
+  				var endDate = $("#endDate").val();
+  				var productId=$("#id",parent.document).val();
+  				$.app.get("${ctxPath}/admin/product/updateproductPrices",{"specifications":specifications,"price":price,"productId":productId,"supplyCycle":supplyCycle,"discountPrice":discountPrice,"startDate":startDate,"endDate":endDate},function(flag,data){
+  					$.app.message(data.message);
+  				})
+			});
+			})
+			
+			function deleteOne(ids){
+				deletePrice(ids);
+			}
+		
+			function deletes(){
+				var ids = "";
+				 $('input[name="idChk"]:checked').each(function(){
+					 ids += $(this).val()+",";
+				 })
+				 deletePrice(ids);
+			}
+			
+			function deletePrice(ids){
+				var productId=$("#id",parent.document).val();
+				$.app.get("${ctxPath}/admin/product/deletePrice",{"ids":ids,"productId":productId},function(flag,data){
+					$.app.message(data.message);
+					if(flag){
+						setTimeout(function(){
+							window.location.href="${ctxPath}/admin/product/price?id=${id!}"; 
+						}, 1000)
+					}
+				})
+			}
+		</script>
