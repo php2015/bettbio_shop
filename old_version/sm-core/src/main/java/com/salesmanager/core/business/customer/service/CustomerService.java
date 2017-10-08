@@ -41,5 +41,8 @@ public interface CustomerService  extends SalesManagerEntityService<Long, Custom
 
 	
 	 boolean getCustomerExistsPhone(String phone);
+	 
+	void verifyCustomerPhone(String phone) throws ServiceException;
+	void verifyCustomerEmail(String emailAddress) throws ServiceException;
 
 }

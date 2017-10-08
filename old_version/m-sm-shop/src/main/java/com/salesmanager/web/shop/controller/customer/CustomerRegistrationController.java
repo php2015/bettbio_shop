@@ -529,6 +529,14 @@ public class CustomerRegistrationController extends AbstractController {
 		@SuppressWarnings("unused")
 		CustomerEntity customerData =null;
 		try {
+			// 校验SMS code是否验证过
+			Object smsCodeVerify  = request.getSession().getAttribute("smscode_verify");
+			if (!("passed".equals(smsCodeVerify))){
+				throw new CustomerRegistrationException("短信验证码不正确");
+			}
+			// 校验手机号码和邮箱
+			customerService.verifyCustomerPhone(customer.getPhone());
+			customerService.verifyCustomerEmail(customer.getEmailAddress());
 			// 注册积分
 			String points ="50";
 			MemberPoints memberPoints = new MemberPoints();
@@ -555,6 +563,7 @@ public class CustomerRegistrationController extends AbstractController {
 			// 用户注册成功后，清除session中的phonecode
 			request.getSession().removeAttribute("phonecode");
 			request.getSession().removeAttribute("phonenum");
+			request.getSession().removeAttribute("smscode_verify");
 		} catch (CustomerRegistrationException cre) {
 			LOGGER.error("Error while registering customer.. ", cre);
 			ObjectError error = new ObjectError("registration",
@@ -921,6 +930,7 @@ public class CustomerRegistrationController extends AbstractController {
 		}
 		if (!"".equals(phoneCode) && !"".equals(smsCode)) {
 			if (smsCode.equals(phoneCode)) {
+				request.getSession().setAttribute("smscode_verify", "passed");
 				ajaxResponse.setStatus(AjaxResponse.RESPONSE_STATUS_SUCCESS);
 			} else {
 				ajaxResponse.setStatus(AjaxResponse.RESPONSE_STATUS_FAIURE);

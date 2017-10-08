@@ -269,6 +269,12 @@ INFO] ------------------------------------------------------------------------
 =======全文完=======
 
 
+备注： 
+1. 几个常用的命令
+	创建DB用户：CREATE USER 'bshopizer'@'%' IDENTIFIED BY 'mySQL@2015Bio'; 
+	DB用户权限：GRANT ALL PRIVILEGES ON *.* TO 'bshopizer'@'%' IDENTIFIED BY "mySQL@2015Bio";
+	建立数据库：CREATE DATABASE SALESMANAGER DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+2. Jar包冲突已经解决，修稿pom.xml后无需特殊操作，直接部署即可。
 
 
 

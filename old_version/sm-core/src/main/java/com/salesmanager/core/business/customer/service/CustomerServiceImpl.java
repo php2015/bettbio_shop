@@ -18,6 +18,7 @@ import com.salesmanager.core.business.generic.exception.ServiceException;
 import com.salesmanager.core.business.generic.service.SalesManagerEntityServiceImpl;
 import com.salesmanager.core.business.merchant.model.MerchantStore;
 import com.salesmanager.core.modules.utils.GeoLocation;
+import com.salesmanager.core.utils.VerificationUtils;
 
 @Service("customerService")
 public class CustomerServiceImpl extends SalesManagerEntityServiceImpl<Long, Customer> implements CustomerService {
@@ -133,6 +134,28 @@ public class CustomerServiceImpl extends SalesManagerEntityServiceImpl<Long, Cus
 	@Override
 	public boolean getCustomerExistsPhone(String phone) {
 		return customerDAO.getCustomerExistsPhone(phone);
+	}
+
+
+	@Override
+	public void verifyCustomerPhone(String phone) throws ServiceException {
+		if (!VerificationUtils.isMobileNumber(phone)){
+			throw new ServiceException("无效的中国大陆手机号码");
+		}
+		if (getByPhone(phone) != null){
+			throw new ServiceException("手机号码已注册");
+		}
+	}
+
+
+	@Override
+	public void verifyCustomerEmail(String emailAddress) throws ServiceException {
+		if (!VerificationUtils.isEmail(emailAddress)){
+			throw new ServiceException("无效的邮箱地址");
+		}
+		if (getByEmail(emailAddress)!= null){
+			throw new ServiceException("邮箱已注册");
+		}
 	}
 	
 
