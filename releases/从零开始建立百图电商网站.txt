@@ -147,7 +147,7 @@ sys    0m1.956s
 10. 获得工程文件
     工程原来是放在 /data/baitu下的
     cd /data
-    git clone     https://git.coding.net/Clariones/baitu
+    git clone https://github.com/Clariones/bettbio_shop.git
     然后编译
     cd /data/baitu/old_version
     mvn clean compile package -DskipTests
