@@ -51,9 +51,9 @@ $(function(){
 	$('.cuxiao_nav').hide();
 	$(window).scroll(function(){
           height = $(window).scrollTop();
-		  if (height <400){
+		  if (height <600){
 			 $('.cuxiao_nav').fadeOut();
-   	  	  }else if(height <2600){
+   	  	  }else if(height <3000){
    	  	  	$('.cuxiao_nav').fadeIn();
    	  	  }else{
    	  	  	$('.cuxiao_nav').fadeOut();
